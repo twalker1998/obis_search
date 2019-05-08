@@ -23,7 +23,7 @@ export class SearchComponent {
   search(query: string): void {
     this.query = query;
 
-    this.apiService.get_sname(query).subscribe((response: Api_Response) => {
+    this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
       this.response = response;
 
       this.get_results(this.response, 0, "acctax");
@@ -50,7 +50,7 @@ export class SearchComponent {
     if(new_count > 0) {
       next_url = next_url.replace("http", "https");
 
-      this.apiService.get_acctax_url(next_url).subscribe((response: Api_Response) => {
+      this.apiService.get_url(next_url).subscribe((response: Api_Response) => {
         this.response = response;
 
         this.get_results(this.response, count, "acctax");

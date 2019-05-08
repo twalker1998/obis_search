@@ -11,19 +11,11 @@ export class ApiService {
 
   constructor(private httpClient : HttpClient) { }
 
-  get_sname(query: string) {
-    return this.httpClient.get<Api_Response>(this.baseUrl + 'acctax/?sname=' + query + '&format=json');
-  }
-
-  get_acctax_url(url: string) {
+  get_url(url: string) {
     return this.httpClient.get<Api_Response>(url);
   }
 
-  get_vname(query: string) {
-    return this.httpClient.get<Api_Response>(this.baseUrl + 'comtax/?vernacularname=' + query + '&format=json');
-  }
-
-  get_comtax_url(url:string) {
-    return this.httpClient.get<Api_Response>(url);
+  get_query(table: string, field: string, query: string) {
+    return this.httpClient.get<Api_Response>(this.baseUrl + table + '/?' + field + '=' + query + '&format=json');
   }
 }
