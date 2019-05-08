@@ -15,23 +15,7 @@ export class ApiService {
     return this.httpClient.get<Api_Response>(url);
   }
 
-  get_sname(query: string) {
-    return this.httpClient.get<Api_Response>(this.baseUrl + 'acctax/?sname=' + query + '&format=json');
-  }
-
-  get_genus(query: string) {
-    return this.httpClient.get<Api_Response>(this.baseUrl + 'acctax/?genus=' + query + '&format=json');
-  }
-
-  get_species(query: string) {
-    return this.httpClient.get<Api_Response>(this.baseUrl + 'acctax/?species=' + query + '&format=json');
-  }
-
-  get_vname(query: string) {
-    return this.httpClient.get<Api_Response>(this.baseUrl + 'comtax/?vernacularname=' + query + '&format=json');
-  }
-
-  get_sname_s(query: string) {
-    return this.httpClient.get<Api_Response>(this.baseUrl + 'syntax/?sname=' + query + '&format=json');
+  get_query(table: string, field: string, query: string) {
+    return this.httpClient.get<Api_Response>(this.baseUrl + table + '/?' + field + '=' + query + '&format=json');
   }
 }
