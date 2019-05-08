@@ -23,9 +23,9 @@ export class SearchComponent {
 
     this.apiService.get_acctax(query).subscribe((response: Api_Response) => {
       this.acctax_response = response;
-    });
 
-    this.get_results(this.acctax_response, 0);
+      this.get_results(this.acctax_response, 0);
+    });
   }
 
   get_results(response: Api_Response, count: number) {
@@ -35,6 +35,21 @@ export class SearchComponent {
     for(let result of response.results) {
       this.acctax.push(result);
       count++;
+    }
+
+    if(new_count > 0) {
+      next_url = next_url.replace("http", "https");
+
+      this.apiService.get_acctax_url(next_url).subscribe((response: Api_Response) => {
+        this.acctax_response = response;
+
+        this.get_results(this.acctax_response, count);
+      });
+    } else {
+      for(let a of this.acctax) {
+        console.log(a);
+      }
+      console.log(this.acctax.length);
     }
   }
 
