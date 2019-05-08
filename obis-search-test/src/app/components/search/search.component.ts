@@ -13,8 +13,8 @@ import { Acctax } from '../../models/acctax';
 export class SearchComponent {
   private query: string;
 
-  private acctax_response: Api_Response;
-  private acctax: Acctax[] = [];
+  private response: Api_Response;
+  private results: Acctax[] = [];
 
   constructor(private apiService: ApiService) { }
 
@@ -22,9 +22,9 @@ export class SearchComponent {
     this.query = query;
 
     this.apiService.get_acctax(query).subscribe((response: Api_Response) => {
-      this.acctax_response = response;
+      this.response = response;
 
-      this.get_results(this.acctax_response, 0);
+      this.get_results(this.response, 0);
     });
   }
 
@@ -33,7 +33,7 @@ export class SearchComponent {
     var next_url = response.next;
 
     for(let result of response.results) {
-      this.acctax.push(result);
+      this.results.push(result);
       count++;
     }
 
@@ -41,15 +41,15 @@ export class SearchComponent {
       next_url = next_url.replace("http", "https");
 
       this.apiService.get_acctax_url(next_url).subscribe((response: Api_Response) => {
-        this.acctax_response = response;
+        this.response = response;
 
-        this.get_results(this.acctax_response, count);
+        this.get_results(this.response, count);
       });
     } else {
-      for(let a of this.acctax) {
+      for(let a of this.results) {
         console.log(a);
       }
-      console.log(this.acctax.length);
+      console.log(this.results.length);
     }
   }
 
