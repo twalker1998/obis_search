@@ -34,4 +34,12 @@ export class ApiService {
   get_vname(query: string) {
     return this.httpClient.get<Api_Response>(this.baseUrl + 'comtax/?vernacularname=' + query + '&format=json');
   }
+
+  get_sname_s(query: string) {
+    return this.httpClient.get<Api_Response>(this.baseUrl + 'syntax/?sname=' + query + '&format=json');
+  }
+
+  get_syntax(query: string) {
+    return this.httpClient.get<Api_Response>(url);
+  }
 }
