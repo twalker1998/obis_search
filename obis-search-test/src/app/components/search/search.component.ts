@@ -27,6 +27,12 @@ export class SearchComponent {
       this.response = response;
 
       this.get_results(this.response, 0, "acctax");
+
+      this.apiService.get_query("acctax", "genus", query).subscribe((response: Api_Response) => {
+        this.response = response;
+
+        this.get_results(this.response, 0, "acctax");
+      })
     });
   }
 
