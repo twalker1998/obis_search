@@ -4,6 +4,8 @@ import { ApiService } from '../../core/api/api.service';
 
 import { Api_Response } from '../../models/api_response';
 import { Acctax } from '../../models/acctax';
+import { Comtax } from '../../models/comtax';
+import { Syntax } from '../../models/syntax';
 
 @Component({
   selector: 'app-search',
@@ -14,7 +16,7 @@ export class SearchComponent {
   private query: string;
 
   private response: Api_Response;
-  private results: Acctax[] = [];
+  private results: Array<Acctax | Comtax | Syntax> = [];
 
   constructor(private apiService: ApiService) { }
 
@@ -24,15 +26,23 @@ export class SearchComponent {
     this.apiService.get_acctax(query).subscribe((response: Api_Response) => {
       this.response = response;
 
-      this.get_results(this.response, 0);
+      this.get_results(this.response, 0, "acctax");
     });
   }
 
-  get_results(response: Api_Response, count: number) {
+  get_results(response: Api_Response, count: number, type: string) {
     var new_count = (response.count - response.results.length) - count;
     var next_url = response.next;
 
     for(let result of response.results) {
+      if(type == "acctax") {
+        result = <Acctax>result;
+      } else if(type == "comtax") {
+        result = <Comtax>result;
+      } else if(type == "syntax") {
+        result = <Syntax>result;
+      }
+
       this.results.push(result);
       count++;
     }
@@ -43,7 +53,7 @@ export class SearchComponent {
       this.apiService.get_acctax_url(next_url).subscribe((response: Api_Response) => {
         this.response = response;
 
-        this.get_results(this.response, count);
+        this.get_results(this.response, count, "acctax");
       });
     } else {
       for(let a of this.results) {
