@@ -11,19 +11,27 @@ export class ApiService {
 
   constructor(private httpClient : HttpClient) { }
 
+  get_acctax_url(url: string) {
+    return this.httpClient.get<Api_Response>(url);
+  }
+
   get_sname(query: string) {
     return this.httpClient.get<Api_Response>(this.baseUrl + 'acctax/?sname=' + query + '&format=json');
   }
 
-  get_acctax_url(url: string) {
+  get_genus(query: string) {
+    return this.httpClient.get<Api_Response>(this.baseUrl + 'acctax/?genus=' + query + '&format=json');
+  }
+
+  get_species(query: string) {
+    return this.httpClient.get<Api_Response>(this.baseUrl + 'acctax/?species=' + query + '&format=json');
+  }
+
+  get_comtax_url(url:string) {
     return this.httpClient.get<Api_Response>(url);
   }
 
   get_vname(query: string) {
     return this.httpClient.get<Api_Response>(this.baseUrl + 'comtax/?vernacularname=' + query + '&format=json');
-  }
-
-  get_comtax_url(url:string) {
-    return this.httpClient.get<Api_Response>(url);
   }
 }
