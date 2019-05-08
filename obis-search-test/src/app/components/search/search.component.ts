@@ -23,7 +23,7 @@ export class SearchComponent {
   search(query: string): void {
     this.query = query;
 
-    this.apiService.get_acctax(query).subscribe((response: Api_Response) => {
+    this.apiService.get_sname(query).subscribe((response: Api_Response) => {
       this.response = response;
 
       this.get_results(this.response, 0, "acctax");
