@@ -16,7 +16,6 @@ import { Syntax } from '../../models/syntax';
 export class SearchService {
   private response: Api_Response;
   private results: Array<Acctax | Comtax | Syntax> = [];
-  private unique_results: Set<Acctax | Comtax | Syntax>;
 
   constructor(private httpClient: HttpClient, private apiService: ApiService, private resultsComp: ResultsComponent) { }
 
@@ -38,9 +37,9 @@ export class SearchService {
 
           this.results.sort(this.compare);
 
-          this.unique_results = new Set(this.results);
+          var unique_results = new Set(this.results);
 
-          this.resultsComp.render_results(this.unique_results);
+          this.resultsComp.render_results(unique_results);
         });
       });
     });
