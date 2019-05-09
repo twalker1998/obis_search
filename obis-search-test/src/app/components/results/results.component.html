@@ -1,4 +1,4 @@
-<ul>
+<ul *ngIf="isQueryComplete">
   <li *ngFor="let result of results">
     {{ result }}
   </li>
