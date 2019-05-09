@@ -79,11 +79,6 @@ export class SearchComponent {
 
         this.get_results(this.response, count, "acctax");
       });
-    } else {
-      for(let a of this.results) {
-        console.log(a);
-      }
-      console.log(this.results.length);
     }
   }
 
