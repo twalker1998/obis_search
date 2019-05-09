@@ -10,16 +10,27 @@ import { Syntax } from '../../models/syntax';
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent {
-  private results: Set<Acctax | Comtax | Syntax>;
+  // results: Set<Acctax | Comtax | Syntax>;
+  results: Array<Acctax | Comtax | Syntax> = [];
+  results_keys: Array<string> = [];
+  isQueryComplete: boolean;
 
-  constructor() { }
+  constructor(private resultsService: ResultsService) {
+    this.resultsService.isQueryComplete.subscribe(value => {
+      this.isQueryComplete = value;
+    });
+  }
 
   render_results(results: Set<Acctax | Comtax | Syntax>) {
-    this.results = results;
+    console.log(this.isQueryComplete);
+    this.results = Array.from(results.values());
+    this.results_keys = Object.keys(this.results);
 
-    this.results.forEach(function (r) {
-      console.log(r);
-    });
+    for(let result of this.results_keys) {
+      console.log(result);
+    }
+
+    console.log(this.isQueryComplete);
   }
 
 }
