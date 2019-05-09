@@ -10,11 +10,14 @@ import { Syntax } from '../../models/syntax';
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent {
+  private results: Set<Acctax | Comtax | Syntax>;
 
   constructor() { }
 
   render_results(results: Set<Acctax | Comtax | Syntax>) {
-    results.forEach(function(r) {
+    this.results = results;
+
+    this.results.forEach(function (r) {
       console.log(r);
     });
   }
