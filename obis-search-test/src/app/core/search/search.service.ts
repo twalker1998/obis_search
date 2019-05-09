@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ApiService } from '../api/api.service'
+import { ApiService } from '../api/api.service';
 
 import { Api_Response } from '../../models/api_response';
 import { Acctax } from '../../models/acctax';
@@ -41,11 +41,6 @@ export class SearchService {
           this.results.sort(this.compare);
 
           this.unique_results = new Set(this.results);
-
-          console.log(this.unique_results.size);
-          this.unique_results.forEach(function(result) {
-            console.log(result);
-          });
         });
       });
     });
