@@ -1,5 +1,5 @@
 export interface Comtax {
-    type: 'comtax';
+    type: string;
     url: string;
     c_id: number;
     acode: string;

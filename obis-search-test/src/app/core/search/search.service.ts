@@ -14,6 +14,7 @@ import { Syntax } from '../../models/syntax';
 export class SearchService {
   private response: Api_Response;
   private results: Array<Acctax | Comtax | Syntax> = [];
+  private unique_results: Set<Acctax | Comtax | Syntax>;
 
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
@@ -37,10 +38,14 @@ export class SearchService {
 
           this.parse_response(this.response, 0, "comtax");
 
-          console.log(this.results.length);
-          for(var r of this.results) {
-            console.log(r);
-          }
+          this.results.sort(this.compare);
+
+          this.unique_results = new Set(this.results);
+
+          console.log(this.unique_results.size);
+          this.unique_results.forEach(function(result) {
+            console.log(result);
+          });
         });
       });
     });
@@ -53,10 +58,13 @@ export class SearchService {
     for(let result of response.results) {
       if(type == "acctax") {
         result = <Acctax>result;
+        result.type = "acctax";
       } else if(type == "comtax") {
         result = <Comtax>result;
+        result.type = "comtax";
       } else if(type == "syntax") {
         result = <Syntax>result;
+        result.type = "syntax";
       }
 
       this.results.push(result);
@@ -69,8 +77,72 @@ export class SearchService {
       this.apiService.get_url(next_url).subscribe((response: Api_Response) => {
         this.response = response;
 
-        this.parse_response(this.response, count, "acctax");
+        this.parse_response(this.response, count, type);
       });
+    }
+  }
+
+  compare(a: Acctax | Syntax | Comtax, b: Acctax | Syntax | Comtax) {
+    if((a.type === 'acctax' || a.type === 'syntax') && (b.type === 'acctax' || b.type === 'syntax')) {
+      a = <Acctax | Syntax>(a);
+      b = <Acctax | Syntax>(b);
+
+      if(a.sname < b.sname) {
+        if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
+          console.log("community");
+          return 1;
+        }
+
+        return -1;
+        } else if(a.sname > b.sname) {
+          if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
+            console.log("community");
+            return -1;
+          }
+
+          return 1;
+        } else {
+          if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
+            console.log("community");
+            return 1;
+          }
+
+          if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
+            console.log("community");
+            return -1;
+          }
+
+          return 0;
+      }
+    } else if(a.type === 'comtax' && b.type === 'comtax') {
+      a = <Comtax>(a);
+      b = <Comtax>(b);
+
+      if(a.vname < b.vname) {
+        return -1;
+      } else if(a.vname > b.vname) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } else if((a.type === 'acctax' || a.type === 'syntax') && b.type === 'comtax') {
+      a = <Acctax | Syntax>(a);
+
+      if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
+        console.log("community");
+        return 1;
+      }
+
+      return -1;
+    } else if(a.type === 'comtax' && (b.type === 'acctax' || b.type === 'syntax')) {
+      b = <Acctax | Syntax>(b);
+
+      if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
+        console.log("community");
+        return -1;
+      }
+
+      return 1;
     }
   }
 }

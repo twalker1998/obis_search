@@ -1,5 +1,5 @@
 export interface Acctax {
-    type: 'acctax';
+    type: string;
     url: string;
     a_id: number;
     acode: string;
