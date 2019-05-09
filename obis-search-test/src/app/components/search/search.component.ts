@@ -32,7 +32,25 @@ export class SearchComponent {
         this.response = response;
 
         this.get_results(this.response, 0, "acctax");
-      })
+
+        this.apiService.get_query("acctax", "species", query).subscribe((response: Api_Response) => {
+          this.response = response;
+
+          this.get_results(this.response, 0, "acctax");
+
+          this.apiService.get_query("syntax", "sname", query).subscribe((response: Api_Response) => {
+            this.response = response;
+
+            this.get_results(this.response, 0, "syntax");
+
+            this.apiService.get_query("comtax", "vernacularname", query).subscribe((response: Api_Response) => {
+              this.response = response;
+
+              this.get_results(this.response, 0, "comtax");
+            });
+          });
+        });
+      });
     });
   }
 
