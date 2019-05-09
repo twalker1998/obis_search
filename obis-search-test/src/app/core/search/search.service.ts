@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { ResultsComponent } from '../../components/results/results.component';
+
 import { ApiService } from '../api/api.service';
 
 import { Api_Response } from '../../models/api_response';
@@ -16,11 +18,7 @@ export class SearchService {
   private results: Array<Acctax | Comtax | Syntax> = [];
   private unique_results: Set<Acctax | Comtax | Syntax>;
 
-  constructor(private httpClient: HttpClient, private apiService: ApiService) { }
-
-  get_results() {
-    return this.results;
-  }
+  constructor(private httpClient: HttpClient, private apiService: ApiService, private resultsComp: ResultsComponent) { }
 
   query_api(query: string): void {
     this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
@@ -41,6 +39,8 @@ export class SearchService {
           this.results.sort(this.compare);
 
           this.unique_results = new Set(this.results);
+
+          this.resultsComp.render_results(this.unique_results);
         });
       });
     });
@@ -84,26 +84,22 @@ export class SearchService {
 
       if(a.sname < b.sname) {
         if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
-          console.log("community");
           return 1;
         }
 
         return -1;
         } else if(a.sname > b.sname) {
           if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
-            console.log("community");
             return -1;
           }
 
           return 1;
         } else {
           if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
-            console.log("community");
             return 1;
           }
 
           if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
-            console.log("community");
             return -1;
           }
 
@@ -124,7 +120,6 @@ export class SearchService {
       a = <Acctax | Syntax>(a);
 
       if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
-        console.log("community");
         return 1;
       }
 
@@ -133,7 +128,6 @@ export class SearchService {
       b = <Acctax | Syntax>(b);
 
       if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
-        console.log("community");
         return -1;
       }
 

@@ -16,7 +16,7 @@ import { SearchComponent } from './components/search/search.component';
     BrowserModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [ResultsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
