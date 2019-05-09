@@ -34,7 +34,7 @@ export class SearchService {
     return this.results;
   }
 
-  search(query: string): void {
+  query_api(query: string): void {
     this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
       this.response = response;
 
@@ -59,6 +59,13 @@ export class SearchService {
               this.response = response;
 
               this.parse_response(this.response, 0, "comtax");
+
+              this.results.sort(this.compare);
+
+              console.log(this.results.length);
+              for(let a of this.results) {
+                console.log(a);
+              }
             });
           });
         });
