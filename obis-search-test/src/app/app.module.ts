@@ -16,8 +16,7 @@ import { ResultsService } from './core/results/results.service';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    ResultsService
+    HttpClientModule
   ],
   providers: [ResultsComponent, ResultsService],
   bootstrap: [AppComponent]
