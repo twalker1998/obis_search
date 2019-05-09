@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ResultsComponent } from '../../components/results/results.component';
 
 import { ApiService } from '../api/api.service';
+import { ResultsService } from '../results/results.service';
 
 import { Api_Response } from '../../models/api_response';
 import { Acctax } from '../../models/acctax';
@@ -17,7 +18,7 @@ export class SearchService {
   private response: Api_Response;
   private results: Array<Acctax | Comtax | Syntax> = [];
 
-  constructor(private httpClient: HttpClient, private apiService: ApiService, private resultsComp: ResultsComponent) { }
+  constructor(private httpClient: HttpClient, private apiService: ApiService, private resultsComp: ResultsComponent, private resultsService: ResultsService) { }
 
   query_api(query: string): void {
     this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
@@ -39,6 +40,7 @@ export class SearchService {
 
           var unique_results = new Set(this.results);
 
+          this.resultsService.isQueryComplete.next(true);
           this.resultsComp.render_results(unique_results);
         });
       });
