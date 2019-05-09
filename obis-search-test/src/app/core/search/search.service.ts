@@ -7,6 +7,7 @@ import { Api_Response } from '../../models/api_response';
 import { Acctax } from '../../models/acctax';
 import { Comtax } from '../../models/comtax';
 import { Syntax } from '../../models/syntax';
+import { CommaExpr } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,18 @@ export class SearchService {
   private results: Array<Acctax | Comtax | Syntax> = [];
 
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
+
+  isAcctax(arg: any) {
+    return arg.acctax !== undefined;
+  }
+
+  isComtax(arg: any) {
+    return arg.comtax !== undefined;
+  }
+
+  isSyntax(arg: any) {
+    return arg.syntax !== undefined;
+  }
 
   get_results() {
     return this.results;
@@ -78,6 +91,66 @@ export class SearchService {
 
         this.parse_response(this.response, count, "acctax");
       });
+    }
+  }
+
+  compare(a: Acctax | Comtax | Syntax, b: Acctax | Comtax | Syntax) {
+    if((this.isAcctax(a) || this.isSyntax(a)) && (this.isAcctax(b) || this.isSyntax(b))) {
+      a = <Acctax | Syntax>(a);
+      b = <Acctax | Syntax>(b);
+
+      if(a.sname < b.sname) {
+        if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
+          return 1;
+        }
+
+        return -1;
+      } else if(a.sname > b.sname) {
+        if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
+          return -1;
+        }
+
+        return 1;
+      } else {
+        if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
+          return 1;
+        }
+
+        if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
+          return -1;
+        }
+
+        return 0;
+      }
+    } else if(this.isComtax(a) && this.isComtax(b)) {
+      a = <Comtax>(a);
+      b = <Comtax>(b);
+
+      if(a.vname < b.vname) {
+        return -1;
+      } else if(a.vname > b.vname) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } else if((this.isAcctax(a) || this.isSyntax(a)) && this.isComtax(b)) {
+      a = <Acctax | Syntax>(a);
+      b = <Comtax>(b);
+
+      if(a.family == "Terrestrial Community" || a.family == "National Vegetation Classification" || a.family == "Subterranean Community" || a.family == "Freshwater Community" || a.family == "Animal Assemblage") {
+        return 1;
+      }
+      
+      return -1;
+    } else if(this.isComtax(a) && (this.isAcctax(b) || this.isSyntax(b))) {
+      a = <Comtax>(a);
+      b = <Acctax | Syntax>(b);
+
+      if(b.family == "Terrestrial Community" || b.family == "National Vegetation Classification" || b.family == "Subterranean Community" || b.family == "Freshwater Community" || b.family == "Animal Assemblage") {
+        return -1;
+      }
+
+      return 1;
     }
   }
 }
