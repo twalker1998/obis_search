@@ -1,4 +1,5 @@
 export interface Syntax {
+    type: string;
     url: string;
     s_id: number;
     acode: string;
