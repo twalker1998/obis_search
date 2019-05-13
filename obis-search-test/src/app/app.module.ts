@@ -7,6 +7,7 @@ import { ResultsComponent } from './components/results/results.component';
 import { SearchComponent } from './components/search/search.component';
 
 import { ResultsService } from './core/results/results.service';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ResultsService } from './core/results/results.service';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [ResultsComponent, ResultsService],
   bootstrap: [AppComponent]
