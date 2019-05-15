@@ -11,7 +11,7 @@
     <div id="results">
         <div class="card" *ngFor="let result of results | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize">
             <div class="card-body">
-                <a class="card-link" href="#">{{result.display_name}}</a>
+                <a class="card-link" [routerLink]="['/result', result.acode]">{{result.display_name}}</a>
                 <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
             </div>
         </div>
