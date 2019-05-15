@@ -20,10 +20,6 @@ export class SearchComponent {
     this.resultsService.isQueryComplete.subscribe(value => {
       if(value == true) {
         this.results = this.searchService.get_results();
-
-        for(let r of this.results) {
-          console.log(r);
-        }
       }
 
       this.isQueryComplete = value;
