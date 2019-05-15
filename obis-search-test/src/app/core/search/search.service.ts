@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { ApiService } from '../api/api.service';
 import { ResultsService } from '../results/results.service';
@@ -16,7 +15,7 @@ export class SearchService {
   private response: Api_Response;
   private results: Array<Acctax | Comtax | Syntax> = [];
 
-  constructor(private httpClient: HttpClient, private apiService: ApiService, private resultsService: ResultsService) { }
+  constructor(private apiService: ApiService, private resultsService: ResultsService) { }
 
   get_results(): Array<Acctax | Comtax | Syntax> {
     return this.results;
