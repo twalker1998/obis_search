@@ -15,6 +15,8 @@ import { ResultsService } from '../../core/results/results.service';
 export class SearchComponent {
   results: Array<Acctax | Comtax | Syntax> = [];
   isQueryComplete: boolean;
+  page = 1;
+  pageSize = 15;
 
   constructor(private searchService: SearchService, private resultsService: ResultsService) {
     this.resultsService.isQueryComplete.subscribe(value => {

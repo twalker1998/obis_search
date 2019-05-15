@@ -2,11 +2,15 @@
 <button class="btn btn-primary" id="submitSearch" (click)="search(query.value)">Search</button>
 <button class="btn btn-primary" id="submitAdvancedSearch">Advanced Search</button>
 <div *ngIf="isQueryComplete">
-    <ul>
-        <li *ngFor="let result of results">{{result.display_name}}, {{result.taxa}}</li>
-    </ul>
-    <p>Should have results</p>
-</div>
-<div *ngIf="!isQueryComplete">
-    Loading...
+    <div id="pagination">
+        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length"></ngb-pagination>
+    </div>
+    <div id="results">
+        <div class="card" *ngFor="let result of results | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize">
+            <div class="card-body">
+                <a class="card-link" href="#">{{result.display_name}}</a>
+                <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
+            </div>
+        </div>
+    </div>
 </div>
