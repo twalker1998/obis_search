@@ -39,7 +39,7 @@ export class SearchService {
 
           this.results.sort(this.compare);
 
-          // var unique_results = new Set(this.results);
+          this.remove_duplicates();
 
           this.resultsService.isQueryComplete.next(true);
         });
@@ -134,5 +134,35 @@ export class SearchService {
 
       return 1;
     }
+  }
+
+  remove_duplicates() {
+    this.results.forEach((r, i) => {
+      if(r.type === 'acctax' || r.type === 'syntax') {
+        r = <Acctax | Syntax>(r);
+
+        for(let j = i + 1; j < this.results.length; j++) {
+          if(this.results[j].type === 'acctax' || this.results[j].type === 'syntax') {
+            let s = <Acctax | Syntax>(this.results[j]);
+
+            if(s.sname === r.sname) {
+              this.results.splice(j, 1);
+            }
+          }
+        }
+      } else if(r.type === 'comtax') {
+        r = <Comtax>(r);
+
+        for(let j = i + 1; j < this.results.length; j++) {
+          if(this.results[j].type === 'comtax') {
+            let s = <Comtax>(this.results[j]);
+
+            if(s.vname === r.vname) {
+              this.results.splice(j, 1);
+            }
+          }
+        }
+      }
+    });
   }
 }
