@@ -40,7 +40,14 @@ export class SearchService {
 
           this.results.sort(this.compare);
 
-          this.remove_duplicates().then(() => this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true)));
+          this.remove_duplicates().then(() => {
+            this.get_taxa_strings().then(() => {
+              this.resultsService.isQueryStarted.next(false);
+              this.resultsService.isQueryComplete.next(true);
+            })
+          })
+
+          // this.remove_duplicates().then(() => this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true)));
         });
       });
     });

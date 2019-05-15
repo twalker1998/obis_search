@@ -14,21 +14,27 @@ import { ResultsService } from '../../core/results/results.service';
 })
 export class SearchComponent {
   results: Array<Acctax | Comtax | Syntax> = [];
+  isQueryStarted: boolean;
   isQueryComplete: boolean;
   page = 1;
   pageSize = 15;
 
   constructor(private searchService: SearchService, private resultsService: ResultsService) {
-    this.resultsService.isQueryComplete.subscribe(value => {
-      if(value == true) {
+    this.resultsService.isQueryStarted.subscribe(s_value => {
+      this.isQueryStarted = s_value;
+    });
+
+    this.resultsService.isQueryComplete.subscribe(c_value => {
+      if(c_value == true) {
         this.results = this.searchService.get_results();
       }
 
-      this.isQueryComplete = value;
+      this.isQueryComplete = c_value;
     });
   }
 
   search(query: string): void {
     this.searchService.query_api(query);
+    this.resultsService.isQueryStarted.next(true);
   }
 }

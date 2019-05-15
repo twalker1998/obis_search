@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ResultsService {
+  public isQueryStarted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public isQueryComplete: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   
   constructor() { }

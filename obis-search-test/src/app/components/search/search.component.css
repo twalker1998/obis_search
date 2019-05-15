@@ -30,3 +30,8 @@ a.card-link {
 a.card-link:hover {
     color: #72b446;
 }
+
+.loading {
+    width: 150px;
+    height: 150px;
+}

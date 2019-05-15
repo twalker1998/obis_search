@@ -1,6 +1,9 @@
 <input type="text" class="form-control" #query required>
 <button class="btn btn-primary" id="submitSearch" (click)="search(query.value)">Search</button>
 <button class="btn btn-primary" id="submitAdvancedSearch">Advanced Search</button>
+<div *ngIf="isQueryStarted">
+    <img class="loading" id="loading_gif" src="assets/loading.gif" />
+</div>
 <div *ngIf="isQueryComplete">
     <div id="pagination">
         <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
