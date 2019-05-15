@@ -3,7 +3,7 @@
 <button class="btn btn-primary" id="submitAdvancedSearch">Advanced Search</button>
 <div *ngIf="isQueryComplete">
     <ul>
-        <li *ngFor="let result of results">{{result.sname}}</li>
+        <li *ngFor="let result of results">{{result.display_name}}</li>
     </ul>
     <p>Should have results</p>
 </div>

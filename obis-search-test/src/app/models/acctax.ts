@@ -15,4 +15,5 @@ export interface Acctax {
     s_rank: string;
     fed_status: string;
     st_status: string;
+    display_name: string;
 }

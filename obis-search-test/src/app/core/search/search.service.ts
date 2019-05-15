@@ -55,12 +55,15 @@ export class SearchService {
       if(type == "acctax") {
         result = <Acctax>result;
         result.type = "acctax";
+        result.display_name = result.sname;
       } else if(type == "comtax") {
         result = <Comtax>result;
         result.type = "comtax";
+        result.display_name = result.vernacularname;
       } else if(type == "syntax") {
         result = <Syntax>result;
         result.type = "syntax";
+        result.display_name = result.sname;
       }
 
       this.results.push(result);
