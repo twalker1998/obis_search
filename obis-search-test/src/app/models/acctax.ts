@@ -16,4 +16,5 @@ export interface Acctax {
     fed_status: string;
     st_status: string;
     display_name: string;
+    taxa: string;
 }

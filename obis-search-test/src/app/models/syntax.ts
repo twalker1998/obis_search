@@ -10,4 +10,5 @@ export interface Syntax {
     subspecies: string;
     variety: string;
     display_name: string;
+    taxa: string;
 }
