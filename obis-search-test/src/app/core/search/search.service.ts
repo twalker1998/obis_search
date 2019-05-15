@@ -40,10 +40,7 @@ export class SearchService {
 
           this.results.sort(this.compare);
 
-          this.remove_duplicates();
-          this.get_taxa_strings();
-
-          this.resultsService.isQueryComplete.next(true);
+          this.remove_duplicates().then(() => this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true)));
         });
       });
     });
@@ -169,6 +166,14 @@ export class SearchService {
         }
       }
     });
+
+    var promise = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1000);
+    });
+
+    return promise;
   }
 
   get_taxa_strings() {
@@ -223,5 +228,13 @@ export class SearchService {
         });
       }
     }
+
+    var promise = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1000);
+    });
+
+    return promise;
   }
 }
