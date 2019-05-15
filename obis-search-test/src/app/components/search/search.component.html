@@ -3,7 +3,7 @@
 <button class="btn btn-primary" id="submitAdvancedSearch">Advanced Search</button>
 <div *ngIf="isQueryComplete">
     <div id="pagination">
-        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length"></ngb-pagination>
+        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
     </div>
     <div id="results">
         <div class="card" *ngFor="let result of results | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize">
@@ -12,5 +12,8 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
             </div>
         </div>
+    </div>
+    <div id="pagination">
+        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
     </div>
 </div>
