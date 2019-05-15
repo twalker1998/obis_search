@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Acctax } from '../../models/acctax';
 import { Comtax } from '../../models/comtax';
@@ -19,7 +20,7 @@ export class SearchComponent {
   page = 1;
   pageSize = 15;
 
-  constructor(private searchService: SearchService, private resultsService: ResultsService) {
+  constructor(private searchService: SearchService, private resultsService: ResultsService, private router: Router) {
     this.resultsService.isQueryStarted.subscribe(s_value => {
       this.isQueryStarted = s_value;
     });
@@ -36,9 +37,15 @@ export class SearchComponent {
   }
 
   search(query: string): void {
+    this.clearResult();
     this.page = 1;
     this.searchService.query_api(query);
     this.resultsService.isQueryStarted.next(true);
     this.resultsService.isQueryComplete.next(false);
+  }
+
+  clearResult(): void {
+    console.log("clear");
+    this.router.navigate(["./"]);
   }
 }
