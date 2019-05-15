@@ -168,4 +168,38 @@ export class SearchService {
       }
     });
   }
+
+  get_taxa_strings() {
+    for(let r of this.results) {
+      let url: string;
+      let family: string;
+      let sname: string;
+
+      if(r.type === 'acctax') {
+        r = <Acctax>(r);
+        family = r.family;
+        sname = r.sname;
+        url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
+      } else if(r.type === 'comtax') {
+        let acode_url = r.acode;
+        acode_url.replace("http", "https");
+        this.apiService.get_acctax(acode_url).subscribe((response: Acctax) => {
+          family = response.family;
+          sname = response.sname;
+          url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
+        });
+      } else if(r.type === 'syntax') {
+        let acode_url = r.acode;
+        acode_url.replace("http", "https");
+        this.apiService.get_acctax(acode_url).subscribe((response: Acctax) => {
+          r = <Syntax>(r);
+          family = r.family;
+          sname = response.sname;
+          url = "set";
+        });
+      }
+
+
+    }
+  }
 }
