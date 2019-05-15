@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ResultsComponent } from '../../components/results/results.component';
-
 import { ApiService } from '../api/api.service';
 import { ResultsService } from '../results/results.service';
 
@@ -18,7 +16,11 @@ export class SearchService {
   private response: Api_Response;
   private results: Array<Acctax | Comtax | Syntax> = [];
 
-  constructor(private httpClient: HttpClient, private apiService: ApiService, private resultsComp: ResultsComponent, private resultsService: ResultsService) { }
+  constructor(private httpClient: HttpClient, private apiService: ApiService, private resultsService: ResultsService) { }
+
+  get_results(): Array<Acctax | Comtax | Syntax> {
+    return this.results;
+  }
 
   query_api(query: string): void {
     this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
@@ -38,10 +40,9 @@ export class SearchService {
 
           this.results.sort(this.compare);
 
-          var unique_results = new Set(this.results);
+          // var unique_results = new Set(this.results);
 
           this.resultsService.isQueryComplete.next(true);
-          this.resultsComp.render_results(unique_results);
         });
       });
     });

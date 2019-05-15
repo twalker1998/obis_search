@@ -1,3 +1,12 @@
 <input type="text" class="form-control" #query required>
 <button class="btn btn-primary" id="submitSearch" (click)="search(query.value)">Search</button>
 <button class="btn btn-primary" id="submitAdvancedSearch">Advanced Search</button>
+<div *ngIf="isQueryComplete">
+    <ul>
+        <li *ngFor="let result of results">{{result.sname}}</li>
+    </ul>
+    <p>Should have results</p>
+</div>
+<div *ngIf="!isQueryComplete">
+    Loading...
+</div>
