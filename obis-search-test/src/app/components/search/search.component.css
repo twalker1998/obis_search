@@ -18,3 +18,24 @@
     background-color: #548235;
     border-color: #548235;
 }
+
+#pagination .page-item.active .page-link {
+    background-color: #548235;
+    border-color: #548235;
+}
+
+#pagination .page-link {
+    color: #548235;
+}
+
+.card {
+    text-align: left;
+}
+
+a.card-link {
+    color: #548235;
+}
+
+a.card-link:hover {
+    color: #72b446;
+}

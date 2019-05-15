@@ -1,1 +1,142 @@
-/* You can add global styles to this file, and also import other style files */
+#obis-search-nav {
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #428bca
+}
+
+a {
+    color: #548235;
+}
+
+a:hover {
+    color: #72b446;
+}
+
+.nav-link {
+    color: #000;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #548235;
+}
+
+.nav-pills .show>.nav-link {
+    background-color: #548235;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #548235;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #fff;
+    background-color: #548235;
+}
+
+.tab-pane {
+    text-align: center;
+}
+
+.centered {
+    display: inline-block;
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.label {
+    color: #548235;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.form-control:focus {
+    border-color: #548235;
+    box-shadow: 0 0 0 0.2rem #548235;
+}
+
+#pagination {
+    margin: 10px 0;
+    text-align: left;
+}
+
+#page-num {
+    display: inline-block;
+}
+
+#results {
+    border: solid 1px lightgray;
+}
+
+#back {
+    text-align: left;
+    margin: 10px auto;
+}
+
+.card {
+    text-align: left;
+}
+
+.btn-link {
+    color: #548235;
+}
+
+.btn-link:hover {
+    color: #72b446;
+}
+
+.btn-link {
+    color: #548235;
+}
+
+.info-table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.btn-success {
+    background-color: #548235;
+    border-color: #548235;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #72b446;
+    border-color: #72b446;
+    color: #fff;
+}
+
+.btn-success:active {
+    background-color: #548235;
+    border-color: #548235;
+    color: #fff;
+}
+
+a:not([href]):not([tabindex]) {
+    color: #fff;
+}
+
+a:not([href]):not([tabindex]):hover {
+    color: #fff;
+}
+
+.page-item.active .page-link {
+    background-color: #548235;
+    border-color: #548235;
+}
+
+.page-link {
+    color: #548235;
+}
+
+.page-link:hover {
+    color: #fff;
+    background-color: #72b446;
+    border-color: #72b446;
+}

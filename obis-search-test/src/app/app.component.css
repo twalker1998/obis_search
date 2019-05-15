@@ -125,3 +125,12 @@ a:not([href]):not([tabindex]) {
 a:not([href]):not([tabindex]):hover {
     color: #fff;
 }
+
+.page-item.active .page-link {
+    background-color: #548235;
+    border-color: #548235;
+}
+
+.page-link {
+    color: #548235;
+}
