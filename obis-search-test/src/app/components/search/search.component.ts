@@ -25,7 +25,9 @@ export class SearchComponent {
     });
 
     this.resultsService.isQueryComplete.subscribe(c_value => {
-      if(c_value == true) {
+      if(c_value) {
+        this.isQueryStarted = false;
+        this.results = new Array<Acctax | Comtax | Syntax>();
         this.results = this.searchService.get_results();
       }
 
@@ -34,7 +36,9 @@ export class SearchComponent {
   }
 
   search(query: string): void {
+    this.page = 1;
     this.searchService.query_api(query);
     this.resultsService.isQueryStarted.next(true);
+    this.resultsService.isQueryComplete.next(false);
   }
 }

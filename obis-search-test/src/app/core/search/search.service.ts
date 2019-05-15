@@ -23,6 +23,8 @@ export class SearchService {
   }
 
   query_api(query: string): void {
+    this.results = new Array<Acctax | Comtax | Syntax>();
+
     this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
       this.response = response;
 
@@ -38,16 +40,10 @@ export class SearchService {
 
           this.parse_response(this.response, 0, "comtax");
 
-          this.results.sort(this.compare);
-
-          this.remove_duplicates().then(() => {
-            this.get_taxa_strings().then(() => {
-              this.resultsService.isQueryStarted.next(false);
-              this.resultsService.isQueryComplete.next(true);
-            })
-          })
-
-          // this.remove_duplicates().then(() => this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true)));
+          if(this.results.sort(this.compare)) {
+            this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true));
+            this.response = null;
+          }
         });
       });
     });
@@ -72,7 +68,10 @@ export class SearchService {
         result.display_name = result.sname;
       }
 
-      this.results.push(result);
+      if(!this.resultsService.contains(this.results, result)) {
+        this.results.push(result);
+      }
+
       count++;
     }
 
@@ -143,44 +142,6 @@ export class SearchService {
 
       return 1;
     }
-  }
-
-  remove_duplicates() {
-    this.results.forEach((r, i) => {
-      if(r.type === 'acctax' || r.type === 'syntax') {
-        r = <Acctax | Syntax>(r);
-
-        for(let j = i + 1; j < this.results.length; j++) {
-          if(this.results[j].type === 'acctax' || this.results[j].type === 'syntax') {
-            let s = <Acctax | Syntax>(this.results[j]);
-
-            if(s.sname === r.sname) {
-              this.results.splice(j, 1);
-            }
-          }
-        }
-      } else if(r.type === 'comtax') {
-        r = <Comtax>(r);
-
-        for(let j = i + 1; j < this.results.length; j++) {
-          if(this.results[j].type === 'comtax') {
-            let s = <Comtax>(this.results[j]);
-
-            if(s.vname === r.vname) {
-              this.results.splice(j, 1);
-            }
-          }
-        }
-      }
-    });
-
-    var promise = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 1000);
-    });
-
-    return promise;
   }
 
   get_taxa_strings() {
