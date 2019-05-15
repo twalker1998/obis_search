@@ -18,3 +18,20 @@
     background-color: #548235;
     border-color: #548235;
 }
+
+.card {
+    text-align: left;
+}
+
+a.card-link {
+    color: #548235;
+}
+
+a.card-link:hover {
+    color: #72b446;
+}
+
+.loading {
+    width: 150px;
+    height: 150px;
+}

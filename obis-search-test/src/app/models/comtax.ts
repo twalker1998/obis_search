@@ -5,4 +5,6 @@ export interface Comtax {
     acode: string;
     vname: string;
     primary_name: boolean;
+    display_name: string;
+    taxa: string;
 }
