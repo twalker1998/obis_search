@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Api_Response } from '../../models/api_response';
 import { Acctax } from '../../models/acctax';
+import { Hightax } from '../../models/hightax';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class ApiService {
 
   get_acctax(url: string) {
     return this.httpClient.get<Acctax>(url);
+  }
+
+  get_hightax(url: string) {
+    return this.httpClient.get<Hightax>(url);
   }
 
   get_url(url: string) {
