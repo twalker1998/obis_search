@@ -42,7 +42,7 @@ export class ResultComponent implements OnInit {
   build_info() {
     this.result = this.searchService.get(this.acode);
 
-    this.apiService.get_acctax("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/&format=json").subscribe((response: Acctax) => {
+    this.apiService.get_acctax("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json").subscribe((response: Acctax) => {
 
       this.get_swap(response);
       this.get_fed_status(response);
@@ -53,7 +53,7 @@ export class ResultComponent implements OnInit {
         this.get_vnames(response);
 
         this.apiService.get_query("syntax", "acode", this.acode).subscribe((response: Api_Response) => {
-          
+
           this.get_synonyms(response);
         });
       });
@@ -64,7 +64,9 @@ export class ResultComponent implements OnInit {
     if(!response.swap) {
       this.swap_status = "Not Included";
     } else {
-      this.apiService.get_swap(response.swap + "?format=json").subscribe((swap_response: Swap) => {
+      let base_url = response.swap.replace("http", "https");
+
+      this.apiService.get_swap(base_url + "?format=json").subscribe((swap_response: Swap) => {
         this.swap_status = swap_response.tier;
       });
     }
@@ -74,7 +76,9 @@ export class ResultComponent implements OnInit {
     if(!response.fed_status) {
       this.fed_status = "Not Listed";
     } else {
-      this.apiService.get_fedstatus(response.fed_status + "?format=json").subscribe((fed_status_response: FedStatus) => {
+      let base_url = response.fed_status.replace("http", "https");
+
+      this.apiService.get_fedstatus(base_url + "?format=json").subscribe((fed_status_response: FedStatus) => {
         this.fed_status = fed_status_response.description;
       });
     }
@@ -84,7 +88,9 @@ export class ResultComponent implements OnInit {
     if(!response.st_status) {
       this.st_status = "Not Listed";
     } else {
-      this.apiService.get_ststatus(response.st_status + "?format=json").subscribe((st_status_response: StateStatus) => {
+      let base_url = response.st_status.replace("http", "https");
+
+      this.apiService.get_ststatus(base_url + "?format=json").subscribe((st_status_response: StateStatus) => {
         this.st_status = st_status_response.description;
       })
     }
