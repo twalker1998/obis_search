@@ -20,49 +20,49 @@ export class ApiService {
 
   get_acctax(url: string) {
     return this.httpClient.get<Acctax>(url).pipe(
-      retry(3),
+      retry(1),
       catchError(this.handleError)
     );
   }
 
   get_hightax(url: string) {
     return this.httpClient.get<Hightax>(url).pipe(
-      retry(3),
+      retry(1),
       catchError(this.handleError)
     );
   }
 
   get_swap(url: string) {
     return this.httpClient.get<Swap>(url).pipe(
-      retry(3),
+      retry(1),
       catchError(this.handleError)
     );
   }
 
   get_fedstatus(url: string) {
     return this.httpClient.get<FedStatus>(url).pipe(
-      retry(3),
+      retry(1),
       catchError(this.handleError)
     );
   }
 
   get_ststatus(url: string) {
     return this.httpClient.get<StateStatus>(url).pipe(
-      retry(3),
+      retry(1),
       catchError(this.handleError)
     );
   }
 
   get_url(url: string) {
     return this.httpClient.get<Api_Response>(url).pipe(
-      retry(3),
+      retry(1),
       catchError(this.handleError)
     );
   }
 
   get_query(table: string, field: string, query: string) {
     return this.httpClient.get<Api_Response>(this.baseUrl + table + '/?' + field + '=' + query + '&format=json').pipe(
-      retry(3),
+      retry(1),
       catchError(this.handleError)
     );
   }
@@ -70,10 +70,10 @@ export class ApiService {
   handleError(error: HttpErrorResponse) {
     if(error.error instanceof ErrorEvent) {
       console.error("An error occurred: ", error.error.message);
+      return throwError("Something bad happened, please try again later.");
     } else {
-      console.error("Backend returned code ${error.status}, body was: ${error.error}");
+      console.error("Backend returned code " + error.status + ", body was: " + error.error);
+      return throwError("Something bad happened, please try again later.");
     }
-
-    return throwError("Something bad happened, please try again later.");
   }
 }

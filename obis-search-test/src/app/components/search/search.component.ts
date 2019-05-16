@@ -50,7 +50,7 @@ export class SearchComponent {
   }
 
   clearResult(): void {
-    console.log("clear");
+    this.results = new Array<Acctax | Comtax | Syntax>();
     this.router.navigate(["./"]);
   }
 }

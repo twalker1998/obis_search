@@ -51,16 +51,16 @@ export class SearchService {
 
           this.parse_response(this.response, 0, "comtax");
 
-          if(this.results.sort(this.compare)) {
-            this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true), error => this.resultsService.isError.next(true));
-            this.response = null;
-          }
-        }, error => this.hasError = true
-        );
-      }, error => this.hasError = true
-      );
-    }, error => this.hasError = true
-    );
+          this.results.sort(this.compare);
+          console.log("break");
+
+          this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true), error => this.resultsService.isError.next(true));
+          console.log("break");
+
+          this.response = null;
+        });
+      });
+    });
   }
 
   parse_response(response: Api_Response, count: number, type: string) {
@@ -83,6 +83,7 @@ export class SearchService {
       }
 
       if(!this.resultsService.contains(this.results, result)) {
+        console.log(result);
         this.results.push(result);
       }
 
@@ -96,8 +97,7 @@ export class SearchService {
         this.response = response;
 
         this.parse_response(this.response, count, type);
-      }, error => this.hasError = true
-      );
+      });
     }
   }
 
@@ -162,6 +162,7 @@ export class SearchService {
   get_taxa_strings() {
     return new Promise((resolve, reject) => {
       for(let r of this.results) {
+        console.log(r);
         let url: string;
         let family: string;
         let sname: string;
@@ -178,7 +179,7 @@ export class SearchService {
             } else {
               r.taxa = "";
             }
-          }, error => this.hasError = true
+          }, error => reject(new Error(error))
           );
         } else if(r.type === 'comtax') {
           let acode_url = r.acode.replace("http", "https");
@@ -193,9 +194,9 @@ export class SearchService {
               } else {
                 r.taxa = "";
               }
-            }, error => this.hasError = true
+            }, error => reject(new Error(error))
             );
-          }, error => this.hasError = true
+          }, error => reject(new Error(error))
           );
         } else if(r.type === 'syntax') {
           let acode_url = r.acode.replace("http", "https");
@@ -206,23 +207,15 @@ export class SearchService {
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
             this.apiService.get_hightax(url).subscribe((response: Hightax) => {
-              if(response.kingdom) {
-                r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
-              } else {
-                r.taxa = "";
-              }
-            }, error => this.hasError = true
+              r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
+            }, error => reject(new Error(error))
             );
-          }, error => this.hasError = true
+          }, error => reject(new Error(error))
           );
         }
       }
 
-      if(this.hasError) {
-        reject(new Error("Error retrieving data from API."));
-      } else {
-        resolve();
-      }
+      resolve();
     });
   }
 }
