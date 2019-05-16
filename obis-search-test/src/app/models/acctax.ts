@@ -15,6 +15,7 @@ export interface Acctax {
     s_rank: string;
     fed_status: string;
     st_status: string;
+    swap: string;
     display_name: string;
     taxa: string;
 }
