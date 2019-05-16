@@ -17,6 +17,7 @@ export class SearchComponent {
   results: Array<Acctax | Comtax | Syntax> = [];
   isQueryStarted: boolean;
   isQueryComplete: boolean;
+  isError: boolean;
   page = 1;
   pageSize = 15;
 
@@ -33,6 +34,10 @@ export class SearchComponent {
       }
 
       this.isQueryComplete = c_value;
+    });
+
+    this.resultsService.isError.subscribe(e_value => {
+      this.isError = e_value;
     });
   }
 
