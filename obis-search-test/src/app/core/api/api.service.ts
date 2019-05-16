@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Api_Response } from '../../models/api_response';
 import { Acctax } from '../../models/acctax';
 import { Hightax } from '../../models/hightax';
+import { Swap } from '../../models/swap';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class ApiService {
 
   get_hightax(url: string) {
     return this.httpClient.get<Hightax>(url);
+  }
+
+  get_swap(url: string) {
+    return this.httpClient.get<Swap>(url);
   }
 
   get_url(url: string) {
