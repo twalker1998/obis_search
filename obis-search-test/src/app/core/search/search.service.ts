@@ -15,6 +15,7 @@ import { Hightax } from '../../models/hightax';
 export class SearchService {
   private response: Api_Response;
   private results: Array<Acctax | Comtax | Syntax> = [];
+  private hasError: boolean;
 
   constructor(private apiService: ApiService, private resultsService: ResultsService) { }
 
@@ -54,9 +55,12 @@ export class SearchService {
             this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true));
             this.response = null;
           }
-        });
-      });
-    });
+        }, error => this.hasError = true
+        );
+      }, error => this.hasError = true
+      );
+    }, error => this.hasError = true
+    );
   }
 
   parse_response(response: Api_Response, count: number, type: string) {
@@ -92,7 +96,8 @@ export class SearchService {
         this.response = response;
 
         this.parse_response(this.response, count, type);
-      });
+      }, error => this.hasError = true
+      );
     }
   }
 
@@ -155,45 +160,16 @@ export class SearchService {
   }
 
   get_taxa_strings() {
-    for(let r of this.results) {
-      let url: string;
-      let family: string;
-      let sname: string;
+    return new Promise((resolve, reject) => {
+      for(let r of this.results) {
+        let url: string;
+        let family: string;
+        let sname: string;
 
-      if(r.type === 'acctax') {
-        r = <Acctax>(r);
-        family = r.family;
-        sname = r.sname;
-        url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
-
-        this.apiService.get_hightax(url).subscribe((response: Hightax) => {
-          if(response.kingdom) {
-            r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
-          } else {
-            r.taxa = "";
-          }
-        });
-      } else if(r.type === 'comtax') {
-        let acode_url = r.acode.replace("http", "https");
-        this.apiService.get_acctax(acode_url).subscribe((response: Acctax) => {
-          family = response.family;
-          sname = response.sname;
-          url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
-
-          this.apiService.get_hightax(url).subscribe((response: Hightax) => {
-            if(response.kingdom) {
-              r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
-            } else {
-              r.taxa = "";
-            }
-          });
-        });
-      } else if(r.type === 'syntax') {
-        let acode_url = r.acode.replace("http", "https");
-        this.apiService.get_acctax(acode_url).subscribe((response: Acctax) => {
-          r = <Syntax>(r);
+        if(r.type === 'acctax') {
+          r = <Acctax>(r);
           family = r.family;
-          sname = response.sname;
+          sname = r.sname;
           url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
           this.apiService.get_hightax(url).subscribe((response: Hightax) => {
@@ -202,17 +178,51 @@ export class SearchService {
             } else {
               r.taxa = "";
             }
-          });
-        });
+          }, error => this.hasError = true
+          );
+        } else if(r.type === 'comtax') {
+          let acode_url = r.acode.replace("http", "https");
+          this.apiService.get_acctax(acode_url).subscribe((response: Acctax) => {
+            family = response.family;
+            sname = response.sname;
+            url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
+
+            this.apiService.get_hightax(url).subscribe((response: Hightax) => {
+              if(response.kingdom) {
+                r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
+              } else {
+                r.taxa = "";
+              }
+            }, error => this.hasError = true
+            );
+          }, error => this.hasError = true
+          );
+        } else if(r.type === 'syntax') {
+          let acode_url = r.acode.replace("http", "https");
+          this.apiService.get_acctax(acode_url).subscribe((response: Acctax) => {
+            r = <Syntax>(r);
+            family = r.family;
+            sname = response.sname;
+            url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
+
+            this.apiService.get_hightax(url).subscribe((response: Hightax) => {
+              if(response.kingdom) {
+                r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
+              } else {
+                r.taxa = "";
+              }
+            }, error => this.hasError = true
+            );
+          }, error => this.hasError = true
+          );
+        }
       }
-    }
 
-    var promise = new Promise((resolve) => {
-      setTimeout(() => {
+      if(this.hasError) {
+        reject();
+      } else {
         resolve();
-      }, 1000);
+      }
     });
-
-    return promise;
   }
 }
