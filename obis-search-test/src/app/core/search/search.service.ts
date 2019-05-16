@@ -52,7 +52,7 @@ export class SearchService {
           this.parse_response(this.response, 0, "comtax");
 
           if(this.results.sort(this.compare)) {
-            this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true));
+            this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true), error => this.resultsService.isError.next(true));
             this.response = null;
           }
         }, error => this.hasError = true
@@ -219,7 +219,7 @@ export class SearchService {
       }
 
       if(this.hasError) {
-        reject();
+        reject(new Error("Error retrieving data from API."));
       } else {
         resolve();
       }
