@@ -5,6 +5,7 @@ import { Api_Response } from '../../models/api_response';
 import { Acctax } from '../../models/acctax';
 import { Hightax } from '../../models/hightax';
 import { Swap } from '../../models/swap';
+import { FedStatus } from '../../models/fed_status';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class ApiService {
 
   get_swap(url: string) {
     return this.httpClient.get<Swap>(url);
+  }
+
+  get_fedstatus(url: string) {
+    return this.httpClient.get<FedStatus>(url);
   }
 
   get_url(url: string) {
