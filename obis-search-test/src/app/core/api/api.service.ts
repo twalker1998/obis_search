@@ -22,7 +22,7 @@ export class ApiService {
     return this.httpClient.get<Acctax>(url).pipe(
       retry(1),
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   get_hightax(url: string) {
