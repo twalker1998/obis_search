@@ -33,37 +33,67 @@ export class SearchService {
     return this.results;
   }
 
-  query_api(query: string): void {
+  async query_api(query: string) {
     this.results = new Array<Acctax | Comtax | Syntax>();
 
-    this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
-      this.response = response;
+    this.response = await this.apiService.get_query("acctax", "sname", query);
 
-      this.parse_response(this.response, 0, "acctax");
+    await this.parse_response(this.response, 0, "acctax");
 
-      this.apiService.get_query("syntax", "sname", query).subscribe((response: Api_Response) => {
-        this.response = response;
+    this.response = await this.apiService.get_query("syntax", "sname", query);
 
-        this.parse_response(this.response, 0, "syntax");
+    await this.parse_response(this.response, 0, "syntax");
 
-        this.apiService.get_query("comtax", "vernacularname", query).subscribe((response: Api_Response) => {
-          this.response = response;
+    this.response = await this.apiService.get_query("comtax", "vernacularname", query);
 
-          this.parse_response(this.response, 0, "comtax");
+    await this.parse_response(this.response, 0, "comtax");
 
-          this.results.sort(this.compare);
-          console.log("break");
+    // await this.apiService.get_query("syntax", "sname", query).subscribe((response: Api_Response) => {
+    //   this.response = response;
 
-          this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true), error => this.resultsService.isError.next(true));
-          console.log("break");
+    //   this.parse_response(this.response, 0, "syntax");
+    // });
 
-          this.response = null;
-        });
-      });
-    });
+    // await this.apiService.get_query("comtax", "vernacularname", query).subscribe((response: Api_Response) => {
+    //   this.response = response;
+
+    //   this.parse_response(this.response, 0, "comtax");
+    // });
+
+    this.results.sort(this.compare);
+
+    this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true));
+
+    this.response = null;
+
+    // this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
+    //   this.response = response;
+
+    //   this.parse_response(this.response, 0, "acctax");
+
+    //   this.apiService.get_query("syntax", "sname", query).subscribe((response: Api_Response) => {
+    //     this.response = response;
+
+    //     this.parse_response(this.response, 0, "syntax");
+
+    //     this.apiService.get_query("comtax", "vernacularname", query).subscribe((response: Api_Response) => {
+    //       this.response = response;
+
+    //       this.parse_response(this.response, 0, "comtax");
+
+    //       this.results.sort(this.compare);
+    //       console.log("break");
+
+    //       this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true), error => this.resultsService.isError.next(true));
+    //       console.log("break");
+
+    //       this.response = null;
+    //     });
+    //   });
+    // });
   }
 
-  parse_response(response: Api_Response, count: number, type: string) {
+  async parse_response(response: Api_Response, count: number, type: string) {
     var new_count = (response.count - response.results.length) - count;
     var next_url = response.next;
 
@@ -83,7 +113,6 @@ export class SearchService {
       }
 
       if(!this.resultsService.contains(this.results, result)) {
-        console.log(result);
         this.results.push(result);
       }
 
@@ -93,11 +122,15 @@ export class SearchService {
     if(new_count > 0) {
       next_url = next_url.replace("http", "https");
 
-      this.apiService.get_url(next_url).subscribe((response: Api_Response) => {
-        this.response = response;
+      this.response = await this.apiService.get_url(next_url);
 
-        this.parse_response(this.response, count, type);
-      });
+      await this.parse_response(this.response, count, type);
+
+      // await this.apiService.get_url(next_url).subscribe((response: Api_Response) => {
+      //   this.response = response;
+
+      //   this.parse_response(this.response, count, type);
+      // });
     }
   }
 
@@ -162,7 +195,6 @@ export class SearchService {
   get_taxa_strings() {
     return new Promise((resolve, reject) => {
       for(let r of this.results) {
-        console.log(r);
         let url: string;
         let family: string;
         let sname: string;
