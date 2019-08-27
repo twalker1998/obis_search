@@ -19,6 +19,7 @@ import { StateStatus } from 'src/app/models/st_status';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
+  private response: Api_Response;
   acode: string;
   result: Acctax | Comtax | Syntax;
   synonyms: Array<string> = [];
@@ -39,64 +40,61 @@ export class ResultComponent implements OnInit {
     });
   }
 
-  build_info() {
+  async build_info() {
     this.result = this.searchService.get(this.acode);
 
     this.apiService.get_acctax("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json").subscribe((response: Acctax) => {
-
       this.get_swap(response);
       this.get_fed_status(response);
       this.get_st_status(response);
-
-      this.apiService.get_query("comtax", "acode", this.acode).subscribe((response: Api_Response) => {
-
-        this.get_vnames(response);
-
-        this.apiService.get_query("syntax", "acode", this.acode).subscribe((response: Api_Response) => {
-
-          this.get_synonyms(response);
-        });
-      });
     });
+
+    this.response = await this.apiService.get_query("comtax", "acode", this.acode);
+
+    await this.get_vnames(this.response);
+
+    this.response = await this.apiService.get_query("syntax", "acode", this.acode);
+
+    await this.get_synonyms(this.response);
   }
 
-  get_swap(response: Acctax) {
+  async get_swap(response: Acctax) {
     if(!response.swap) {
       this.swap_status = "Not Included";
     } else {
       let base_url = response.swap.replace("http", "https");
 
-      this.apiService.get_swap(base_url + "?format=json").subscribe((swap_response: Swap) => {
-        this.swap_status = swap_response.tier;
-      });
+      let swap_response = await this.apiService.get_swap(base_url + "?format=json");
+      
+      this.swap_status = swap_response.tier;
     }
   }
 
-  get_fed_status(response: Acctax) {
+  async get_fed_status(response: Acctax) {
     if(!response.fed_status) {
       this.fed_status = "Not Listed";
     } else {
       let base_url = response.fed_status.replace("http", "https");
 
-      this.apiService.get_fedstatus(base_url + "?format=json").subscribe((fed_status_response: FedStatus) => {
-        this.fed_status = fed_status_response.description;
-      });
+      let fed_status_response = await this.apiService.get_fedstatus(base_url + "?format=json");
+      
+      this.fed_status = fed_status_response.description;
     }
   }
 
-  get_st_status(response: Acctax) {
+  async get_st_status(response: Acctax) {
     if(!response.st_status) {
       this.st_status = "Not Listed";
     } else {
       let base_url = response.st_status.replace("http", "https");
 
-      this.apiService.get_ststatus(base_url + "?format=json").subscribe((st_status_response: StateStatus) => {
-        this.st_status = st_status_response.description;
-      })
+      let st_status_response = await this.apiService.get_ststatus(base_url + "?format=json");
+      
+      this.st_status = st_status_response.description;
     }
   }
 
-  get_vnames(response: Api_Response) {
+  async get_vnames(response: Api_Response) {
     if(response.results.length > 1) {
       for(let r of response.results) {
         r = <Comtax>(r);
@@ -112,7 +110,7 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  get_synonyms(response: Api_Response) {
+  async get_synonyms(response: Api_Response) {
     for(let r of response.results) {
       r = <Syntax>(r);
 
