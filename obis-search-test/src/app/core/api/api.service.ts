@@ -22,49 +22,49 @@ export class ApiService {
     return this.httpClient.get<Acctax>(url).pipe(
       retry(1),
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   get_hightax(url: string) {
     return this.httpClient.get<Hightax>(url).pipe(
       retry(1),
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   get_swap(url: string) {
     return this.httpClient.get<Swap>(url).pipe(
       retry(1),
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   get_fedstatus(url: string) {
     return this.httpClient.get<FedStatus>(url).pipe(
       retry(1),
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   get_ststatus(url: string) {
     return this.httpClient.get<StateStatus>(url).pipe(
       retry(1),
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   get_url(url: string) {
     return this.httpClient.get<Api_Response>(url).pipe(
       retry(1),
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   get_query(table: string, field: string, query: string) {
     return this.httpClient.get<Api_Response>(this.baseUrl + table + '/?' + field + '=' + query + '&format=json').pipe(
       retry(1),
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   handleError(error: HttpErrorResponse) {
