@@ -48,49 +48,11 @@ export class SearchService {
 
     await this.parse_response(this.response, 0, "comtax");
 
-    // await this.apiService.get_query("syntax", "sname", query).subscribe((response: Api_Response) => {
-    //   this.response = response;
-
-    //   this.parse_response(this.response, 0, "syntax");
-    // });
-
-    // await this.apiService.get_query("comtax", "vernacularname", query).subscribe((response: Api_Response) => {
-    //   this.response = response;
-
-    //   this.parse_response(this.response, 0, "comtax");
-    // });
-
     this.results.sort(this.compare);
 
     this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true));
 
     this.response = null;
-
-    // this.apiService.get_query("acctax", "sname", query).subscribe((response: Api_Response) => {
-    //   this.response = response;
-
-    //   this.parse_response(this.response, 0, "acctax");
-
-    //   this.apiService.get_query("syntax", "sname", query).subscribe((response: Api_Response) => {
-    //     this.response = response;
-
-    //     this.parse_response(this.response, 0, "syntax");
-
-    //     this.apiService.get_query("comtax", "vernacularname", query).subscribe((response: Api_Response) => {
-    //       this.response = response;
-
-    //       this.parse_response(this.response, 0, "comtax");
-
-    //       this.results.sort(this.compare);
-    //       console.log("break");
-
-    //       this.get_taxa_strings().then(() => this.resultsService.isQueryComplete.next(true), error => this.resultsService.isError.next(true));
-    //       console.log("break");
-
-    //       this.response = null;
-    //     });
-    //   });
-    // });
   }
 
   async parse_response(response: Api_Response, count: number, type: string) {
@@ -125,12 +87,6 @@ export class SearchService {
       this.response = await this.apiService.get_url(next_url);
 
       await this.parse_response(this.response, count, type);
-
-      // await this.apiService.get_url(next_url).subscribe((response: Api_Response) => {
-      //   this.response = response;
-
-      //   this.parse_response(this.response, count, type);
-      // });
     }
   }
 
