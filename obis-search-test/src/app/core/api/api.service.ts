@@ -18,6 +18,15 @@ export class ApiService {
 
   constructor(private httpClient : HttpClient) { }
 
+  get_url_promise(url: string, type: string) {
+    if(type === 'api_response') {
+      return this.httpClient.get<Api_Response>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      ).toPromise();
+    }
+  }
+
   get_acctax(url: string) {
     return this.httpClient.get<Acctax>(url).pipe(
       retry(1),
@@ -48,13 +57,6 @@ export class ApiService {
 
   get_ststatus(url: string) {
     return this.httpClient.get<StateStatus>(url).pipe(
-      retry(1),
-      catchError(this.handleError)
-    ).toPromise();
-  }
-
-  get_url(url: string) {
-    return this.httpClient.get<Api_Response>(url).pipe(
       retry(1),
       catchError(this.handleError)
     ).toPromise();
