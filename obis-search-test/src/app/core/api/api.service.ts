@@ -29,14 +29,12 @@ export class ApiService {
         retry(1),
         catchError(this.handleError)
       ).toPromise();
+    } else if(type === 'hightax') {
+      return this.httpClient.get<Hightax>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      ).toPromise();
     }
-  }
-
-  get_hightax(url: string) {
-    return this.httpClient.get<Hightax>(url).pipe(
-      retry(1),
-      catchError(this.handleError)
-    );
   }
 
   get_swap(url: string) {
