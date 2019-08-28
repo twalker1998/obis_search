@@ -43,12 +43,12 @@ export class ResultComponent implements OnInit {
   async build_info() {
     this.result = this.searchService.get(this.acode);
 
-    let a_response = await this.apiService.get_acctax("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json");
+    this.apiService.get_acctax("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json").subscribe((response: Acctax) => {
+      this.get_swap(response);
+      this.get_fed_status(response);
+      this.get_st_status(response);
+    });
 
-    await this.get_swap(a_response);
-    await this.get_fed_status(a_response);
-    await this.get_st_status(a_response);
-    
     this.response = await this.apiService.get_query("comtax", "acode", this.acode);
 
     await this.get_vnames(this.response);
