@@ -34,14 +34,12 @@ export class ApiService {
         retry(1),
         catchError(this.handleError)
       ).toPromise();
+    } else if(type === 'swap') {
+      return this.httpClient.get<Swap>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      ).toPromise();
     }
-  }
-
-  get_swap(url: string) {
-    return this.httpClient.get<Swap>(url).pipe(
-      retry(1),
-      catchError(this.handleError)
-    ).toPromise();
   }
 
   get_fedstatus(url: string) {
