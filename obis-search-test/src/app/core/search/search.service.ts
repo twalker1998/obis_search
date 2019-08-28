@@ -160,7 +160,7 @@ export class SearchService {
           sname = r.sname;
           url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
-          this.apiService.get_hightax(url).subscribe((response: Hightax) => {
+          this.apiService.get_url(url, "hightax").subscribe((response: Hightax) => {
             if(response.kingdom) {
               r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
             } else {
@@ -175,7 +175,7 @@ export class SearchService {
             sname = response.sname;
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
-            this.apiService.get_hightax(url).subscribe((response: Hightax) => {
+            this.apiService.get_url(url, "hightax").subscribe((response: Hightax) => {
               if(response.kingdom) {
                 r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
               } else {
@@ -193,7 +193,7 @@ export class SearchService {
             sname = response.sname;
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
-            this.apiService.get_hightax(url).subscribe((response: Hightax) => {
+            this.apiService.get_url(url, "hightax").subscribe((response: Hightax) => {
               if(response.kingdom) {
                 r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
               } else {
