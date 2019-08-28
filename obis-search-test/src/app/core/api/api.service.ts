@@ -18,6 +18,40 @@ export class ApiService {
 
   constructor(private httpClient : HttpClient) { }
 
+  get_url(url: string, type: string): any {
+    if(type === 'api_response') {
+      return this.httpClient.get<Api_Response>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+    } else if(type === 'acctax') {
+      return this.httpClient.get<Acctax>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+    } else if(type === 'hightax') {
+      return this.httpClient.get<Hightax>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+    } else if(type === 'swap') {
+      return this.httpClient.get<Swap>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+    } else if(type === 'fed_status') {
+      return this.httpClient.get<FedStatus>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+    } else if(type === 'st_status') {
+      return this.httpClient.get<StateStatus>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+    }
+  }
+
   get_url_promise(url: string, type: string): any {
     if(type === 'api_response') {
       return this.httpClient.get<Api_Response>(url).pipe(
