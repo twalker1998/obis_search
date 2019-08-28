@@ -19,10 +19,10 @@ import { StateStatus } from 'src/app/models/st_status';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
-  private a_response: Acctax;
   private response: Api_Response;
   acode: string;
-  result: Acctax | Comtax | Syntax;
+  list_result: Acctax | Comtax | Syntax;
+  result: Acctax;
   synonyms: Array<string> = [];
   primary_vname: string;
   other_vnames: Array<string> = [];
@@ -42,13 +42,17 @@ export class ResultComponent implements OnInit {
   }
 
   async build_info() {
-    this.result = this.searchService.get(this.acode);
+    this.list_result = this.searchService.get(this.acode);
 
-    this.a_response = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+    if(!this.list_result || this.list_result.type !== 'acctax') {
+      this.result = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+    } else if(this.list_result.type === 'acctax') {
+      this.result = <Acctax>(this.list_result);
+    }
 
-    this.get_swap(this.a_response);
-    this.get_fed_status(this.a_response);
-    this.get_st_status(this.a_response);
+    this.get_swap(this.result);
+    this.get_fed_status(this.result);
+    this.get_st_status(this.result);
 
     this.response = await this.apiService.get_query("comtax", "acode", this.acode);
 
