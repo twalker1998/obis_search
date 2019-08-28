@@ -164,7 +164,7 @@ export class SearchService {
             if(response.kingdom) {
               r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
             } else {
-              r.taxa = "";
+              r.taxa = "community";
             }
           }, error => reject(new Error(error))
           );
@@ -179,7 +179,7 @@ export class SearchService {
               if(response.kingdom) {
                 r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
               } else {
-                r.taxa = "";
+                r.taxa = "community";
               }
             }, error => reject(new Error(error))
             );
@@ -194,7 +194,11 @@ export class SearchService {
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
             this.apiService.get_hightax(url).subscribe((response: Hightax) => {
-              r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
+              if(response.kingdom) {
+                r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
+              } else {
+                r.taxa = "community";
+              }
             }, error => reject(new Error(error))
             );
           }, error => reject(new Error(error))
