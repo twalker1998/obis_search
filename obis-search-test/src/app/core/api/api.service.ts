@@ -39,14 +39,12 @@ export class ApiService {
         retry(1),
         catchError(this.handleError)
       ).toPromise();
+    } else if(type === 'fed_status') {
+      return this.httpClient.get<FedStatus>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      ).toPromise();
     }
-  }
-
-  get_fedstatus(url: string) {
-    return this.httpClient.get<FedStatus>(url).pipe(
-      retry(1),
-      catchError(this.handleError)
-    ).toPromise();
   }
 
   get_ststatus(url: string) {
