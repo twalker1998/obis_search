@@ -12,14 +12,16 @@
         <div class="card" *ngFor="let result of results | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize">
             <div class="card-body">
                 <a class="card-link" [routerLink]="['/result', result.acode]">{{result.display_name}}</a>
-                <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
+                <div *ngIf="!result.taxa">
+                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+                </div>
+                <div *ngIf="result.taxa">
+                    <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
+                </div>
             </div>
         </div>
     </div>
     <div id="pagination">
         <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
     </div>
-</div>
-<div *ngIf="isError">
-    <p>There was an error retrieving data from the API. Please try again later.</p>
 </div>

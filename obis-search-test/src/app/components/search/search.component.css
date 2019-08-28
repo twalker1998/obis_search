@@ -35,3 +35,8 @@ a.card-link:hover {
     width: 150px;
     height: 150px;
 }
+
+.spinner {
+    width: 25px;
+    height: 25px;
+}
