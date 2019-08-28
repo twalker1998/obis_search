@@ -31,7 +31,7 @@ export class ResultsService {
       } else if(r.type === 'comtax') {
         r = <Comtax>(r);
 
-        if(r.type === 'acctax' || r.type === 'syntax') {
+        if(e.type === 'acctax' || e.type === 'syntax') {
           continue;
         }
 
