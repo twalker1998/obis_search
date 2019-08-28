@@ -44,14 +44,12 @@ export class ApiService {
         retry(1),
         catchError(this.handleError)
       ).toPromise();
+    } else if(type === 'st_status') {
+      return this.httpClient.get<StateStatus>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      ).toPromise();
     }
-  }
-
-  get_ststatus(url: string) {
-    return this.httpClient.get<StateStatus>(url).pipe(
-      retry(1),
-      catchError(this.handleError)
-    ).toPromise();
   }
 
   get_query(table: string, field: string, query: string) {
