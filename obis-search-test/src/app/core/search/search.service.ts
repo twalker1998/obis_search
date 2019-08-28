@@ -181,7 +181,7 @@ export class SearchService {
           }, error => reject(new Error(error))
           );
         } else if(r.type === 'comtax') {
-          let acode_url = r.acode.replace("http", "https");
+          let acode_url = "https://obis.ou.edu/api/obis/acctax/" + r.acode + "/";
           this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             family = response.family;
             sname = response.sname;
@@ -198,7 +198,7 @@ export class SearchService {
           }, error => reject(new Error(error))
           );
         } else if(r.type === 'syntax') {
-          let acode_url = r.acode.replace("http", "https");
+          let acode_url = "https://obis.ou.edu/api/obis/acctax/" + r.acode + "/";
           this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             r = <Syntax>(r);
             family = r.family;
