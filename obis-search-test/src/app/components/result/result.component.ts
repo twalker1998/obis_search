@@ -19,6 +19,7 @@ import { StateStatus } from 'src/app/models/st_status';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
+  private a_response: Acctax;
   private response: Api_Response;
   acode: string;
   result: Acctax | Comtax | Syntax;
@@ -43,11 +44,11 @@ export class ResultComponent implements OnInit {
   async build_info() {
     this.result = this.searchService.get(this.acode);
 
-    this.apiService.get_acctax("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json").subscribe((response: Acctax) => {
-      this.get_swap(response);
-      this.get_fed_status(response);
-      this.get_st_status(response);
-    });
+    this.a_response = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+
+    this.get_swap(this.a_response);
+    this.get_fed_status(this.a_response);
+    this.get_st_status(this.a_response);
 
     this.response = await this.apiService.get_query("comtax", "acode", this.acode);
 
@@ -64,7 +65,7 @@ export class ResultComponent implements OnInit {
     } else {
       let base_url = response.swap.replace("http", "https");
 
-      let swap_response = await this.apiService.get_swap(base_url + "?format=json");
+      let swap_response = await this.apiService.get_url_promise(base_url + "?format=json", "swap");
       
       this.swap_status = swap_response.tier;
     }
@@ -76,7 +77,7 @@ export class ResultComponent implements OnInit {
     } else {
       let base_url = response.fed_status.replace("http", "https");
 
-      let fed_status_response = await this.apiService.get_fedstatus(base_url + "?format=json");
+      let fed_status_response = await this.apiService.get_url_promise(base_url + "?format=json", "fed_status");
       
       this.fed_status = fed_status_response.description;
     }
@@ -88,7 +89,7 @@ export class ResultComponent implements OnInit {
     } else {
       let base_url = response.st_status.replace("http", "https");
 
-      let st_status_response = await this.apiService.get_ststatus(base_url + "?format=json");
+      let st_status_response = await this.apiService.get_url_promise(base_url + "?format=json", "st_status");
       
       this.st_status = st_status_response.description;
     }
