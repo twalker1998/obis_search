@@ -19,10 +19,10 @@ import { StateStatus } from 'src/app/models/st_status';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
-  private a_response: Acctax;
   private response: Api_Response;
   acode: string;
-  result: Acctax | Comtax | Syntax;
+  list_result: Acctax | Comtax | Syntax;
+  result: Acctax;
   synonyms: Array<string> = [];
   primary_vname: string;
   other_vnames: Array<string> = [];
@@ -42,13 +42,17 @@ export class ResultComponent implements OnInit {
   }
 
   async build_info() {
-    this.result = this.searchService.get(this.acode);
+    this.list_result = this.searchService.get(this.acode);
 
-    this.a_response = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+    if(!this.list_result || this.list_result.type !== 'acctax') {
+      this.result = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+    } else if(this.list_result.type === 'acctax') {
+      this.result = <Acctax>(this.list_result);
+    }
 
-    this.get_swap(this.a_response);
-    this.get_fed_status(this.a_response);
-    this.get_st_status(this.a_response);
+    this.get_swap(this.result);
+    this.get_fed_status(this.result);
+    this.get_st_status(this.result);
 
     this.response = await this.apiService.get_query("comtax", "acode", this.acode);
 
@@ -59,11 +63,11 @@ export class ResultComponent implements OnInit {
     await this.get_synonyms(this.response);
   }
 
-  async get_swap(response: Acctax) {
-    if(!response.swap) {
+  async get_swap(result: Acctax) {
+    if(!result.swap) {
       this.swap_status = "Not Included";
     } else {
-      let base_url = response.swap.replace("http", "https");
+      let base_url = result.swap.replace("http", "https");
 
       let swap_response = await this.apiService.get_url_promise(base_url + "?format=json", "swap");
       
@@ -71,11 +75,11 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  async get_fed_status(response: Acctax) {
-    if(!response.fed_status) {
+  async get_fed_status(result: Acctax) {
+    if(!result.fed_status) {
       this.fed_status = "Not Listed";
     } else {
-      let base_url = response.fed_status.replace("http", "https");
+      let base_url = result.fed_status.replace("http", "https");
 
       let fed_status_response = await this.apiService.get_url_promise(base_url + "?format=json", "fed_status");
       
@@ -83,11 +87,11 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  async get_st_status(response: Acctax) {
-    if(!response.st_status) {
+  async get_st_status(result: Acctax) {
+    if(!result.st_status) {
       this.st_status = "Not Listed";
     } else {
-      let base_url = response.st_status.replace("http", "https");
+      let base_url = result.st_status.replace("http", "https");
 
       let st_status_response = await this.apiService.get_url_promise(base_url + "?format=json", "st_status");
       
