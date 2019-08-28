@@ -32,6 +32,15 @@ export class SearchService {
     return this.results;
   }
 
+  extract_acode(raw_acode: string): string {
+    if(raw_acode.lastIndexOf("http", 0) === 0) {
+      let url_arr = raw_acode.split("/");
+      return url_arr[url_arr.length - 2];
+    } else {
+      return raw_acode;
+    }
+  }
+
   async query_api(query: string) {
     this.results = new Array<Acctax | Comtax | Syntax>();
 
@@ -61,14 +70,17 @@ export class SearchService {
     for(let result of response.results) {
       if(type == "acctax") {
         result = <Acctax>result;
+        result.acode = this.extract_acode(result.acode);
         result.type = "acctax";
         result.display_name = result.sname;
       } else if(type == "comtax") {
         result = <Comtax>result;
+        result.acode = this.extract_acode(result.acode);
         result.type = "comtax";
         result.display_name = result.vernacularname;
       } else if(type == "syntax") {
         result = <Syntax>result;
+        result.acode = this.extract_acode(result.acode);
         result.type = "syntax";
         result.display_name = result.sname;
       }
