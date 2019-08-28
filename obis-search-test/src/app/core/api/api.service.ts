@@ -18,7 +18,7 @@ export class ApiService {
 
   constructor(private httpClient : HttpClient) { }
 
-  get_url_promise(url: string, type: string) {
+  get_url_promise(url: string, type: string): any {
     if(type === 'api_response') {
       return this.httpClient.get<Api_Response>(url).pipe(
         retry(1),
