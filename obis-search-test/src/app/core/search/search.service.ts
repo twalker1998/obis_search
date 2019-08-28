@@ -83,7 +83,7 @@ export class SearchService {
     if(new_count > 0) {
       next_url = next_url.replace("http", "https");
 
-      this.response = await this.apiService.get_url(next_url);
+      this.response = await this.apiService.get_url_promise(next_url, "api_response");
 
       await this.parse_response(this.response, count, type);
     }
@@ -160,7 +160,7 @@ export class SearchService {
           sname = r.sname;
           url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
-          this.apiService.get_hightax(url).subscribe((response: Hightax) => {
+          this.apiService.get_url(url, "hightax").subscribe((response: Hightax) => {
             if(response.kingdom) {
               r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
             } else {
@@ -170,12 +170,12 @@ export class SearchService {
           );
         } else if(r.type === 'comtax') {
           let acode_url = r.acode.replace("http", "https");
-          this.apiService.get_acctax(acode_url).subscribe((response: Acctax) => {
+          this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             family = response.family;
             sname = response.sname;
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
-            this.apiService.get_hightax(url).subscribe((response: Hightax) => {
+            this.apiService.get_url(url, "hightax").subscribe((response: Hightax) => {
               if(response.kingdom) {
                 r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
               } else {
@@ -187,13 +187,13 @@ export class SearchService {
           );
         } else if(r.type === 'syntax') {
           let acode_url = r.acode.replace("http", "https");
-          this.apiService.get_acctax(acode_url).subscribe((response: Acctax) => {
+          this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             r = <Syntax>(r);
             family = r.family;
             sname = response.sname;
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
-            this.apiService.get_hightax(url).subscribe((response: Hightax) => {
+            this.apiService.get_url(url, "hightax").subscribe((response: Hightax) => {
               if(response.kingdom) {
                 r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
               } else {
