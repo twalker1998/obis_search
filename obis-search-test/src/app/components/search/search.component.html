@@ -16,7 +16,12 @@
                     <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
                 </div>
                 <div *ngIf="result.taxa">
-                    <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
+                    <div *ngIf="result.taxa !== 'community'">
+                        <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
+                    </div>
+                    <div *ngIf="result.taxa === 'community'">
+
+                    </div>
                 </div>
             </div>
         </div>
