@@ -24,14 +24,12 @@ export class ApiService {
         retry(1),
         catchError(this.handleError)
       ).toPromise();
+    } else if(type === 'acctax') {
+      return this.httpClient.get<Acctax>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      ).toPromise();
     }
-  }
-
-  get_acctax(url: string) {
-    return this.httpClient.get<Acctax>(url).pipe(
-      retry(1),
-      catchError(this.handleError)
-    );
   }
 
   get_hightax(url: string) {
