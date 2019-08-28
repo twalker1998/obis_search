@@ -59,11 +59,11 @@ export class ResultComponent implements OnInit {
     await this.get_synonyms(this.response);
   }
 
-  async get_swap(response: Acctax) {
-    if(!response.swap) {
+  async get_swap(result: Acctax) {
+    if(!result.swap) {
       this.swap_status = "Not Included";
     } else {
-      let base_url = response.swap.replace("http", "https");
+      let base_url = result.swap.replace("http", "https");
 
       let swap_response = await this.apiService.get_url_promise(base_url + "?format=json", "swap");
       
@@ -71,11 +71,11 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  async get_fed_status(response: Acctax) {
-    if(!response.fed_status) {
+  async get_fed_status(result: Acctax) {
+    if(!result.fed_status) {
       this.fed_status = "Not Listed";
     } else {
-      let base_url = response.fed_status.replace("http", "https");
+      let base_url = result.fed_status.replace("http", "https");
 
       let fed_status_response = await this.apiService.get_url_promise(base_url + "?format=json", "fed_status");
       
@@ -83,11 +83,11 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  async get_st_status(response: Acctax) {
-    if(!response.st_status) {
+  async get_st_status(result: Acctax) {
+    if(!result.st_status) {
       this.st_status = "Not Listed";
     } else {
-      let base_url = response.st_status.replace("http", "https");
+      let base_url = result.st_status.replace("http", "https");
 
       let st_status_response = await this.apiService.get_url_promise(base_url + "?format=json", "st_status");
       
