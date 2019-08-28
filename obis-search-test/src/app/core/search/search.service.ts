@@ -170,7 +170,7 @@ export class SearchService {
           );
         } else if(r.type === 'comtax') {
           let acode_url = r.acode.replace("http", "https");
-          this.apiService.get_url_promise(acode_url, "acctax").subscribe((response: Acctax) => {
+          this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             family = response.family;
             sname = response.sname;
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
@@ -187,7 +187,7 @@ export class SearchService {
           );
         } else if(r.type === 'syntax') {
           let acode_url = r.acode.replace("http", "https");
-          this.apiService.get_url_promise(acode_url, "acctax").subscribe((response: Acctax) => {
+          this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             r = <Syntax>(r);
             family = r.family;
             sname = response.sname;
