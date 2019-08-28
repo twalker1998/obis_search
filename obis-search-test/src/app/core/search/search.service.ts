@@ -83,7 +83,7 @@ export class SearchService {
     if(new_count > 0) {
       next_url = next_url.replace("http", "https");
 
-      this.response = await this.apiService.get_url(next_url);
+      this.response = await this.apiService.get_url_promise(next_url, "api_response");
 
       await this.parse_response(this.response, count, type);
     }
