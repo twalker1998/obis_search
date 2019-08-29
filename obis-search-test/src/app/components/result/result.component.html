@@ -22,6 +22,7 @@
                 <p><i>{{result.sname}}</i> {{result.scientificnameauthorship}}</p>
                 <p *ngIf="synonyms"><b>Synonyms: </b><span>{{synonyms.join(", ")}}</span></p>
                 <p><b>{{primary_vname}}</b><span *ngIf="other_vnames.length > 0">, {{other_vnames.join(", ")}}</span></p>
+                <p><b>Element Code: </b> {{result.elcode}}</p>
             </div>
         </div>
     </div>
