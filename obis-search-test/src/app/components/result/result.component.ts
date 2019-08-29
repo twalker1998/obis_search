@@ -9,9 +9,6 @@ import { Api_Response } from '../../models/api_response';
 import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
-import { Swap } from 'src/app/models/swap';
-import { FedStatus } from 'src/app/models/fed_status';
-import { StateStatus } from 'src/app/models/st_status';
 
 @Component({
   selector: 'app-result',
@@ -51,9 +48,9 @@ export class ResultComponent implements OnInit {
       this.result = <Acctax>(this.list_result);
     }
 
-    this.get_swap(this.result);
-    this.get_fed_status(this.result);
-    this.get_st_status(this.result);
+    await this.get_swap(this.result);
+    await this.get_fed_status(this.result);
+    await this.get_st_status(this.result);
 
     this.response = await this.apiService.get_query("comtax", "acode", this.acode);
 
@@ -63,7 +60,7 @@ export class ResultComponent implements OnInit {
 
     await this.get_synonyms(this.response);
 
-    await this.build_taxa(this.result.taxa);
+    await this.build_taxa();
   }
 
   async get_swap(result: Acctax) {
@@ -126,8 +123,21 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  build_taxa(taxa_str: string) {
-    let taxa_arr = taxa_str.split(">");
+  async build_taxa() {
+    if(!this.result.taxa) {
+      let family = this.result.family;
+      let url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
+
+      let response = await this.apiService.get_url_promise(url, "hightax");
+
+      if(response.kingdom) {
+        this.result.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family;
+      } else {
+        this.result.taxa = "community";
+      }
+    }
+
+    let taxa_arr = this.result.taxa.split(">");
 
     for(let str of taxa_arr) {
       this.taxa.push(str.trim());
