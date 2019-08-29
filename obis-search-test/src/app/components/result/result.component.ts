@@ -9,9 +9,6 @@ import { Api_Response } from '../../models/api_response';
 import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
-import { Swap } from 'src/app/models/swap';
-import { FedStatus } from 'src/app/models/fed_status';
-import { StateStatus } from 'src/app/models/st_status';
 
 @Component({
   selector: 'app-result',
@@ -128,9 +125,17 @@ export class ResultComponent implements OnInit {
 
   async build_taxa() {
     if(!this.result.taxa) {
+      let family = this.result.family;
+      let url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
+      let response = await this.apiService.get_url_promise(url, "hightax");
+
+      if(response.kingdom) {
+        this.result.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family;
+      } else {
+        this.result.taxa = "community";
+      }
     }
-
 
     let taxa_arr = this.result.taxa.split(">");
 
