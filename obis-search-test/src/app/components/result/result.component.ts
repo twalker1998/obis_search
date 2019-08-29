@@ -137,6 +137,10 @@ export class ResultComponent implements OnInit {
       }
     }
 
+    if(this.result.taxa === "community") {
+      return;
+    }
+
     let taxa_arr = this.result.taxa.split(">");
 
     for(let str of taxa_arr) {
