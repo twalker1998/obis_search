@@ -11,99 +11,123 @@ export class DistributionMapComponent implements OnInit {
 
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
-  // The <div> where we will place the map
-  @ViewChild('mapViewNode', {static: true}) private mapViewEl: ElementRef;
-
-  /**
-   * _zoom sets map zoom
-   * _center sets map center
-   * _basemap sets type of map
-   * _loaded provides map loaded status
-   */
-  private _zoom = 10;
-  private _center: Array<number> = [0.1278, 51.5074];
-  private _basemap = 'streets';
-  private _loaded = false;
-
-  get mapLoaded(): boolean {
-    return this._loaded;
-  }
-
-  @Input()
-  set zoom(zoom: number) {
-    this._zoom = zoom;
-  }
-
-  get zoom(): number {
-    return this._zoom;
-  }
-
-  @Input()
-  set center(center: Array<number>) {
-    this._center = center;
-  }
-
-  get center(): Array<number> {
-    return this._center;
-  }
-
-  @Input()
-  set basemap(basemap: string) {
-    this._basemap = basemap;
-  }
-
-  get basemap(): string {
-    return this._basemap;
-  }
-
   constructor() { }
 
   async initializeMap() {
     try {
-
       // Load the modules for the ArcGIS API for JavaScript
-      const [EsriMap, EsriMapView] = await loadModules([
+      const [Map, MapView, FeatureLayer, Home, Legend, Expand, Extent, Fullscreen] = await loadModules([
         'esri/Map',
-        'esri/views/MapView'
+        'esri/views/MapView',
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Home",
+        "esri/widgets/Legend",
+        "esri/widgets/Expand",
+        "esri/geometry/Extent",
+        "esri/widgets/Fullscreen"
       ]);
 
-      // Configure the Map
-      const mapProperties: esri.MapProperties = {
-        basemap: this._basemap
+      //map extent: Need this since no basemap; otherwise extent is pretty wonky
+      var bounds = new Extent({
+        "xmin": -103.5,
+        "ymin": 33.0,
+        "xmax": -93.5,
+        "ymax": 37.5,
+        "spatialReference": { "wkid": 4326 } //this is for the extent only; need to set map spatial reference in view.
+      });
+
+      var speciesquery = "acode='B-GRAM'";
+
+      // Oklahoma Counties Layer
+      var okcounties = new FeatureLayer({
+          url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ArcGISServer_Counties/MapServer"
+
+      });
+
+      var cotemplate = {
+          // autocasts as new PopupTemplate()
+          title: "<em>{sname}</em> ({vernacularname})",
+          content: "ONHI has {count} occurrence record(s) for <em>{sname}</em> ({vernacularname}) in {county} County"
       };
 
-      const map: esri.Map = new EsriMap(mapProperties);
+      // County Occurrences Layer
+      var coquery = new FeatureLayer({
+          url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OBIS_County_Occurrences_Poly/MapServer/0/",
+          definitionExpression: speciesquery,
+          title: "County Occurrences",
+          outFields: ["*"],
+          popupTemplate: cotemplate,
+          opacity: 0.75
+      });
 
-      // Initialize the MapView
-      const mapViewProperties: esri.MapViewProperties = {
-        container: this.mapViewEl.nativeElement,
-        center: this._center,
-        zoom: this._zoom,
-        map: map
+      var hextemplate = {
+          // autocasts as new PopupTemplate()
+          title: "<em>{sname}</em> ({vernacularname})",
+          content: "ONHI has {count} occurrence record(s) for <em>{sname}</em> ({vernacularname}) in this hexagon"
       };
 
-      return new EsriMapView(mapViewProperties);
+      // Hex Occurrences Layer
+      var hexquery = new FeatureLayer({
+          url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OBIS_5km_Occurrences/MapServer/0/",
+          definitionExpression: speciesquery,
+          title: "Georeferenced Occurrences",
+          outFields: ["*"],
+          popupTemplate: hextemplate
+      });
 
+      var map = new Map({
+          //basemap: "satellite",
+          layers: [coquery, okcounties, hexquery]
+      });
+
+      var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          extent: bounds,
+          spatialReference: 3857 //spatial reference of map; different from the extent
+      });
+
+      //Home button
+      var homeBtn = new Home({
+          view: view
+      });
+
+      // Add the home button to the top left corner of the view
+      view.ui.add(homeBtn, "top-left");
+
+      const legend = new Expand({
+          content: new Legend({
+              view: view,
+              style: "classic",
+              layerInfos: [{
+                  layer: hexquery
+              },
+              {
+                  layer: coquery
+              }
+              ]
+          }),
+          view: view,
+          expandTooltip: "Legend",
+          expanded: false
+      });
+
+      view.ui.add(legend, "bottom-left");
+
+      var fullscreen = new Fullscreen({
+          view: view
+      });
+
+      view.ui.add(fullscreen, "top-right");
+
+      return new MapView(view);
     } catch (error) {
       console.log('EsriLoader: ', error);
     }
-
-  }
-
-  // Finalize a few things once the MapView has been loaded
-  houseKeeping(mapView) {
-    mapView.when(() => {
-      console.log('mapView ready: ', mapView.ready);
-      this._loaded = mapView.ready;
-      this.mapLoadedEvent.emit(true);
-    });
   }
 
   ngOnInit() {
     // Initialize MapView and return an instance of MapView
-    this.initializeMap().then((mapView) => {
-      this.houseKeeping(mapView);
-    });
+    this.initializeMap();
   }
-
 }
