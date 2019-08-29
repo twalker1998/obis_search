@@ -51,9 +51,9 @@ export class ResultComponent implements OnInit {
       this.result = <Acctax>(this.list_result);
     }
 
-    this.get_swap(this.result);
-    this.get_fed_status(this.result);
-    this.get_st_status(this.result);
+    await this.get_swap(this.result);
+    await this.get_fed_status(this.result);
+    await this.get_st_status(this.result);
 
     this.response = await this.apiService.get_query("comtax", "acode", this.acode);
 
@@ -63,7 +63,7 @@ export class ResultComponent implements OnInit {
 
     await this.get_synonyms(this.response);
 
-    await this.build_taxa(this.result.taxa);
+    await this.build_taxa();
   }
 
   async get_swap(result: Acctax) {
@@ -126,8 +126,13 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  build_taxa(taxa_str: string) {
-    let taxa_arr = taxa_str.split(">");
+  async build_taxa() {
+    if(!this.result.taxa) {
+
+    }
+
+
+    let taxa_arr = this.result.taxa.split(">");
 
     for(let str of taxa_arr) {
       this.taxa.push(str.trim());
