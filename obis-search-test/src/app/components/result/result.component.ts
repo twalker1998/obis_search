@@ -29,6 +29,7 @@ export class ResultComponent implements OnInit {
   swap_status: string;
   fed_status: string;
   st_status: string;
+  taxa: Array<string> = [];
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
@@ -61,6 +62,8 @@ export class ResultComponent implements OnInit {
     this.response = await this.apiService.get_query("syntax", "acode", this.acode);
 
     await this.get_synonyms(this.response);
+
+    await this.build_taxa(this.result.taxa);
   }
 
   async get_swap(result: Acctax) {
@@ -120,6 +123,14 @@ export class ResultComponent implements OnInit {
       r = <Syntax>(r);
 
       this.synonyms.push(r.sname);
+    }
+  }
+
+  build_taxa(taxa_str: string) {
+    let taxa_arr = taxa_str.split(">");
+
+    for(let str of taxa_arr) {
+      this.taxa.push(str.trim());
     }
   }
 }
