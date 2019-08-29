@@ -99,19 +99,19 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  async get_vnames(response: Api_Response) {
+  get_vnames(response: Api_Response) {
     if(response.results.length > 1) {
       for(let r of response.results) {
         r = <Comtax>(r);
 
-        if(!r.primary_name) {
-          this.primary_vname = r.vname;
+        if(r.primary_name) {
+          this.primary_vname = r.vernacularname;
         } else {
-          this.other_vnames.push(r.vname);
+          this.other_vnames.push(r.vernacularname);
         }
       }
     } else {
-      this.primary_vname = response.results[0].vname;
+      this.primary_vname = response.results[0].vernacularname;
     }
   }
 
