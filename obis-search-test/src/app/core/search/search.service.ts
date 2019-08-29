@@ -28,10 +28,6 @@ export class SearchService {
     return null;
   }
 
-  add(result: Acctax | Comtax | Syntax) {
-    this.results.push(result);
-  }
-
   get_results(): Array<Acctax | Comtax | Syntax> {
     return this.results;
   }
