@@ -4,7 +4,7 @@ export interface Acctax {
     a_id: number;
     acode: string;
     sname: string;
-    snameauthorship: string;
+    scientificnameauthorship: string;
     family: string;
     genus: string;
     species: string;
