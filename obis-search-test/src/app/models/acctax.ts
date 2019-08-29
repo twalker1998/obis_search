@@ -11,6 +11,7 @@ export interface Acctax {
     subspecies: string;
     variety: string;
     forma: string;
+    elcode: string;
     g_rank: string;
     s_rank: string;
     fed_status: string;
