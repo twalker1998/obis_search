@@ -8,7 +8,7 @@ import esri = __esri;
   styleUrls: ['./distribution-map.component.css']
 })
 export class DistributionMapComponent implements OnInit {
-  acode: string;
+  @Input() acode: string;
 
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
