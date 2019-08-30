@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { loadModules } from 'esri-loader';
-import esri = __esri;
 
 @Component({
   selector: 'app-distribution-map',
