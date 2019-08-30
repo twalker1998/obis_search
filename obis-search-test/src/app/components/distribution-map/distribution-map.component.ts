@@ -8,6 +8,7 @@ import esri = __esri;
   styleUrls: ['./distribution-map.component.css']
 })
 export class DistributionMapComponent implements OnInit {
+  acode: string;
 
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
@@ -129,5 +130,9 @@ export class DistributionMapComponent implements OnInit {
   ngOnInit() {
     // Initialize MapView and return an instance of MapView
     this.initializeMap();
+  }
+
+  setAcode(acode: string) {
+    this.acode = acode;
   }
 }
