@@ -1,12 +1,3 @@
-<!-- <p>{{acode}}</p>
-<p></p>
-<p>{{primary_vname}}</p>
-<p *ngFor="let name of other_vnames">{{name}}</p>
-<p *ngFor="let syn of synonyms">{{syn}}</p>
-<p>{{swap_status}}</p>
-<p>{{fed_status}}</p>
-<p>{{st_status}}</p> -->
-
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="overview-header">
@@ -20,7 +11,7 @@
         <div id="collapse-overview" class="collapse show" aria-labelledby="overview-header" data-parent="#accordion">
             <div class="card-body" *ngIf="result">
                 <p><i>{{result.sname}}</i> {{result.scientificnameauthorship}}</p>
-                <p *ngIf="synonyms"><b>Synonyms: </b><span>{{synonyms.join(", ")}}</span></p>
+                <p *ngIf="synonyms.length > 0"><b>Synonyms: </b><span>{{synonyms.join(", ")}}</span></p>
                 <p><b>{{primary_vname}}</b><span *ngIf="other_vnames.length > 0">, {{other_vnames.join(", ")}}</span></p>
                 <p><b>Element Code: </b> {{result.elcode}}</p>
                 <p><b>State Rank: </b> {{result.s_rank}}</p>
