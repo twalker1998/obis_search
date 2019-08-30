@@ -131,8 +131,4 @@ export class DistributionMapComponent implements OnInit {
     // Initialize MapView and return an instance of MapView
     this.initializeMap();
   }
-
-  setAcode(acode: string) {
-    this.acode = acode;
-  }
 }
