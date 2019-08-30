@@ -37,7 +37,7 @@ export class DistributionMapComponent implements OnInit {
         "spatialReference": { "wkid": 4326 } //this is for the extent only; need to set map spatial reference in view.
       });
 
-      var speciesquery = "acode='B-GRAM'";
+      var speciesquery = "acode='" + this.acode + "'";
 
       // Oklahoma Counties Layer
       var okcounties = new FeatureLayer({
