@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { DistributionMapComponent } from '../distribution-map/distribution-map.component';
-
 import { ApiService } from '../../core/api/api.service';
 import { SearchService } from '../../core/search/search.service';
 import { ResultsService } from '../../core/results/results.service';
@@ -30,7 +28,7 @@ export class ResultComponent implements OnInit {
   st_status: string;
   taxa: Array<string> = [];
 
-  constructor(private route: ActivatedRoute, private distMap: DistributionMapComponent, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
   ngOnInit() {
     this.resultsService.isQueryComplete.next(false);
@@ -39,8 +37,6 @@ export class ResultComponent implements OnInit {
       this.acode = params.get("acode");
       this.build_info();
     });
-
-    this.distMap.setAcode(this.acode);
   }
 
   async build_info() {
