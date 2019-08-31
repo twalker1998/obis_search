@@ -9,6 +9,7 @@ import { Api_Response } from '../../models/api_response';
 import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
+import { Occurrence } from 'src/app/models/occurrence';
 
 @Component({
   selector: 'app-result',
@@ -27,6 +28,7 @@ export class ResultComponent implements OnInit {
   fed_status: string;
   st_status: string;
   taxa: Array<string> = [];
+  occurrences: Array<Occurrence> = [];
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
@@ -61,6 +63,8 @@ export class ResultComponent implements OnInit {
     await this.get_synonyms(this.response);
 
     await this.build_taxa();
+
+    await this.get_occ_table();
   }
 
   async get_swap(result: Acctax) {
@@ -146,5 +150,17 @@ export class ResultComponent implements OnInit {
     for(let str of taxa_arr) {
       this.taxa.push(str.trim());
     }
+  }
+
+  async get_occ_table() {
+    this.apiService.get_occ_table(this.result.sname).subscribe((results: Array<any>) => {
+      for(let result of results) {
+        for(let county in result) {
+          let occurrence = {county: county, count: result[county]}
+
+          this.occurrences.push(occurrence);
+        }
+      }
+    });
   }
 }

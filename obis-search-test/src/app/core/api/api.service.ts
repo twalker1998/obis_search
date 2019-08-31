@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { Api_Response } from '../../models/api_response';
@@ -101,5 +101,9 @@ export class ApiService {
       console.error("Backend returned code " + error.status + ", body was: " + error.error);
       return throwError("Something bad happened, please try again later.");
     }
+  }
+
+  get_occ_table(sname: string) {
+    return this.httpClient.get<Array<any>>("http://10.27.0.129/obis_search/occurrence-table.php?sname=" + sname);
   }
 }
