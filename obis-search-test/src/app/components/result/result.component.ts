@@ -11,6 +11,10 @@ import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
 import { Occurrence } from 'src/app/models/occurrence';
 
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
+
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -193,7 +197,7 @@ export class ResultComponent implements OnInit {
     this.download(filename, csv);
   }
 
-  generatePDF() {
+  generatePDF_old() {
     let filename = this.result.sname + ".pdf";
 
     let content: any = [{text: 'Number of Occurrences of ' + this.result.sname + ' in Each County', fontSize: 32}];
@@ -219,5 +223,13 @@ export class ResultComponent implements OnInit {
     let docDefinition = {
       content: content
     };
+  }
+
+  generate_pdf() {
+    let filename = this.result.sname + ".pdf";
+
+    let doc = new jsPDF('p', 'pt', 'letter');
+    doc.autoTable({html:"#occ_table"});
+    doc.save(filename);
   }
 }
