@@ -178,8 +178,8 @@ export class ResultComponent implements OnInit {
   }
 
   generate_csv() {
-    let filename = this.result.sname;
-    let firstRow = '"County", "Count"';
+    let filename = this.result.sname + ".csv";
+    let firstRow = '"County","Count';
     let colDelim = '","';
     let rowDelim = '"\r\n"';
     let csvRows = [firstRow];
