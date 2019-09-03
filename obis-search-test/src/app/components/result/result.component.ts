@@ -163,4 +163,22 @@ export class ResultComponent implements OnInit {
       }
     });
   }
+
+  generate_csv() {
+    let filename = this.result.sname;
+    let firstRow = '"County", "Count"';
+    let colDelim = '","';
+    let rowDelim = '"\r\n"';
+    let csvRows = [firstRow];
+
+    for(let occurrence of this.occurrences) {
+      let county = occurrence.county;
+      let count = occurrence.count;
+      let row = [county, count].join(colDelim);
+      csvRows.push(row);
+    }
+
+    let csv = csvRows.join(rowDelim) + '"';
+    this.download(filename, csv);
+  }
 }
