@@ -185,13 +185,39 @@ export class ResultComponent implements OnInit {
     let csvRows = [firstRow];
 
     for(let occurrence of this.occurrences) {
-      let county = occurrence.county;
-      let count = occurrence.count;
-      let row = [county, count].join(colDelim);
+      let row = [occurrence.county, occurrence.count].join(colDelim);
       csvRows.push(row);
     }
 
     let csv = csvRows.join(rowDelim) + '"';
     this.download(filename, csv);
+  }
+
+  generatePDF() {
+    let filename = this.result.sname + ".pdf";
+
+    let content: any = [{text: 'Number of Occurrences of ' + this.result.sname + ' in Each County', fontSize: 32}];
+
+    let countyTable: any = [
+      [{text: "County", fillColor: '#4CAF50', color: 'white'},
+       {text: "Count", fillColor: '#4CAF50', color: 'white'}]
+    ];
+
+    for(let occurrence of this.occurrences) {
+      let row = [
+        {text: String(occurrence.county), fillColor: 'white'},
+        {text: String(occurrence.count), fillColor: 'white'}
+      ];
+
+      countyTable.push(row);
+    }
+
+    let table = {table: {headerRows: 0, widths: ['auto', 'auto'], body: countyTable}};
+
+    content.push(table);
+
+    let docDefinition = {
+      content: content
+    };
   }
 }
