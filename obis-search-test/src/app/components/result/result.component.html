@@ -13,7 +13,7 @@
                 <p><i>{{result.sname}}</i> {{result.scientificnameauthorship}}</p>
                 <p *ngIf="synonyms.length > 0"><b>Synonyms: </b><span>{{synonyms.join(", ")}}</span></p>
                 <p><b>{{primary_vname}}</b><span *ngIf="other_vnames.length > 0">, {{other_vnames.join(", ")}}</span></p>
-                <p><b>Element Code: </b> {{result.elcode}}</p>
+                <p *ngIf="result.elcode"><b>Element Code: </b> {{result.elcode}}</p>
                 <p><b>State Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
                 <p><b>Global Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
                 <p><b>Species of Greatest Conservation Need Tier: </b> {{swap_status}}</p>
