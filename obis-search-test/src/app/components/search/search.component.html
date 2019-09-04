@@ -1,6 +1,6 @@
-<input type="text" class="form-control" #query required>
+<input type="text" class="form-control" name="query" id="query" #query required>
 <button class="btn btn-primary" id="submitSearch" (click)="search(query.value)">Search</button>
-<button class="btn btn-primary" id="submitAdvancedSearch">Advanced Search</button>
+<button class="btn btn-primary" id="submitAdvancedSearch" disabled="true">Advanced Search</button>
 <div *ngIf="isQueryStarted">
     <img class="loading" id="loading_gif" src="assets/loading.gif" />
 </div>
