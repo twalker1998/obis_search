@@ -10,7 +10,17 @@
 
         <div id="collapse-overview" class="collapse show" aria-labelledby="overview-header" data-parent="#accordion">
             <div class="card-body" *ngIf="result">
-                <p><i>{{result.sname}}</i> {{result.scientificnameauthorship}}</p>
+                <div *ngIf="!result">
+                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+                </div>
+                <div *ngIf="result">
+                    <p><i>{{result.sname}}</i> {{result.scientificnameauthorship}}</p>
+                </div>
+
+                
+
+
+
                 <p *ngIf="synonyms.length > 0"><b>Synonyms: </b><span>{{synonyms.join(", ")}}</span></p>
                 <p><b>{{primary_vname}}</b><span *ngIf="other_vnames.length > 0">, {{other_vnames.join(", ")}}</span></p>
                 <p *ngIf="result.elcode"><b>Element Code: </b> {{result.elcode}}</p>
