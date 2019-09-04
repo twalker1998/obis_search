@@ -34,6 +34,8 @@ export class ResultComponent implements OnInit {
   taxa: Array<string> = [];
   occurrences: Array<Occurrence> = [];
 
+  private areSynsLoaded = false;
+
   constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
   ngOnInit() {
@@ -129,6 +131,8 @@ export class ResultComponent implements OnInit {
 
       this.synonyms.push(r.sname);
     }
+
+    this.areSynsLoaded = true;
   }
 
   async build_taxa() {
