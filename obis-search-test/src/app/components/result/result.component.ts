@@ -35,6 +35,7 @@ export class ResultComponent implements OnInit {
   occurrences: Array<Occurrence> = [];
 
   private areSynsLoaded = false;
+  private areVNamesLoaded = false;
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
@@ -123,6 +124,8 @@ export class ResultComponent implements OnInit {
     } else {
       this.primary_vname = response.results[0].vernacularname;
     }
+
+    this.areVNamesLoaded = true;
   }
 
   async get_synonyms(response: Api_Response) {
