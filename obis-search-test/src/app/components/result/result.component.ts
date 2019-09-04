@@ -9,9 +9,11 @@ import { Api_Response } from '../../models/api_response';
 import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
-import { Swap } from 'src/app/models/swap';
-import { FedStatus } from 'src/app/models/fed_status';
-import { StateStatus } from 'src/app/models/st_status';
+import { Occurrence } from 'src/app/models/occurrence';
+
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 @Component({
   selector: 'app-result',
@@ -19,16 +21,25 @@ import { StateStatus } from 'src/app/models/st_status';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
-  private a_response: Acctax;
   private response: Api_Response;
   acode: string;
-  result: Acctax | Comtax | Syntax;
+  list_result: Acctax | Comtax | Syntax;
+  result: Acctax;
   synonyms: Array<string> = [];
   primary_vname: string;
   other_vnames: Array<string> = [];
   swap_status: string;
   fed_status: string;
   st_status: string;
+  taxa: Array<string> = [];
+  occurrences: Array<Occurrence> = [];
+
+  private areSynsLoaded = false;
+  private areVNamesLoaded = false;
+  private isSwapLoaded = false;
+  private isFedStatusLoaded = false;
+  private isStStatusLoaded = false;
+  private isTaxaBuilt = false;
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
@@ -42,13 +53,17 @@ export class ResultComponent implements OnInit {
   }
 
   async build_info() {
-    this.result = this.searchService.get(this.acode);
+    this.list_result = this.searchService.get(this.acode);
 
-    this.a_response = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+    if(!this.list_result || this.list_result.type !== 'acctax') {
+      this.result = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+    } else if(this.list_result.type === 'acctax') {
+      this.result = <Acctax>(this.list_result);
+    }
 
-    this.get_swap(this.a_response);
-    this.get_fed_status(this.a_response);
-    this.get_st_status(this.a_response);
+    await this.get_swap(this.result);
+    await this.get_fed_status(this.result);
+    await this.get_st_status(this.result);
 
     this.response = await this.apiService.get_query("comtax", "acode", this.acode);
 
@@ -57,58 +72,70 @@ export class ResultComponent implements OnInit {
     this.response = await this.apiService.get_query("syntax", "acode", this.acode);
 
     await this.get_synonyms(this.response);
+
+    await this.build_taxa();
+
+    await this.get_occ_table();
   }
 
-  async get_swap(response: Acctax) {
-    if(!response.swap) {
+  async get_swap(result: Acctax) {
+    if(!result.swap) {
       this.swap_status = "Not Included";
     } else {
-      let base_url = response.swap.replace("http", "https");
+      let base_url = result.swap.replace("http", "https");
 
       let swap_response = await this.apiService.get_url_promise(base_url + "?format=json", "swap");
       
       this.swap_status = swap_response.tier;
     }
+
+    this.isSwapLoaded = true;
   }
 
-  async get_fed_status(response: Acctax) {
-    if(!response.fed_status) {
+  async get_fed_status(result: Acctax) {
+    if(!result.fed_status) {
       this.fed_status = "Not Listed";
     } else {
-      let base_url = response.fed_status.replace("http", "https");
+      let base_url = result.fed_status.replace("http", "https");
 
       let fed_status_response = await this.apiService.get_url_promise(base_url + "?format=json", "fed_status");
       
       this.fed_status = fed_status_response.description;
     }
+
+    this.isFedStatusLoaded = true;
   }
 
-  async get_st_status(response: Acctax) {
-    if(!response.st_status) {
+  async get_st_status(result: Acctax) {
+    if(!result.st_status) {
       this.st_status = "Not Listed";
     } else {
-      let base_url = response.st_status.replace("http", "https");
+      let base_url = result.st_status.replace("http", "https");
 
       let st_status_response = await this.apiService.get_url_promise(base_url + "?format=json", "st_status");
       
       this.st_status = st_status_response.description;
     }
+
+    this.isStStatusLoaded = true;
   }
 
-  async get_vnames(response: Api_Response) {
+  get_vnames(response: Api_Response) {
     if(response.results.length > 1) {
       for(let r of response.results) {
         r = <Comtax>(r);
 
-        if(!r.primary_name) {
-          this.primary_vname = r.vname;
+        if(r.primary_name) {
+          this.primary_vname = r.vernacularname;
         } else {
-          this.other_vnames.push(r.vname);
+          this.other_vnames.push(r.vernacularname);
         }
       }
     } else {
-      this.primary_vname = response.results[0].vname;
+      this.primary_vname = response.results[0].vernacularname;
     }
+
+    this.areVNamesLoaded = true;
   }
 
   async get_synonyms(response: Api_Response) {
@@ -116,6 +143,98 @@ export class ResultComponent implements OnInit {
       r = <Syntax>(r);
 
       this.synonyms.push(r.sname);
+    }
+
+    this.areSynsLoaded = true;
+  }
+
+  async build_taxa() {
+    if(!this.result.taxa) {
+      let family = this.result.family;
+      let url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
+
+      let response = await this.apiService.get_url_promise(url, "hightax");
+
+      if(response.kingdom) {
+        this.result.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family;
+      } else {
+        this.result.taxa = "community";
+      }
+    }
+
+    if(this.result.taxa === "community") {
+      return;
+    }
+
+    let taxa_arr = this.result.taxa.split(">");
+
+    for(let str of taxa_arr) {
+      this.taxa.push(str.trim());
+    }
+
+    this.isTaxaBuilt = true;
+  }
+
+  async get_occ_table() {
+    this.apiService.get_occ_table(this.result.sname).subscribe((results: Array<any>) => {
+      for(let result of results) {
+        for(let county in result) {
+          let occurrence = {county: county, count: result[county]}
+
+          this.occurrences.push(occurrence);
+        }
+      }
+    });
+  }
+
+  download(filename: string, text: any) {
+    var element = document.createElement("a");
+    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+    element.setAttribute("download", filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  }
+
+  export(type: string) {
+    let rows = [];
+
+    for(let occurrence of this.occurrences) {
+      let row: any = [];
+      if(type == "csv") {
+        row = [occurrence.county, occurrence.count].join('","');
+      } else if(type == "pdf") {
+        row = [occurrence.county, occurrence.count];
+      }
+      rows.push(row);
+    }
+
+    if(type == "csv") {
+      let filename = this.result.sname + ".csv";
+
+      rows.unshift('"County","Count');
+      let csv = rows.join('"\r\n"') + '"';
+
+      this.download(filename, csv);
+    } else if(type == "pdf") {
+      let filename = this.result.sname + ".pdf";
+
+      let doc = new jsPDF();
+      let col = [["County", "Count"]];
+
+      doc.autoTable({
+        head: col,
+        headStyles: {
+          fillColor: [84, 130, 53]
+        },
+        body: rows
+      });
+
+      doc.save(filename);
     }
   }
 }

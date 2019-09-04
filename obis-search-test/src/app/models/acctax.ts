@@ -4,13 +4,14 @@ export interface Acctax {
     a_id: number;
     acode: string;
     sname: string;
-    snameauthorship: string;
+    scientificnameauthorship: string;
     family: string;
     genus: string;
     species: string;
     subspecies: string;
     variety: string;
     forma: string;
+    elcode: string;
     g_rank: string;
     s_rank: string;
     fed_status: string;
