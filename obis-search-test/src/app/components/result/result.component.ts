@@ -181,42 +181,41 @@ export class ResultComponent implements OnInit {
     document.body.removeChild(element);
   }
 
-  generate_csv() {
-    let filename = this.result.sname + ".csv";
-    let firstRow = '"County","Count';
-    let colDelim = '","';
-    let rowDelim = '"\r\n"';
-    let csvRows = [firstRow];
-
-    for(let occurrence of this.occurrences) {
-      let row = [occurrence.county, occurrence.count].join(colDelim);
-      csvRows.push(row);
-    }
-
-    let csv = csvRows.join(rowDelim) + '"';
-    this.download(filename, csv);
-  }
-
-  generate_pdf() {
-    let filename = this.result.sname + ".pdf";
-
-    let doc = new jsPDF();
-    let col = [["County", "Count"]];
+  export(type: string) {
     let rows = [];
 
     for(let occurrence of this.occurrences) {
-      let row = [occurrence.county, occurrence.count];
+      let row: any = [];
+      if(type == "csv") {
+        row = [occurrence.county, occurrence.count].join('","');
+      } else if(type == "pdf") {
+        row = [occurrence.county, occurrence.count];
+      }
       rows.push(row);
     }
 
-    doc.autoTable({
-      head: col,
-      headStyles: {
-        fillColor: [84, 130, 53]
-      },
-      body: rows
-    });
+    if(type == "csv") {
+      let filename = this.result.sname + ".csv";
 
-    doc.save(filename);
+      rows.unshift('"County","Count');
+      let csv = rows.join('"\r\n"') + '"';
+
+      this.download(filename, csv);
+    } else if(type == "pdf") {
+      let filename = this.result.sname + ".pdf";
+
+      let doc = new jsPDF();
+      let col = [["County", "Count"]];
+
+      doc.autoTable({
+        head: col,
+        headStyles: {
+          fillColor: [84, 130, 53]
+        },
+        body: rows
+      });
+
+      doc.save(filename);
+    }
   }
 }
