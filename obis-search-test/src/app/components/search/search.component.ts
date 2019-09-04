@@ -36,6 +36,18 @@ export class SearchComponent {
     });
   }
 
+  ngOnInit() {
+    var search_bar = document.getElementById("query");
+
+    search_bar.addEventListener("keyup", function(event) {
+      if(event.keyCode === 13) {
+        event.preventDefault();
+
+        document.getElementById("submitSearch").click();
+      }
+    });
+  }
+
   search(query: string): void {
     this.clearResult();
     this.page = 1;
