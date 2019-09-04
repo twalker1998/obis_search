@@ -31,10 +31,15 @@
                     <p><b>{{primary_vname}}</b><span *ngIf="other_vnames.length > 0">, {{other_vnames.join(", ")}}</span></p>
                 </div>
 
-                
-                <p *ngIf="result.elcode"><b>Element Code: </b> {{result.elcode}}</p>
-                <p><b>State Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
-                <p><b>Global Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
+                <div *ngIf="!result">
+                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+                </div>
+                <div *ngIf="result">
+                    <p *ngIf="result.elcode"><b>Element Code: </b> {{result.elcode}}</p>
+                    <p><b>State Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
+                    <p><b>Global Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
+                </div>
+
                 <p><b>Species of Greatest Conservation Need Tier: </b> {{swap_status}}</p>
                 <p><b>Federal Status: </b> {{fed_status}}</p>
                 <p><b>State Status: </b> {{st_status}}</p>
