@@ -40,8 +40,22 @@
                     <p><b>Global Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
                 </div>
 
-                <p><b>Species of Greatest Conservation Need Tier: </b> {{swap_status}}</p>
-                <p><b>Federal Status: </b> {{fed_status}}</p>
+                <div *ngIf="!isSwapLoaded">
+                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+                </div>
+                <div *ngIf="isSwapLoaded">
+                    <p><b>Species of Greatest Conservation Need Tier: </b> {{swap_status}}</p>
+                </div>
+
+                <div *ngIf="!isFedStatusLoaded">
+                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+                </div>
+                <div *ngIf="isFedStatusLoaded">
+                    <p><b>Federal Status: </b> {{fed_status}}</p>
+                </div>
+
+                
+                
                 <p><b>State Status: </b> {{st_status}}</p>
 
                 <table *ngIf="taxa.length > 0">

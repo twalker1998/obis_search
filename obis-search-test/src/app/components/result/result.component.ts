@@ -36,6 +36,8 @@ export class ResultComponent implements OnInit {
 
   private areSynsLoaded = false;
   private areVNamesLoaded = false;
+  private isSwapLoaded = false;
+  private isFedStatusLoaded = false;
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
@@ -84,6 +86,8 @@ export class ResultComponent implements OnInit {
       
       this.swap_status = swap_response.tier;
     }
+
+    this.isSwapLoaded = true;
   }
 
   async get_fed_status(result: Acctax) {
@@ -96,6 +100,8 @@ export class ResultComponent implements OnInit {
       
       this.fed_status = fed_status_response.description;
     }
+
+    this.isFedStatusLoaded = true;
   }
 
   async get_st_status(result: Acctax) {
