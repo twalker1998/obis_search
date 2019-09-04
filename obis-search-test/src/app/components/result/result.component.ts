@@ -38,6 +38,7 @@ export class ResultComponent implements OnInit {
   private areVNamesLoaded = false;
   private isSwapLoaded = false;
   private isFedStatusLoaded = false;
+  private isStStatusLoaded = false;
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
@@ -114,6 +115,8 @@ export class ResultComponent implements OnInit {
       
       this.st_status = st_status_response.description;
     }
+
+    this.isStStatusLoaded = true;
   }
 
   get_vnames(response: Api_Response) {

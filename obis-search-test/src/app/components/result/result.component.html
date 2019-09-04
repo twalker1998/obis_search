@@ -54,9 +54,12 @@
                     <p><b>Federal Status: </b> {{fed_status}}</p>
                 </div>
 
-                
-                
-                <p><b>State Status: </b> {{st_status}}</p>
+                <div *ngIf="!isStStatusLoaded">
+                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+                </div>
+                <div *ngIf="isStStatusLoaded">
+                    <p><b>State Status: </b> {{st_status}}</p>
+                </div>
 
                 <table *ngIf="taxa.length > 0">
                     <tr>
