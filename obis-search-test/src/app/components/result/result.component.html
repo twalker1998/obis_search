@@ -69,7 +69,9 @@
 
         <div id="collapse-table" class="collapse" aria-labelledby="table-header" data-parent="#accordion">
             <div class="card-body">
-                <table>
+                <button (click)="export('csv')" class="btn btn-success" style="margin-bottom: 15px; margin-right: 5px;">Export to CSV</button>
+                <button (click)="export('pdf')" class="btn btn-success" style="margin-bottom: 15px;">Export to PDF</button>
+                <table id="occ_table">
                     <tr>
                         <th>County</th>
                         <th>Count</th>

@@ -11,6 +11,10 @@ import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
 import { Occurrence } from 'src/app/models/occurrence';
 
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
+
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -162,5 +166,56 @@ export class ResultComponent implements OnInit {
         }
       }
     });
+  }
+
+  download(filename: string, text: any) {
+    var element = document.createElement("a");
+    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+    element.setAttribute("download", filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  }
+
+  export(type: string) {
+    let rows = [];
+
+    for(let occurrence of this.occurrences) {
+      let row: any = [];
+      if(type == "csv") {
+        row = [occurrence.county, occurrence.count].join('","');
+      } else if(type == "pdf") {
+        row = [occurrence.county, occurrence.count];
+      }
+      rows.push(row);
+    }
+
+    if(type == "csv") {
+      let filename = this.result.sname + ".csv";
+
+      rows.unshift('"County","Count');
+      let csv = rows.join('"\r\n"') + '"';
+
+      this.download(filename, csv);
+    } else if(type == "pdf") {
+      let filename = this.result.sname + ".pdf";
+
+      let doc = new jsPDF();
+      let col = [["County", "Count"]];
+
+      doc.autoTable({
+        head: col,
+        headStyles: {
+          fillColor: [84, 130, 53]
+        },
+        body: rows
+      });
+
+      doc.save(filename);
+    }
   }
 }
