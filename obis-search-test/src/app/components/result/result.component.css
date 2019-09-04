@@ -2,3 +2,13 @@
     padding: 10px;
     text-align: left;
 }
+
+p {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.spinner {
+    width: 25px;
+    height: 25px;
+}
