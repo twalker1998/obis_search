@@ -61,24 +61,29 @@
                     <p><b>State Status: </b> {{st_status}}</p>
                 </div>
 
-                <table *ngIf="taxa.length > 0">
-                    <tr>
-                        <th>Kingdom</th>
-                        <th>Phylum</th>
-                        <th>Class</th>
-                        <th>Order</th>
-                        <th>Family</th>
-                        <th>Genus</th>
-                    </tr>
-                    <tr>
-                        <td>{{taxa[0]}}</td>
-                        <td>{{taxa[1]}}</td>
-                        <td>{{taxa[2]}}</td>
-                        <td>{{taxa[3]}}</td>
-                        <td>{{taxa[4]}}</td>
-                        <td>{{result.genus}}</td>
-                    </tr>
-                </table>
+                <div *ngIf="!isTaxaBuilt">
+                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+                </div>
+                <div *ngIf="isTaxaBuilt">
+                    <table *ngIf="taxa.length > 0">
+                        <tr>
+                            <th>Kingdom</th>
+                            <th>Phylum</th>
+                            <th>Class</th>
+                            <th>Order</th>
+                            <th>Family</th>
+                            <th>Genus</th>
+                        </tr>
+                        <tr>
+                            <td>{{taxa[0]}}</td>
+                            <td>{{taxa[1]}}</td>
+                            <td>{{taxa[2]}}</td>
+                            <td>{{taxa[3]}}</td>
+                            <td>{{taxa[4]}}</td>
+                            <td>{{result.genus}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

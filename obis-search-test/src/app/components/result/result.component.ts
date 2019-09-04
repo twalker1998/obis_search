@@ -39,6 +39,7 @@ export class ResultComponent implements OnInit {
   private isSwapLoaded = false;
   private isFedStatusLoaded = false;
   private isStStatusLoaded = false;
+  private isTaxaBuilt = false;
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
 
@@ -170,6 +171,8 @@ export class ResultComponent implements OnInit {
     for(let str of taxa_arr) {
       this.taxa.push(str.trim());
     }
+
+    this.isTaxaBuilt = true;
   }
 
   async get_occ_table() {
