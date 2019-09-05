@@ -205,9 +205,9 @@ export class ResultComponent implements OnInit {
     for(let occurrence of this.occurrences) {
       let row: any = [];
       if(type == "csv") {
-        row = [occurrence.county, occurrence.count].join('","');
+        row = [occurrence.county, occurrence.count, occurrence.min_date, occurrence.max_date].join('","');
       } else if(type == "pdf") {
-        row = [occurrence.county, occurrence.count];
+        row = [occurrence.county, occurrence.count, occurrence.min_date, occurrence.max_date];
       }
       rows.push(row);
     }
@@ -215,7 +215,7 @@ export class ResultComponent implements OnInit {
     if(type == "csv") {
       let filename = this.result.sname + ".csv";
 
-      rows.unshift('"County","Count');
+      rows.unshift('"County","Count","Min Event Date","Max Event Date');
       let csv = rows.join('"\r\n"') + '"';
 
       this.download(filename, csv);
@@ -223,7 +223,7 @@ export class ResultComponent implements OnInit {
       let filename = this.result.sname + ".pdf";
 
       let doc = new jsPDF();
-      let col = [["County", "Count"]];
+      let col = [["County", "Count", "Min Event Date", "Max Event Date"]];
 
       doc.autoTable({
         head: col,
