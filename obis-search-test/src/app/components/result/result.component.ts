@@ -75,7 +75,7 @@ export class ResultComponent implements OnInit {
 
     await this.build_taxa();
 
-    await this.get_occ_table();
+    await this.get_occurrences();
   }
 
   async get_swap(result: Acctax) {
@@ -175,7 +175,7 @@ export class ResultComponent implements OnInit {
     this.isTaxaBuilt = true;
   }
 
-  async get_occ_table() {
+  async get_occurrences() {
     this.apiService.get_occ_table(this.result.sname).subscribe((results: Array<any>) => {
       for(let result of results) {
         for(let county in result) {
