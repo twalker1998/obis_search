@@ -10,6 +10,7 @@ import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
 import { Occurrence } from 'src/app/models/occurrence';
+import { OccurrenceData } from 'src/app/models/occurrence_data';
 
 declare const require: any;
 const jsPDF = require('jspdf');
@@ -32,6 +33,8 @@ export class ResultComponent implements OnInit {
   fed_status: string;
   st_status: string;
   taxa: Array<string> = [];
+  minEventDate: string;
+  maxEventDate: string;
   occurrences: Array<Occurrence> = [];
 
   private areSynsLoaded = false;
