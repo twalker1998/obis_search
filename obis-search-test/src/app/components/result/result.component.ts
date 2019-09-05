@@ -10,6 +10,7 @@ import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
 import { Occurrence } from 'src/app/models/occurrence';
+import { OccurrenceData } from 'src/app/models/occurrence_data';
 
 declare const require: any;
 const jsPDF = require('jspdf');
@@ -32,6 +33,8 @@ export class ResultComponent implements OnInit {
   fed_status: string;
   st_status: string;
   taxa: Array<string> = [];
+  minEventDate: Date;
+  maxEventDate: Date;
   occurrences: Array<Occurrence> = [];
 
   private areSynsLoaded = false;
@@ -75,7 +78,7 @@ export class ResultComponent implements OnInit {
 
     await this.build_taxa();
 
-    await this.get_occ_table();
+    await this.get_occurrences();
   }
 
   async get_swap(result: Acctax) {
@@ -175,11 +178,14 @@ export class ResultComponent implements OnInit {
     this.isTaxaBuilt = true;
   }
 
-  async get_occ_table() {
-    this.apiService.get_occ_table(this.result.sname).subscribe((results: Array<any>) => {
-      for(let result of results) {
+  async get_occurrences() {
+    this.apiService.get_occurrence_data(this.result.sname).subscribe((data: OccurrenceData) => {
+      this.minEventDate = new Date(data.min_date.replace('-', '/'));
+      this.maxEventDate = new Date(data.max_date.replace('-', '/'));
+
+      for(let result of data.table) {
         for(let county in result) {
-          let occurrence = {county: county, count: result[county]}
+          let occurrence = {county: county, count: result[county]};
 
           this.occurrences.push(occurrence);
         }

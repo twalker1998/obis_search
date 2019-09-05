@@ -9,6 +9,7 @@ import { Hightax } from '../../models/hightax';
 import { Swap } from '../../models/swap';
 import { FedStatus } from '../../models/fed_status';
 import { StateStatus } from '../../models/st_status';
+import { OccurrenceData } from '../../models/occurrence_data';
 
 @Injectable({
   providedIn: 'root'
@@ -103,7 +104,7 @@ export class ApiService {
     }
   }
 
-  get_occ_table(sname: string) {
-    return this.httpClient.get<Array<any>>("http://10.27.0.129/obis_search/occurrence-table.php?sname=" + sname);
+  get_occurrence_data(sname: string) {
+    return this.httpClient.get<OccurrenceData>("http://10.27.0.129/obis_search/occurrence-table.php?sname=" + sname);
   }
 }
