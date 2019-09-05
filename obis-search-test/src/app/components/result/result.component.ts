@@ -179,10 +179,13 @@ export class ResultComponent implements OnInit {
   }
 
   async get_occurrences() {
-    this.apiService.get_occ_table(this.result.sname).subscribe((results: Array<any>) => {
-      for(let result of results) {
+    this.apiService.get_occurrence_data(this.result.sname).subscribe((data: OccurrenceData) => {
+      this.minEventDate = data.min_date;
+      this.maxEventDate = data.max_date;
+
+      for(let result of data.table) {
         for(let county in result) {
-          let occurrence = {county: county, count: result[county]}
+          let occurrence = {county: county, count: result[county]};
 
           this.occurrences.push(occurrence);
         }
