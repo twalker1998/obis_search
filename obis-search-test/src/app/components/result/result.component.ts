@@ -33,8 +33,6 @@ export class ResultComponent implements OnInit {
   fed_status: string;
   st_status: string;
   taxa: Array<string> = [];
-  minEventDate: Date;
-  maxEventDate: Date;
   occurrences: Array<Occurrence> = [];
 
   private areSynsLoaded = false;
@@ -180,15 +178,10 @@ export class ResultComponent implements OnInit {
 
   async get_occurrences() {
     this.apiService.get_occurrence_data(this.result.sname).subscribe((data: OccurrenceData) => {
-      this.minEventDate = new Date(data.min_date.replace('-', '/'));
-      this.maxEventDate = new Date(data.max_date.replace('-', '/'));
+      for(let record of data.table) {
+        let occurrence: Occurrence = {county: record.county, count: record.count, min_date: record.min_date, max_date: record.max_date};
 
-      for(let result of data.table) {
-        for(let county in result) {
-          let occurrence = {county: county, count: result[county]};
-
-          this.occurrences.push(occurrence);
-        }
+        this.occurrences.push(occurrence);
       }
     });
   }
@@ -212,9 +205,9 @@ export class ResultComponent implements OnInit {
     for(let occurrence of this.occurrences) {
       let row: any = [];
       if(type == "csv") {
-        row = [occurrence.county, occurrence.count].join('","');
+        row = [occurrence.county, occurrence.count, occurrence.min_date, occurrence.max_date].join('","');
       } else if(type == "pdf") {
-        row = [occurrence.county, occurrence.count];
+        row = [occurrence.county, occurrence.count, occurrence.min_date, occurrence.max_date];
       }
       rows.push(row);
     }
@@ -222,7 +215,7 @@ export class ResultComponent implements OnInit {
     if(type == "csv") {
       let filename = this.result.sname + ".csv";
 
-      rows.unshift('"County","Count');
+      rows.unshift('"County","Count","Min Event Date","Max Event Date');
       let csv = rows.join('"\r\n"') + '"';
 
       this.download(filename, csv);
@@ -230,7 +223,7 @@ export class ResultComponent implements OnInit {
       let filename = this.result.sname + ".pdf";
 
       let doc = new jsPDF();
-      let col = [["County", "Count"]];
+      let col = [["County", "Count", "Min Event Date", "Max Event Date"]];
 
       doc.autoTable({
         head: col,
