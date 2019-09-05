@@ -33,8 +33,6 @@ export class ResultComponent implements OnInit {
   fed_status: string;
   st_status: string;
   taxa: Array<string> = [];
-  minEventDate: Date;
-  maxEventDate: Date;
   occurrences: Array<Occurrence> = [];
 
   private areSynsLoaded = false;
