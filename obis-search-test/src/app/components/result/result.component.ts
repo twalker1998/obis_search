@@ -121,7 +121,7 @@ export class ResultComponent implements OnInit {
     this.isStStatusLoaded = true;
   }
 
-  get_vnames(response: Api_Response) {
+  async get_vnames(response: Api_Response) {
     if(response.results.length > 1) {
       for(let r of response.results) {
         r = <Comtax>(r);
