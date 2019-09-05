@@ -33,8 +33,8 @@ export class ResultComponent implements OnInit {
   fed_status: string;
   st_status: string;
   taxa: Array<string> = [];
-  minEventDate: string;
-  maxEventDate: string;
+  minEventDate: Date;
+  maxEventDate: Date;
   occurrences: Array<Occurrence> = [];
 
   private areSynsLoaded = false;
@@ -180,8 +180,8 @@ export class ResultComponent implements OnInit {
 
   async get_occurrences() {
     this.apiService.get_occurrence_data(this.result.sname).subscribe((data: OccurrenceData) => {
-      this.minEventDate = data.min_date;
-      this.maxEventDate = data.max_date;
+      this.minEventDate = new Date(data.min_date.replace('-', '/'));
+      this.maxEventDate = new Date(data.max_date.replace('-', '/'));
 
       for(let result of data.table) {
         for(let county in result) {
