@@ -105,6 +105,6 @@ export class ApiService {
   }
 
   get_occurrence_data(sname: string) {
-    return this.httpClient.get<OccurrenceData>("http://10.27.0.129/obis_search/occurrence-table.php?sname=" + sname);
+    return this.httpClient.get<OccurrenceData>("http://obsvweb1.ou.edu/obis_search_old/occurrence-table.php?sname=" + sname);
   }
 }

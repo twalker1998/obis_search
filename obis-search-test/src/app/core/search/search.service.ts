@@ -78,6 +78,7 @@ export class SearchService {
         result.acode = this.extract_acode(result.acode);
         result.type = "comtax";
         result.display_name = result.vernacularname;
+        result.vname = result.vernacularname;
       } else if(type == "syntax") {
         result = <Syntax>result;
         result.acode = this.extract_acode(result.acode);
@@ -180,28 +181,10 @@ export class SearchService {
             }
           }, error => reject(new Error(error))
           );
-        } else if(r.type === 'comtax') {
+        } else if(r.type === 'comtax' || r.type === 'syntax') {
           let acode_url = "https://obis.ou.edu/api/obis/acctax/" + r.acode + "/";
           this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             family = response.family;
-            sname = response.sname;
-            url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
-
-            this.apiService.get_url(url, "hightax").subscribe((response: Hightax) => {
-              if(response.kingdom) {
-                r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
-              } else {
-                r.taxa = "community";
-              }
-            }, error => reject(new Error(error))
-            );
-          }, error => reject(new Error(error))
-          );
-        } else if(r.type === 'syntax') {
-          let acode_url = "https://obis.ou.edu/api/obis/acctax/" + r.acode + "/";
-          this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
-            r = <Syntax>(r);
-            family = r.family;
             sname = response.sname;
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
