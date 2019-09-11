@@ -181,32 +181,10 @@ export class SearchService {
             }
           }, error => reject(new Error(error))
           );
-        } else if(r.type === 'comtax') {
+        } else if(r.type === 'comtax' || r.type === 'syntax') {
           let acode_url = "https://obis.ou.edu/api/obis/acctax/" + r.acode + "/";
           this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             family = response.family;
-            sname = response.sname;
-            url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
-
-            this.apiService.get_url(url, "hightax").subscribe((response: Hightax) => {
-              if(response.kingdom) {
-                r.taxa = response.kingdom + " > " + response.phylum + " > " + response.taxclass + " > " + response.taxorder + " > " + family + " > " + sname;
-              } else {
-                r.taxa = "community";
-              }
-            }, error => reject(new Error(error))
-            );
-          }, error => reject(new Error(error))
-          );
-        } else if(r.type === 'syntax') {
-          let acode_url = "https://obis.ou.edu/api/obis/acctax/" + r.acode + "/";
-          this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
-            r = <Syntax>(r);
-            if(r.family) {
-              family = r.family;
-            } else {
-              family = response.family;
-            }
             sname = response.sname;
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
