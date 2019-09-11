@@ -78,6 +78,7 @@ export class SearchService {
         result.acode = this.extract_acode(result.acode);
         result.type = "comtax";
         result.display_name = result.vernacularname;
+        result.vname = result.vernacularname;
       } else if(type == "syntax") {
         result = <Syntax>result;
         result.acode = this.extract_acode(result.acode);
@@ -201,7 +202,11 @@ export class SearchService {
           let acode_url = "https://obis.ou.edu/api/obis/acctax/" + r.acode + "/";
           this.apiService.get_url(acode_url, "acctax").subscribe((response: Acctax) => {
             r = <Syntax>(r);
-            family = r.family;
+            if(r.family) {
+              family = r.family;
+            } else {
+              family = response.family;
+            }
             sname = response.sname;
             url = "https://obis.ou.edu/api/obis/hightax/" + family + "/?format=json";
 
