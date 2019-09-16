@@ -11,6 +11,7 @@ import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
 import { Occurrence } from 'src/app/models/occurrence';
 import { OccurrenceData } from 'src/app/models/occurrence_data';
+import { formatDate } from '@angular/common';
 
 declare const require: any;
 const jsPDF = require('jspdf');
@@ -207,7 +208,7 @@ export class ResultComponent implements OnInit {
       if(type == "csv") {
         row = [occurrence.county, occurrence.count, occurrence.min_date, occurrence.max_date].join('","');
       } else if(type == "pdf") {
-        row = [occurrence.county, occurrence.count, occurrence.min_date, occurrence.max_date];
+        row = [occurrence.county, occurrence.count, formatDate(occurrence.min_date, "longDate", "en"), formatDate(occurrence.max_date, "longDate", "en")];
       }
       rows.push(row);
     }
