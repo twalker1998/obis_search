@@ -25,6 +25,7 @@
 
 a.card-link {
     color: #548235;
+    vertical-align: middle;
 }
 
 a.card-link:hover {
@@ -44,4 +45,20 @@ a.card-link:hover {
 .no-results {
     height: 250px;
     width: 250px;
+}
+
+.name {
+    line-height: 5ex;
+}
+
+.badge {
+    display: inline-block;
+    width: 75px;
+    height: auto;
+    margin: auto;
+    vertical-align: middle;
+}
+
+.common {
+    width: 100px;
 }

@@ -127,8 +127,8 @@
                     <tr *ngFor="let occurrence of occurrences">
                         <td>{{occurrence.county}}</td>
                         <td>{{occurrence.count}}</td>
-                        <td>{{occurrence.min_date | date}}</td>
-                        <td>{{occurrence.max_date | date}}</td>
+                        <td>{{occurrence.min_date | date: 'longDate'}}</td>
+                        <td>{{occurrence.max_date | date: 'longDate'}}</td>
                     </tr>
                 </table>
             </div>
