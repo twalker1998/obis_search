@@ -180,7 +180,13 @@ export class ResultComponent implements OnInit {
   async get_occurrences() {
     this.apiService.get_occurrence_data(this.result.sname).subscribe((data: OccurrenceData) => {
       for(let record of data.table) {
-        let occurrence: Occurrence = {county: record.county, count: record.count, min_date: record.min_date, max_date: record.max_date};
+        let is_date: boolean = true;
+
+        if(record.min_date.toString() === 'No Date Listed') {
+          is_date = false;
+        }
+
+        let occurrence: Occurrence = {county: record.county, count: record.count, min_date: record.min_date, max_date: record.max_date, is_date};
 
         this.occurrences.push(occurrence);
       }
@@ -208,7 +214,11 @@ export class ResultComponent implements OnInit {
       if(type == "csv") {
         row = [occurrence.county, occurrence.count, occurrence.min_date, occurrence.max_date].join('","');
       } else if(type == "pdf") {
-        row = [occurrence.county, occurrence.count, formatDate(occurrence.min_date, "longDate", "en"), formatDate(occurrence.max_date, "longDate", "en")];
+        if(occurrence.is_date) {
+          row = [occurrence.county, occurrence.count, formatDate(occurrence.min_date, "longDate", "en"), formatDate(occurrence.max_date, "longDate", "en")];
+        } else if(!occurrence.is_date) {
+          row = [occurrence.county, occurrence.count, "No Date Listed", "No Date Listed"];
+        }
       }
       rows.push(row);
     }
