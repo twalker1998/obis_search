@@ -58,3 +58,7 @@ a.card-link:hover {
     margin: auto;
     vertical-align: middle;
 }
+
+.common {
+    width: 100px;
+}
