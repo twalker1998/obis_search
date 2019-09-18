@@ -54,6 +54,9 @@ export class SearchComponent {
     this.searchService.query_api(query);
     this.resultsService.isQueryStarted.next(true);
     this.resultsService.isQueryComplete.next(false);
+
+    let results_str = JSON.stringify(this.results);
+    this.createCookie("results", results_str);
   }
 
   clearResult(): void {
