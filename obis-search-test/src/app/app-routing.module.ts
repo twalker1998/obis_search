@@ -6,8 +6,7 @@ import { ResultComponent } from './components/result/result.component';
 
 const routes: Routes = [
   { path: "result/:acode", component: ResultComponent },
-  { path: "./", component: SearchComponent },
-  { path: "./:query", component: SearchComponent }
+  { path: "./", component: SearchComponent }
 ];
 
 @NgModule({
