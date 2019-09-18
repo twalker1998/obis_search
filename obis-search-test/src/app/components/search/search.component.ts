@@ -60,4 +60,8 @@ export class SearchComponent {
     this.results = new Array<Acctax | Comtax | Syntax>();
     this.router.navigate(["./"]);
   }
+
+  createCookie(name: string, value: string): void {
+    document.cookie = name + "=" + value + "; path=/";
+  }
 }
