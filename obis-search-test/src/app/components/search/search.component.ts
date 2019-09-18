@@ -30,6 +30,9 @@ export class SearchComponent {
         this.isQueryStarted = false;
         this.results = new Array<Acctax | Comtax | Syntax>();
         this.results = this.searchService.get_results();
+
+        let results_str = JSON.stringify(this.results);
+        this.createCookie("results", results_str);
       }
 
       this.isQueryComplete = c_value;
@@ -54,9 +57,6 @@ export class SearchComponent {
     this.searchService.query_api(query);
     this.resultsService.isQueryStarted.next(true);
     this.resultsService.isQueryComplete.next(false);
-
-    let results_str = JSON.stringify(this.results);
-    this.createCookie("results", results_str);
   }
 
   clearResult(): void {
