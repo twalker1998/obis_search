@@ -48,8 +48,6 @@ export class SearchComponent {
   }
 
   ngOnInit() {
-    localStorage.clear();
-
     var search_bar = document.getElementById("query");
 
     search_bar.addEventListener("keyup", function(event) {
