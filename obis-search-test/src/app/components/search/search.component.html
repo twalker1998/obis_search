@@ -16,6 +16,7 @@
                         <img *ngIf="result.type === 'acctax'" class="badge" src="assets/accepted.png" />
                         <img *ngIf="result.type === 'comtax'" class="badge common" src="assets/common.png" />
                         <img *ngIf="result.type === 'syntax'" class="badge" src="assets/synonym.png" />
+                        <img *ngIf="result.taxa === 'community'" class="badge community" src="assets/community.png" />
                     </div>
                     <div *ngIf="!result.taxa">
                         <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />

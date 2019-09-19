@@ -58,7 +58,17 @@ export class ResultComponent implements OnInit {
     this.list_result = this.searchService.get(this.acode);
 
     if(!this.list_result || this.list_result.type !== 'acctax') {
-      this.result = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+      let results_str: string = localStorage.getItem("results");
+      let results_arr: Array<Acctax | Comtax | Syntax> = JSON.parse(results_str);
+
+      this.list_result = this.searchService.get(this.acode, results_arr);
+
+      if(!this.list_result || this.list_result.type !== 'acctax') {
+        this.result = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
+        console.log("test")
+      } else if(this.list_result.type === 'acctax') {
+        this.result = <Acctax>(this.list_result);
+      }
     } else if(this.list_result.type === 'acctax') {
       this.result = <Acctax>(this.list_result);
     }
@@ -67,17 +77,23 @@ export class ResultComponent implements OnInit {
     await this.get_fed_status(this.result);
     await this.get_st_status(this.result);
 
-    this.response = await this.apiService.get_query("comtax", "acode", this.acode);
+    if(this.result.acode != this.result.elcode) {
+      this.response = await this.apiService.get_query("comtax", "acode", this.acode);
 
-    await this.get_vnames(this.response);
+      await this.get_vnames(this.response);
 
-    this.response = await this.apiService.get_query("syntax", "acode", this.acode);
+      this.response = await this.apiService.get_query("syntax", "acode", this.acode);
 
-    await this.get_synonyms(this.response);
+      await this.get_synonyms(this.response);
 
-    await this.build_taxa();
+      await this.build_taxa();
 
-    await this.get_occurrences();
+      await this.get_occurrences();
+    } else {
+      this.areVNamesLoaded = true;
+      this.areSynsLoaded = true;
+      this.isTaxaBuilt = true;
+    }
   }
 
   async get_swap(result: Acctax) {
