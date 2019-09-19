@@ -115,24 +115,29 @@
 
         <div id="collapse-table" class="collapse" aria-labelledby="table-header" data-parent="#accordion">
             <div class="card-body">
-                <button (click)="export('csv')" class="btn btn-success" style="margin-bottom: 15px; margin-right: 5px;">Export to CSV</button>
-                <button (click)="export('pdf')" class="btn btn-success" style="margin-bottom: 15px;">Export to PDF</button>
-                <table id="occ_table">
-                    <tr>
-                        <th>County</th>
-                        <th>Count</th>
-                        <th>Min Event Date</th>
-                        <th>Max Event Date</th>
-                    </tr>
-                    <tr *ngFor="let occurrence of occurrences">
-                        <td>{{occurrence.county}}</td>
-                        <td>{{occurrence.count}}</td>
-                        <td *ngIf="occurrence.is_date">{{occurrence.min_date | date: 'longDate'}}</td>
-                        <td *ngIf="!occurrence.is_date">No Date Listed</td>
-                        <td *ngIf="occurrence.is_date">{{occurrence.max_date | date: 'longDate'}}</td>
-                        <td *ngIf="!occurrence.is_date">No Date Listed</td>
-                    </tr>
-                </table>
+                <div *ngIf="occurrences.length > 0">
+                    <button (click)="export('csv')" class="btn btn-success" style="margin-bottom: 15px; margin-right: 5px;">Export to CSV</button>
+                    <button (click)="export('pdf')" class="btn btn-success" style="margin-bottom: 15px;">Export to PDF</button>
+                    <table id="occ_table">
+                        <tr>
+                            <th>County</th>
+                            <th>Count</th>
+                            <th>Min Event Date</th>
+                            <th>Max Event Date</th>
+                        </tr>
+                        <tr *ngFor="let occurrence of occurrences">
+                            <td>{{occurrence.county}}</td>
+                            <td>{{occurrence.count}}</td>
+                            <td *ngIf="occurrence.is_date">{{occurrence.min_date | date: 'longDate'}}</td>
+                            <td *ngIf="!occurrence.is_date">No Date Listed</td>
+                            <td *ngIf="occurrence.is_date">{{occurrence.max_date | date: 'longDate'}}</td>
+                            <td *ngIf="!occurrence.is_date">No Date Listed</td>
+                        </tr>
+                    </table>
+                </div>
+                <div *ngIf="occurrences.length <= 0">
+                    <p>No occurrences found for this record.</p>
+                </div>
             </div>
         </div>
     </div>
