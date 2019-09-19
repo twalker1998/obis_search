@@ -18,8 +18,8 @@ export class SearchService {
 
   constructor(private apiService: ApiService, private resultsService: ResultsService) { }
 
-  get(acode: string): Acctax | Comtax | Syntax {
-    for(let r of this.results) {
+  get(acode: string, array: Array<Acctax | Comtax | Syntax> = this.results): Acctax | Comtax | Syntax {
+    for(let r of array) {
       if(r.acode === acode) {
         return r;
       }
