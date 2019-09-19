@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Acctax } from '../../models/acctax';
@@ -20,6 +20,14 @@ export class SearchComponent {
   page = 1;
   pageSize = 15;
 
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    let results_str = localStorage.getItem("results");
+    this.results = JSON.parse(results_str);
+    this.resultsService.isQueryStarted.next(false);
+    this.resultsService.isQueryComplete.next(true);
+  }
+
   constructor(private searchService: SearchService, private resultsService: ResultsService, private router: Router) {
     this.resultsService.isQueryStarted.subscribe(s_value => {
       this.isQueryStarted = s_value;
@@ -30,6 +38,9 @@ export class SearchComponent {
         this.isQueryStarted = false;
         this.results = new Array<Acctax | Comtax | Syntax>();
         this.results = this.searchService.get_results();
+
+        let results_str = JSON.stringify(this.results);
+        localStorage.setItem("results", results_str);
       }
 
       this.isQueryComplete = c_value;
@@ -58,6 +69,7 @@ export class SearchComponent {
 
   clearResult(): void {
     this.results = new Array<Acctax | Comtax | Syntax>();
+    localStorage.removeItem("results");
     this.router.navigate(["./"]);
   }
 }
