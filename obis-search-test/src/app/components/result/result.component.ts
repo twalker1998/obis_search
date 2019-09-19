@@ -87,13 +87,13 @@ export class ResultComponent implements OnInit {
       await this.get_synonyms(this.response);
 
       await this.build_taxa();
-
-      await this.get_occurrences();
     } else {
       this.areVNamesLoaded = true;
       this.areSynsLoaded = true;
       this.isTaxaBuilt = true;
     }
+
+    await this.get_occurrences();
   }
 
   async get_swap(result: Acctax) {
