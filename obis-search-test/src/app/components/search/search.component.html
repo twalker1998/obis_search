@@ -13,9 +13,9 @@
                 <div class="card-body">
                     <div class="name">
                         <a class="card-link" [routerLink]="['/result', result.acode]">{{result.display_name}}</a>
-                        <img *ngIf="result.type === 'acctax'" class="badge" src="assets/accepted.png" />
-                        <img *ngIf="result.type === 'comtax'" class="badge common" src="assets/common.png" />
-                        <img *ngIf="result.type === 'syntax'" class="badge" src="assets/synonym.png" />
+                        <img *ngIf="result.type === 'acctax' && result.taxa !== 'community'" class="badge" src="assets/accepted.png" />
+                        <img *ngIf="result.type === 'comtax' && result.taxa !== 'community'" class="badge common" src="assets/common.png" />
+                        <img *ngIf="result.type === 'syntax' && result.taxa !== 'community'" class="badge" src="assets/synonym.png" />
                         <img *ngIf="result.taxa === 'community'" class="badge community" src="assets/community.png" />
                     </div>
                     <div *ngIf="!result.taxa">
