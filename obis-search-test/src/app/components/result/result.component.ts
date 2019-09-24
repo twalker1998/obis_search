@@ -65,7 +65,6 @@ export class ResultComponent implements OnInit {
 
       if(!this.list_result || this.list_result.type !== 'acctax') {
         this.result = await this.apiService.get_url_promise("https://obis.ou.edu/api/obis/acctax/" + this.acode + "/?format=json", "acctax");
-        console.log("test")
       } else if(this.list_result.type === 'acctax') {
         this.result = <Acctax>(this.list_result);
       }

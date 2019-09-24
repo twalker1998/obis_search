@@ -36,11 +36,17 @@ export class SearchComponent {
     this.resultsService.isQueryComplete.subscribe(c_value => {
       if(c_value) {
         this.isQueryStarted = false;
-        this.results = new Array<Acctax | Comtax | Syntax>();
-        this.results = this.searchService.get_results();
+        if(this.searchService.get_results().length == 0) {
+          let results_str = localStorage.getItem("results");
+          this.results = JSON.parse(results_str);
+          this.searchService.set_results(this.results);
+          this.searchService.get_taxa_strings();
+        } else {
+          this.results = this.searchService.get_results();
 
-        let results_str = JSON.stringify(this.results);
-        localStorage.setItem("results", results_str);
+          let results_str = JSON.stringify(this.results);
+          localStorage.setItem("results", results_str);
+        }
       }
 
       this.isQueryComplete = c_value;

@@ -32,6 +32,10 @@ export class SearchService {
     return this.results;
   }
 
+  set_results(results: Array<Acctax | Comtax | Syntax>): void {
+    this.results = results;
+  }
+
   extract_acode(raw_acode: string): string {
     if(raw_acode.lastIndexOf("http", 0) === 0) {
       let url_arr = raw_acode.split("/");
