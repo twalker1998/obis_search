@@ -65,31 +65,12 @@ a:hover {
     text-align: left;
 }
 
-#page-num {
-    display: inline-block;
-}
-
-#back {
-    text-align: left;
-    margin: 10px auto;
-}
-
 .btn-link {
     color: #548235;
 }
 
 .btn-link:hover {
     color: #72b446;
-}
-
-.btn-link {
-    color: #548235;
-}
-
-.info-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 5px;
 }
 
 .btn-success {
@@ -107,14 +88,6 @@ a:hover {
 .btn-success:active {
     background-color: #548235;
     border-color: #548235;
-    color: #fff;
-}
-
-a:not([href]):not([tabindex]) {
-    color: #fff;
-}
-
-a:not([href]):not([tabindex]):hover {
     color: #fff;
 }
 
