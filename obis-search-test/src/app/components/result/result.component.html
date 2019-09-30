@@ -36,8 +36,8 @@
                 </div>
                 <div *ngIf="result">
                     <p *ngIf="result.elcode"><b>Element Code: </b> {{result.elcode}}</p>
-                    <p><b>State Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
-                    <p><b>Global Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
+                    <p><b>State Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
+                    <p><b>Global Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
                 </div>
 
                 <div *ngIf="!isSwapLoaded">
