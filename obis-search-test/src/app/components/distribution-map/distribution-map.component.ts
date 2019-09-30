@@ -41,7 +41,6 @@ export class DistributionMapComponent implements OnInit {
       // Oklahoma Counties Layer
       var okcounties = new FeatureLayer({
           url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ArcGISServer_Counties/MapServer"
-
       });
 
       var cotemplate = {
