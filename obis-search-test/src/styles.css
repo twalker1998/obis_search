@@ -65,31 +65,12 @@ a:hover {
     text-align: left;
 }
 
-#page-num {
-    display: inline-block;
-}
-
-#back {
-    text-align: left;
-    margin: 10px auto;
-}
-
 .btn-link {
     color: #548235;
 }
 
 .btn-link:hover {
     color: #72b446;
-}
-
-.btn-link {
-    color: #548235;
-}
-
-.info-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 5px;
 }
 
 .btn-success {
@@ -110,14 +91,6 @@ a:hover {
     color: #fff;
 }
 
-a:not([href]):not([tabindex]) {
-    color: #fff;
-}
-
-a:not([href]):not([tabindex]):hover {
-    color: #fff;
-}
-
 .page-item.active .page-link {
     background-color: #548235;
     border-color: #548235;
@@ -131,4 +104,25 @@ a:not([href]):not([tabindex]):hover {
     color: #fff;
     background-color: #72b446;
     border-color: #72b446;
+}
+
+.btn-primary {
+    background-color: #548235;
+    border-color: #548235;
+    margin: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #72b446;
+    border-color: #72b446;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+    background-color: #548235;
+    border-color: #548235;
+}
+
+.btn-primary:disabled {
+    background-color: #548235;
+    border-color: #548235;
 }

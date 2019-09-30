@@ -36,8 +36,8 @@
                 </div>
                 <div *ngIf="result">
                     <p *ngIf="result.elcode"><b>Element Code: </b> {{result.elcode}}</p>
-                    <p><b>State Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
-                    <p><b>Global Rank: </b> <a style="text-decoration:underline;" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
+                    <p><b>State Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
+                    <p><b>Global Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
                 </div>
 
                 <div *ngIf="!isSwapLoaded">
@@ -116,8 +116,8 @@
         <div id="collapse-table" class="collapse" aria-labelledby="table-header" data-parent="#accordion">
             <div class="card-body">
                 <div *ngIf="occurrences.length > 0">
-                    <button (click)="export('csv')" class="btn btn-success" style="margin-bottom: 15px; margin-right: 5px;">Export to CSV</button>
-                    <button (click)="export('pdf')" class="btn btn-success" style="margin-bottom: 15px;">Export to PDF</button>
+                    <button (click)="export('csv')" class="btn btn-success btn-export">Export to CSV</button>
+                    <button (click)="export('pdf')" class="btn btn-success btn-export">Export to PDF</button>
                     <table id="occ_table">
                         <tr>
                             <th>County</th>

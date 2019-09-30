@@ -12,3 +12,11 @@ p {
     width: 25px;
     height: 25px;
 }
+
+.btn-export {
+    margin: 0 2px 15px;
+}
+
+.underline {
+    text-decoration: underline;
+}
