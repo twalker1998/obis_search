@@ -10,13 +10,15 @@ import { ResultsService } from './core/results/results.service';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultComponent } from './components/result/result.component';
 import { DistributionMapComponent } from './components/distribution-map/distribution-map.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     ResultComponent,
-    DistributionMapComponent
+    DistributionMapComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
