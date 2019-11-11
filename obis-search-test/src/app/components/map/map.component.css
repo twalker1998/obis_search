@@ -1,0 +1,12 @@
+@import url('https://js.arcgis.com/4.11/esri/css/main.css');
+
+html, body, #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 75vh;
+    width: 100%;
+}
+
+.esri-view:fullscreen {
+    background-color: #fff;
+}
