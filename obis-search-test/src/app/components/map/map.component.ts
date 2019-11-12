@@ -8,7 +8,7 @@ import { MapService } from '../../core/map/map.service';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  @Input() acode: string;
+  // @Input() acode: string;
 
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
@@ -20,7 +20,7 @@ export class MapComponent implements OnInit {
     });
   }
 
-  async initializeMap() {
+  public async initializeMap(acode: string) {
     try {
       const [Map, MapView, GroupLayer, FeatureLayer, MapImageLayer, Home, Search, BasemapGallery, LayerList, Expand, SimpleRenderer, Extent, SpatialReference, Query, QueryTask, Graphic, Fullscreen] = await loadModules([
         'esri/Map',
@@ -51,7 +51,8 @@ export class MapComponent implements OnInit {
         "spatialReference":{"wkid":4326} //this is for the extent only; need to set map spatial reference in view.
       });
 
-      var speciesquery = "acode='B-GRAM'"
+      // var speciesquery = "acode='B-GRAM'"
+      var speciesquery = "acode='" + acode + "'";
       
       // Oklahoma Counties Layer
       var okcounties = new FeatureLayer({
@@ -327,6 +328,6 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     // Initialize MapView and return an instance of MapView
-    this.initializeMap();
+    // this.initializeMap();
   }
 }

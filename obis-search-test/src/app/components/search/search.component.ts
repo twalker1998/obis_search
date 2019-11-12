@@ -7,6 +7,7 @@ import { Syntax } from '../../models/syntax';
 
 import { SearchService } from '../../core/search/search.service';
 import { ResultsService } from '../../core/results/results.service';
+import { MapService } from '../../core/map/map.service';
 
 @Component({
   selector: 'app-search',
@@ -26,9 +27,10 @@ export class SearchComponent {
     this.results = JSON.parse(results_str);
     this.resultsService.isQueryStarted.next(false);
     this.resultsService.isQueryComplete.next(true);
+    this.mapService.isResultLoaded.next(false);
   }
 
-  constructor(private searchService: SearchService, private resultsService: ResultsService, private router: Router) {
+  constructor(private searchService: SearchService, private resultsService: ResultsService, private mapService: MapService, private router: Router) {
     this.resultsService.isQueryStarted.subscribe(s_value => {
       this.isQueryStarted = s_value;
     });
@@ -71,6 +73,7 @@ export class SearchComponent {
     this.searchService.query_api(query);
     this.resultsService.isQueryStarted.next(true);
     this.resultsService.isQueryComplete.next(false);
+    this.mapService.isResultLoaded.next(false);
   }
 
   clearResult(): void {

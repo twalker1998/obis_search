@@ -6,6 +6,8 @@ import { SearchService } from '../../core/search/search.service';
 import { ResultsService } from '../../core/results/results.service';
 import { MapService } from '../../core/map/map.service';
 
+import { MapComponent } from '../../components/map/map.component';
+
 import { Api_Response } from '../../models/api_response';
 import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
@@ -44,7 +46,7 @@ export class ResultComponent implements OnInit {
   private isStStatusLoaded = false;
   private isTaxaBuilt = false;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService, private mapService: MapService) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService, private mapService: MapService, private mapComponent: MapComponent) { }
 
   ngOnInit() {
     this.resultsService.isQueryComplete.next(false);
@@ -54,6 +56,7 @@ export class ResultComponent implements OnInit {
       this.build_info();
 
       this.mapService.isResultLoaded.next(true);
+      this.mapComponent.initializeMap(this.acode);
     });
   }
 
