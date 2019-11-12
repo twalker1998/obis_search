@@ -317,12 +317,12 @@ export class MapComponent implements OnInit {
 
   async initializeMapNew() {
     try {
-      const [Map, MapView, GroupLayer, FeatureLayer, MapImageLayer, Home, Search, BasemapGallery, LayerList, Expand, Extent, Fullscreen] = await loadModules([
+      const [Map, MapView, GroupLayer, FeatureLayer, MapImageLayer, Home, Search, BasemapGallery, LayerList, Expand, SimpleRenderer, Extent, SpatialReference, Query, QueryTask, Graphic, Fullscreen] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
         'esri/layers/GroupLayer',
         'esri/layers/FeatureLayer',
-        'esri/layers/MapImageLayer',
+        'esri/layers/MapImageLayer', 
         'esri/widgets/Home',
         'esri/widgets/Search',
         'esri/widgets/BasemapGallery',
@@ -331,6 +331,7 @@ export class MapComponent implements OnInit {
         'esri/renderers/SimpleRenderer',
         'esri/geometry/Extent',
         'esri/geometry/SpatialReference',
+        'esri/tasks/support/Query',
         'esri/tasks/QueryTask',
         'esri/Graphic',
         'esri/widgets/Fullscreen'
