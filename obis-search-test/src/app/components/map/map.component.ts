@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { loadModules } from 'esri-loader';
+import { MapService } from '../../core/map/map.service';
 
 @Component({
   selector: 'app-map',
@@ -11,7 +12,13 @@ export class MapComponent implements OnInit {
 
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
-  constructor() { }
+  isResultLoaded: boolean;
+
+  constructor(private mapService: MapService) {
+    this.mapService.isResultLoaded.subscribe(value => {
+      this.isResultLoaded = value;
+    });
+  }
 
   async initializeMap() {
     try {
