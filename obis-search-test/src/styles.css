@@ -47,6 +47,11 @@ a:hover {
     padding: 10px;
 }
 
+.map {
+    width: auto;
+    padding: 0px;
+}
+
 .label {
     color: #548235;
 }
