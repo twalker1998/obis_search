@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
 
 import { ResultsService } from './core/results/results.service';
+import { MapService } from './core/map/map.service';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultComponent } from './components/result/result.component';
 import { DistributionMapComponent } from './components/distribution-map/distribution-map.component';
@@ -26,7 +27,7 @@ import { MapComponent } from './components/map/map.component';
     AppRoutingModule,
     NgbModule
   ],
-  providers: [ResultsService],
+  providers: [ResultsService, MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
