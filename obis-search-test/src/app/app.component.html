@@ -6,7 +6,7 @@
       <a class="nav-link" id="nav-about-tab" data-toggle="pill" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a>
   </li>
   <li class="nav-item">
-      <a class="nav-link" id="nav-map-tab" data-toggle="pill" href="#nav-map" role="tab" aria-controls="nav-map" aria-seleected="false" *ngIf="isResultLoaded">Map</a>
+      <a class="nav-link" id="nav-map-tab" data-toggle="pill" href="#nav-map" role="tab" aria-controls="nav-map" aria-seleected="false">Map</a>
   </li>
   <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
@@ -64,7 +64,7 @@
             ABOUT COMING SOON
         </div>
     </div>
-    <div class="tab-pane fade" id="nav-map" role="tabpanel" aria-labelledby="nav-map-tab" *ngIf="isResultLoaded">
+    <div class="tab-pane fade" id="nav-map" role="tabpanel" aria-labelledby="nav-map-tab">
         <div class="centered map">
             <app-map></app-map>
         </div>
