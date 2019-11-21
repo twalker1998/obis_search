@@ -27,7 +27,7 @@ import { MapComponent } from './components/map/map.component';
     AppRoutingModule,
     NgbModule
   ],
-  providers: [ResultsService, MapService, MapComponent],
+  providers: [ResultsService, MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
