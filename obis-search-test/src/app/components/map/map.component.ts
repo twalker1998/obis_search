@@ -13,12 +13,13 @@ export class MapComponent {
   isResultLoaded: boolean;
 
   constructor(private mapService: MapService) {
-    this.mapService.isResultLoaded.subscribe(value => {
-      this.isResultLoaded = value;
-    });
-
     this.mapService.acode.subscribe(acode => {
-      this.initializeMap(acode);
+      if(acode === "search") {
+        this.isResultLoaded = false;
+      } else {
+        this.isResultLoaded = true;
+        this.initializeMap(acode);
+      }
     });
   }
 
