@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { loadModules } from 'esri-loader';
 import { MapService } from '../../core/map/map.service';
 
@@ -7,9 +7,7 @@ import { MapService } from '../../core/map/map.service';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
-  // @Input() acode: string;
-
+export class MapComponent {
   @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
   isResultLoaded: boolean;
@@ -17,6 +15,10 @@ export class MapComponent implements OnInit {
   constructor(private mapService: MapService) {
     this.mapService.isResultLoaded.subscribe(value => {
       this.isResultLoaded = value;
+    });
+
+    this.mapService.acode.subscribe(acode => {
+      this.initializeMap(acode);
     });
   }
 
@@ -324,10 +326,5 @@ export class MapComponent implements OnInit {
     } catch(error) {
       console.log('EsriLoader: ', error);
     }
-  }
-
-  ngOnInit() {
-    // Initialize MapView and return an instance of MapView
-    // this.initializeMap();
   }
 }
