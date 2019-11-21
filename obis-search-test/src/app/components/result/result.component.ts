@@ -56,7 +56,7 @@ export class ResultComponent implements OnInit {
       this.build_info();
 
       this.mapService.isResultLoaded.next(true);
-      this.mapComponent.initializeMap(this.acode);
+      this.mapService.changeAcode(this.acode);
     });
   }
 
