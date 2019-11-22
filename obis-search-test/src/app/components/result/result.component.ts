@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../core/api/api.service';
 import { SearchService } from '../../core/search/search.service';
 import { ResultsService } from '../../core/results/results.service';
+import { MapService } from '../../core/map/map.service';
 
 import { Api_Response } from '../../models/api_response';
 import { Acctax } from 'src/app/models/acctax';
@@ -43,7 +44,7 @@ export class ResultComponent implements OnInit {
   private isStStatusLoaded = false;
   private isTaxaBuilt = false;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private searchService: SearchService, private resultsService: ResultsService, private mapService: MapService) { }
 
   ngOnInit() {
     this.resultsService.isQueryComplete.next(false);
@@ -51,6 +52,8 @@ export class ResultComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.acode = params.get("acode");
       this.build_info();
+
+      this.mapService.changeAcode(this.acode);
     });
   }
 

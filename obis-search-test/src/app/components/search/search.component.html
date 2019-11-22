@@ -1,5 +1,11 @@
-<input type="text" class="form-control" name="query" id="query" #query required>
-<button class="btn btn-primary" id="submitSearch" (click)="search(query.value)">Search</button>
+<div *ngIf="location === 'main'">
+    <input type="text" class="form-control" name="query_main" id="query_main" #query_main required>
+    <button class="btn btn-primary" id="submitSearch_main" (click)="search(query_main.value)">Search</button>
+</div>
+<div *ngIf="location === 'map'">
+    <input type="text" class="form-control" name="query_map" id="query_map" #query_map required>
+    <button class="btn btn-primary" id="submitSearch_map" (click)="search(query_map.value)">Search</button>
+</div>
 <div *ngIf="isQueryStarted">
     <img class="loading" id="loading_gif" src="assets/loading.gif" />
 </div>

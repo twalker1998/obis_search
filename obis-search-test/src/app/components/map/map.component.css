@@ -1,0 +1,16 @@
+@import url('https://js.arcgis.com/4.11/esri/css/main.css');
+
+html, body, #viewDiv-map {
+    padding: 0;
+    margin: 0;
+    height: 90vh;
+    width: 90vw;
+}
+
+.esri-view:fullscreen {
+    background-color: #fff;
+}
+
+.map-search {
+    width: 90vw;
+}
