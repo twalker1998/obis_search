@@ -26,3 +26,7 @@ table, th, td {
     border-collapse: collapse;
     padding: 5px;
 }
+
+th {
+    text-align: center;
+}
