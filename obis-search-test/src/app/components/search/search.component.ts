@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Input, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Acctax } from '../../models/acctax';
@@ -14,7 +14,9 @@ import { MapService } from '../../core/map/map.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent {
+export class SearchComponent implements AfterViewInit {
+  @Input() location: string;
+
   results: Array<Acctax | Comtax | Syntax> = [];
   isQueryStarted: boolean;
   isQueryComplete: boolean;
@@ -28,6 +30,7 @@ export class SearchComponent {
     this.resultsService.isQueryStarted.next(false);
     this.resultsService.isQueryComplete.next(true);
     this.mapService.changeAcode("search");
+    this.searchService.updateQuery("");
   }
 
   constructor(private searchService: SearchService, private resultsService: ResultsService, private mapService: MapService, private router: Router) {
@@ -55,15 +58,28 @@ export class SearchComponent {
     });
   }
 
-  ngOnInit() {
-    var search_bar = document.getElementById("query");
+  ngAfterViewInit() {
+    var searchBar: HTMLElement;
+    var submitSearch: HTMLElement;
 
-    search_bar.addEventListener("keyup", function(event) {
+    if(this.location === 'main') {
+      searchBar = document.getElementById("query_main");
+      submitSearch = document.getElementById("submitSearch_main");
+    } else if(this.location === 'map') {
+      searchBar = document.getElementById("query_map");
+      submitSearch = document.getElementById("submitSearch_map");
+    }
+
+    searchBar.addEventListener("keyup", function(event) {
       if(event.keyCode === 13) {
         event.preventDefault();
 
-        document.getElementById("submitSearch").click();
+        submitSearch.click();
       }
+    });
+    
+    this.searchService.query.subscribe(query => {
+      this.updateQueryValue(query);
     });
   }
 
@@ -74,11 +90,21 @@ export class SearchComponent {
     this.resultsService.isQueryStarted.next(true);
     this.resultsService.isQueryComplete.next(false);
     this.mapService.changeAcode("search");
+    this.searchService.updateQuery(query);
   }
 
   clearResult(): void {
     this.results = new Array<Acctax | Comtax | Syntax>();
     localStorage.removeItem("results");
     this.router.navigate(["./"]);
+    this.searchService.updateQuery("");
+  }
+
+  updateQueryValue(query: string) {
+    if(this.location === 'main') {
+      (<HTMLInputElement>document.getElementById("query_map")).value = query;
+    } else if(this.location === 'map') {
+      (<HTMLInputElement>document.getElementById("query_main")).value = query;
+    }
   }
 }
