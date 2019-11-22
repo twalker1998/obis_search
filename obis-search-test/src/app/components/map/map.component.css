@@ -10,3 +10,7 @@ html, body, #viewDiv-map {
 .esri-view:fullscreen {
     background-color: #fff;
 }
+
+.map-search {
+    width: 90vw;
+}
