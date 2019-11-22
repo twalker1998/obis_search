@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 import { ApiService } from '../api/api.service';
 import { ResultsService } from '../results/results.service';
@@ -15,6 +16,8 @@ import { Hightax } from '../../models/hightax';
 export class SearchService {
   private response: Api_Response;
   private results: Array<Acctax | Comtax | Syntax> = [];
+  private querySource: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  query = this.querySource.asObservable();
 
   constructor(private apiService: ApiService, private resultsService: ResultsService) { }
 
@@ -46,6 +49,8 @@ export class SearchService {
   }
 
   async query_api(query: string) {
+    this.updateQuery(query);
+
     this.results = new Array<Acctax | Comtax | Syntax>();
 
     this.response = await this.apiService.get_query("acctax", "sname", query);
@@ -207,5 +212,9 @@ export class SearchService {
 
       resolve();
     });
+  }
+
+  updateQuery(query: string) {
+    this.querySource.next(query);
   }
 }
