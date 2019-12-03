@@ -30,7 +30,6 @@ export class SearchComponent implements AfterViewInit {
     this.resultsService.isQueryStarted.next(false);
     this.resultsService.isQueryComplete.next(true);
     this.mapService.changeAcode("search");
-    this.searchService.updateQuery("");
   }
 
   constructor(private searchService: SearchService, private resultsService: ResultsService, private mapService: MapService, private router: Router) {
