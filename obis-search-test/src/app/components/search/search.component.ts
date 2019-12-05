@@ -30,7 +30,6 @@ export class SearchComponent implements AfterViewInit {
     this.resultsService.isQueryStarted.next(false);
     this.resultsService.isQueryComplete.next(true);
     this.mapService.changeAcode("search");
-    this.searchService.updateQuery("");
   }
 
   constructor(private searchService: SearchService, private resultsService: ResultsService, private mapService: MapService, private router: Router) {
@@ -43,12 +42,17 @@ export class SearchComponent implements AfterViewInit {
         this.isQueryStarted = false;
         if(this.searchService.get_results().length == 0) {
           let results_str = localStorage.getItem("results");
-          this.results = JSON.parse(results_str);
+
+          if(!results_str) {
+            this.results = new Array<Acctax | Comtax | Syntax>();
+          } else {
+            this.results = JSON.parse(results_str);
+          }
+
           this.searchService.set_results(this.results);
           this.searchService.get_taxa_strings();
         } else {
           this.results = this.searchService.get_results();
-
           let results_str = JSON.stringify(this.results);
           localStorage.setItem("results", results_str);
         }
