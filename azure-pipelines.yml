@@ -22,3 +22,10 @@ steps:
 
 - script: ng build --prod --base-href="/obis_search/"
   displayName: 'Build'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'dist/obis_search'
+    ArtifactName: 'obis_search'
+    publishLocation: 'Container'
+  displayName: 'Publish Artifacts'
