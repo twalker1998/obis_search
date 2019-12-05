@@ -35,7 +35,6 @@
                     <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
                 </div>
                 <div *ngIf="result">
-                    <p *ngIf="result.elcode"><b>Element Code: </b> {{result.elcode}}</p>
                     <p><b>Taxonomic Serial Number: </b> {{result.tsn}}</p>
                     <p><b>State Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
                     <p><b>Global Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
