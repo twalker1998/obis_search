@@ -16,9 +16,11 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    pushd obis-search-test
     npm install -g @angular/cli
     npm install
-    ng build --prod
+    ng build --prod --base-href="/obis_search/"
+    popd
   displayName: 'npm install and build'
 
 - task: PublishBuildArtifacts@1
