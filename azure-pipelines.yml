@@ -15,12 +15,10 @@ steps:
     versionSpec: '10.x'
   displayName: 'Setup Environment'
 
-- script: |
-    npm install -g @angular/cli
-    npm install
+- script: npm install
   displayName: 'Install Dependencies'
 
-- script: ng build --prod --base-href="/obis_search/"
+- script: npx ng build --prod --base-href="/obis_search/"
   displayName: 'Build'
 
 - task: PublishBuildArtifacts@1
