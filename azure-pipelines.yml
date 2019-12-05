@@ -25,7 +25,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: 'dist/obis_search'
+    PathtoPublish: 'obis-search-test/dist/obis-search-test'
     ArtifactName: 'obis_search'
     publishLocation: 'Container'
   displayName: 'Publish Artifacts'
