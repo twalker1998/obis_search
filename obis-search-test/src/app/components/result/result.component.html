@@ -35,10 +35,9 @@
                     <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
                 </div>
                 <div *ngIf="result">
-                    <p *ngIf="result.elcode"><b>Element Code: </b> {{result.elcode}}</p>
-                    <p><b>Taxonomic Serial Number: </b> {{result.tsn}}</p>
-                    <p><b>State Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
-                    <p><b>Global Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
+                    <p *ngIf="result.tsn"><b>Taxonomic Serial Number: </b> {{result.tsn}}</p>
+                    <p *ngIf="result.s_rank"><b>State Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
+                    <p *ngIf="result.g_rank"><b>Global Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
                 </div>
 
                 <div *ngIf="!isSwapLoaded">
@@ -139,22 +138,6 @@
                 <div *ngIf="occurrences.length <= 0">
                     <p>No occurrences found for this record.</p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header" id="links-header">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-links" aria-expanded="false" aria-controls="collapse-links">
-                    External Links
-                </button>
-            </h5>
-        </div>
-
-        <div id="collapse-links" class="collapse" aria-labelledby="links-header" data-parent="#accordion">
-            <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             </div>
         </div>
     </div>
