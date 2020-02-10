@@ -96,6 +96,7 @@ export class MapComponent {
         popupTemplate: cotemplate
       });
 
+      // Ecological Systems
       const okecos = new MapImageLayer({
         url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/EcologicalSystems/OKECOS/MapServer',
         title: 'Ecological Systems',
@@ -226,7 +227,7 @@ export class MapComponent {
       });
 
       const view = new MapView({
-        container: 'viewDiv',
+        container: 'viewDiv-map',
         map,
         extent: bounds,
         spatialReference: 3857 // spatial reference of map; different from the extent
@@ -347,6 +348,8 @@ export class MapComponent {
       });
 
       view.ui.add(fullscreen, 'top-right');
+
+      return new MapView(view);
     } catch (error) {
       console.log('EsriLoader: ', error);
     }
