@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { loadModules } from 'esri-loader';
-import { MapService } from '../../core/map/map.service';
+import { MapService } from '../../core/map.service';
 
 @Component({
   selector: 'app-map',
@@ -30,7 +30,7 @@ export class MapComponent {
         'esri/views/MapView',
         'esri/layers/GroupLayer',
         'esri/layers/FeatureLayer',
-        'esri/layers/MapImageLayer', 
+        'esri/layers/MapImageLayer',
         'esri/widgets/Home',
         'esri/widgets/Search',
         'esri/widgets/BasemapGallery',
@@ -56,7 +56,7 @@ export class MapComponent {
 
       // var speciesquery = "acode='B-GRAM'"
       var speciesquery = "acode='" + acode + "'";
-      
+
       // Oklahoma Counties Layer
       var okcounties = new FeatureLayer({
         url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ArcGISServer_Counties/FeatureServer",
@@ -68,7 +68,7 @@ export class MapComponent {
         title: "<em>{sname}</em> ({vernacularname})",
         content: "ONHI has {count} occurrence record(s) for <em>{sname}</em> ({vernacularname}) in {county} County"
       };
-      
+
       // County Occurrences Layer
       var coquery = new FeatureLayer({
         url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OBIS_County_Occurrences_Poly/MapServer/0/",
@@ -82,7 +82,7 @@ export class MapComponent {
       var okecos = new MapImageLayer({
         url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/EcologicalSystems/OKECOS/MapServer",
           title: "Ecological Systems",
-          visible: false            
+          visible: false
       });
 
       var ecoivtemplate = {
@@ -90,27 +90,27 @@ export class MapComponent {
         title: "<strong>Level IV Ecoregion</strong>: {us_l4name}",
         content: "Level III Ecoregion: {us_l3name}<br> Level II Ecoregion: {na_l2name}<br> Level I Ecoregion: {na_l1name}"
       };
-      
+
       // Ecoregions
       var ecoiv = new FeatureLayer({
         url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ok_eco_l4/FeatureServer",
         title: "Level IV Ecoregions of Oklahoma",
-        popupTemplate: ecoivtemplate, 
-        visible: false            
+        popupTemplate: ecoivtemplate,
+        visible: false
       });
-      
+
       var okpadivtemplate = {
         // autocasts as new PopupTemplate()
         title: "<strong>{unit_nm}</strong>",
         content: "Protected Area Type: {loc_ds}<br> Protected Area Manager: {loc_own}"
       };
-      
+
       // Protected Areas
       var okpad = new FeatureLayer({
         url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/PAD_OK/FeatureServer",
         title: "Protected Areas of Oklahoma",
-        popupTemplate: okpadivtemplate, 
-        visible: false            
+        popupTemplate: okpadivtemplate,
+        visible: false
       });
 
       var dftemplate = {
@@ -118,27 +118,27 @@ export class MapComponent {
         title: "<strong>Game Types of Oklahoma</strong>",
         content: "{gametype}"
       };
-      
+
       // Duck and Fletcher
       var df = new FeatureLayer({
         url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/Duck_and_Fletcher/FeatureServer",
         title: "Duck and Fletcher: Game Types",
-        popupTemplate: dftemplate, 
-        visible: false            
+        popupTemplate: dftemplate,
+        visible: false
       });
-      
+
       var geotemplate = {
         // autocasts as new PopupTemplate()
         title: "<strong>Geomorphic Province</strong>",
         content: "{province}"
       };
-      
+
       // Geomorphic Provinces
       var geo = new FeatureLayer({
         url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/geomorphic/FeatureServer",
         title: "Geomorphic Provinces",
-        popupTemplate: geotemplate, 
-        visible: false            
+        popupTemplate: geotemplate,
+        visible: false
       });
 
       var swaptemplate = {
@@ -146,15 +146,15 @@ export class MapComponent {
         title: "<strong>Comprehensive Wildlife Conservation Strategy Region</strong>",
         content: "{name}"
       };
-      
+
       // Comprehensive Wildlife Conservation Strategy Regions
       var swap = new FeatureLayer({
         url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OKWCSR/FeatureServer",
         title: "Comprehensive Wildlife Conservation Strategy Regions",
-        popupTemplate: swaptemplate, 
-        visible: false            
+        popupTemplate: swaptemplate,
+        visible: false
       });
-      
+
       var hextemplate = {
         // autocasts as new PopupTemplate()
         title: "<em>{sname}</em> ({vernacularname})",
@@ -169,7 +169,7 @@ export class MapComponent {
         outFields: ["*"],
         popupTemplate: hextemplate
       });
-      
+
       // Create GroupLayer for occurrences
       var occurrencesGroupLayer = new GroupLayer({
         title: "Occurrences",
@@ -186,7 +186,7 @@ export class MapComponent {
         title: "Township/Range"
         //popupTemplate: template
       });
-  
+
       // Sections
       var sections = new FeatureLayer({
         url: "https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/1",
@@ -194,7 +194,7 @@ export class MapComponent {
         title: "Section"
         //popupTemplate: template
       });
-        
+
       // Create GroupLayer for PLSS data
       var PLSS = new GroupLayer({
         title: "PLSS Data",
@@ -233,16 +233,16 @@ export class MapComponent {
               title: "{label}",
               overwriteActions: true
             }
-          }), 	
-  
+          }),
+
           searchFields: ["label"],
           displayField: "label",
           exactMatch: false,
           outFields: ["label"],
           name: "Township/Range",
           placeholder: "example: 12N 10W"
-        }, 
-          
+        },
+
         {
           layer: new FeatureLayer({ //Notice the property is called layer Not featureLayer new to 4.11
           url: "https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/1",
@@ -250,8 +250,8 @@ export class MapComponent {
               title: "{STR_label}",
               overwriteActions: true
             }
-          }), 	
-  
+          }),
+
           searchFields: ["STR_label"],
           displayField: "STR_label",
           exactMatch: false,
@@ -259,7 +259,7 @@ export class MapComponent {
           name: "Section Township/Range",
           placeholder: "example: 15 12N 10W",
         },
-        
+
         {
           layer: new FeatureLayer({ //Notice the property is called layer Not featureLayer new to 4.11
           url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ArcGISServer_Counties/FeatureServer/0",
@@ -268,7 +268,7 @@ export class MapComponent {
             overwriteActions: true
           }
         }),
-          
+
           searchFields: ["name"],
           displayField: "name",
           exactMatch: false,
@@ -289,14 +289,14 @@ export class MapComponent {
         view: view,
         container: document.createElement("div")
       });
-  
+
       // Create an Expand instance for basemap gallery
       var bgExpand = new Expand({
         view: view,
         expandTooltip: "Select basemap",
         content: basemapGallery
       });
-  
+
       // Add the expand instance to the ui
       view.ui.add(bgExpand, "top-left");
 
@@ -316,7 +316,7 @@ export class MapComponent {
       });
 
       view.ui.add(layerList, "bottom-left");
-          
+
       // var fullscreen = new Fullscreen({
       //   view: view
       // });
