@@ -15,37 +15,37 @@ import { OccurrenceData } from '../../models/occurrence_data';
   providedIn: 'root'
 })
 export class ApiService {
-  baseUrl: string = "https://obis.ou.edu/api/obis/";
+  baseUrl = 'https://obis.ou.edu/api/obis/';
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   get_url(url: string, type: string): any {
-    if(type === 'api_response') {
+    if (type === 'api_response') {
       return this.httpClient.get<Api_Response>(url).pipe(
         retry(1),
         catchError(this.handleError)
       );
-    } else if(type === 'acctax') {
+    } else if (type === 'acctax') {
       return this.httpClient.get<Acctax>(url).pipe(
         retry(1),
         catchError(this.handleError)
       );
-    } else if(type === 'hightax') {
+    } else if (type === 'hightax') {
       return this.httpClient.get<Hightax>(url).pipe(
         retry(1),
         catchError(this.handleError)
       );
-    } else if(type === 'swap') {
+    } else if (type === 'swap') {
       return this.httpClient.get<Swap>(url).pipe(
         retry(1),
         catchError(this.handleError)
       );
-    } else if(type === 'fed_status') {
+    } else if (type === 'fed_status') {
       return this.httpClient.get<FedStatus>(url).pipe(
         retry(1),
         catchError(this.handleError)
       );
-    } else if(type === 'st_status') {
+    } else if (type === 'st_status') {
       return this.httpClient.get<StateStatus>(url).pipe(
         retry(1),
         catchError(this.handleError)
@@ -54,32 +54,32 @@ export class ApiService {
   }
 
   get_url_promise(url: string, type: string): any {
-    if(type === 'api_response') {
+    if (type === 'api_response') {
       return this.httpClient.get<Api_Response>(url).pipe(
         retry(1),
         catchError(this.handleError)
       ).toPromise();
-    } else if(type === 'acctax') {
+    } else if (type === 'acctax') {
       return this.httpClient.get<Acctax>(url).pipe(
         retry(1),
         catchError(this.handleError)
       ).toPromise();
-    } else if(type === 'hightax') {
+    } else if (type === 'hightax') {
       return this.httpClient.get<Hightax>(url).pipe(
         retry(1),
         catchError(this.handleError)
       ).toPromise();
-    } else if(type === 'swap') {
+    } else if (type === 'swap') {
       return this.httpClient.get<Swap>(url).pipe(
         retry(1),
         catchError(this.handleError)
       ).toPromise();
-    } else if(type === 'fed_status') {
+    } else if (type === 'fed_status') {
       return this.httpClient.get<FedStatus>(url).pipe(
         retry(1),
         catchError(this.handleError)
       ).toPromise();
-    } else if(type === 'st_status') {
+    } else if (type === 'st_status') {
       return this.httpClient.get<StateStatus>(url).pipe(
         retry(1),
         catchError(this.handleError)
@@ -95,16 +95,16 @@ export class ApiService {
   }
 
   handleError(error: HttpErrorResponse) {
-    if(error.error instanceof ErrorEvent) {
-      console.error("An error occurred: ", error.error.message);
-      return throwError("Something bad happened, please try again later.");
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred: ', error.error.message);
+      return throwError('Something bad happened, please try again later.');
     } else {
-      console.error("Backend returned code " + error.status + ", body was: " + error.error);
-      return throwError("Something bad happened, please try again later.");
+      console.error('Backend returned code ' + error.status + ', body was: ' + error.error);
+      return throwError('Something bad happened, please try again later.');
     }
   }
 
   get_occurrence_data(sname: string) {
-    return this.httpClient.get<OccurrenceData>("http://obsvweb1.ou.edu/obis_search_old/occurrence-table.php?sname=" + sname);
+    return this.httpClient.get<OccurrenceData>('http://obsvweb1.ou.edu/obis_search_old/occurrence-table.php?sname=' + sname);
   }
 }
