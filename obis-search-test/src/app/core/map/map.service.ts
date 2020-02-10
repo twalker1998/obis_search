@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class MapService {
-  private acodeSource: BehaviorSubject<string> = new BehaviorSubject<string>("search");
+  private acodeSource: BehaviorSubject<string> = new BehaviorSubject<string>('search');
   acode = this.acodeSource.asObservable();
 
   constructor() { }
