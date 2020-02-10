@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { loadModules } from 'esri-loader';
-
-import { MapService } from '../../core/map.service';
+import { MapService } from '../../core/map/map.service';
 
 @Component({
   selector: 'app-map',
