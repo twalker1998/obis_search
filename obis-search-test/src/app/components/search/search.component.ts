@@ -5,9 +5,9 @@ import { Acctax } from '../../models/acctax';
 import { Comtax } from '../../models/comtax';
 import { Syntax } from '../../models/syntax';
 
-import { SearchService } from '../../core/search.service';
-import { ResultsService } from '../../core/results.service';
 import { MapService } from '../../core/map.service';
+import { ResultsService } from '../../core/results.service';
+import { SearchService } from '../../core/search.service';
 
 @Component({
   selector: 'app-search',

@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+
+import { Acctax } from '../../models/acctax';
+import { ApiResponse } from '../../models/api-response';
+import { Comtax } from '../../models/comtax';
+import { Occurrence } from '../../models/occurrence';
+import { OccurrenceData } from '../../models/occurrence-data';
+import { Syntax } from '../../models/syntax';
 
 import { ApiService } from '../../core/api.service';
 import { DbService } from '../../core/db.service';
-import { SearchService } from '../../core/search.service';
-import { ResultsService } from '../../core/results.service';
 import { MapService } from '../../core/map.service';
-
-import { ApiResponse } from '../../models/api-response';
-import { Acctax } from 'src/app/models/acctax';
-import { Comtax } from 'src/app/models/comtax';
-import { Syntax } from 'src/app/models/syntax';
-import { Occurrence } from 'src/app/models/occurrence';
-import { OccurrenceData } from 'src/app/models/occurrence-data';
-import { formatDate } from '@angular/common';
+import { ResultsService } from '../../core/results.service';
+import { SearchService } from '../../core/search.service';
 
 declare const require: any;
 const jsPDF = require('jspdf');
