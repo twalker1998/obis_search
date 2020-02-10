@@ -9,7 +9,6 @@ import { Hightax } from '../models/hightax';
 import { Swap } from '../models/swap';
 import { FedStatus } from '../models/fed_status';
 import { StateStatus } from '../models/st_status';
-import { OccurrenceData } from '../models/occurrence_data';
 
 @Injectable({
   providedIn: 'root'
@@ -102,9 +101,5 @@ export class ApiService {
       console.error('Backend returned code ' + error.status + ', body was: ' + error.error);
       return throwError('Something bad happened, please try again later.');
     }
-  }
-
-  get_occurrence_data(sname: string) {
-    return this.httpClient.get<OccurrenceData>('http://obsvweb1.ou.edu/obis_search_old/occurrence-table.php?sname=' + sname);
   }
 }
