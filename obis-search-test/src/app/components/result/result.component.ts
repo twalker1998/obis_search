@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ApiService } from '../../core/api/api.service';
+import { ApiService } from '../../core/api.service';
 import { SearchService } from '../../core/search/search.service';
 import { ResultsService } from '../../core/results/results.service';
 import { MapService } from '../../core/map/map.service';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { ApiService } from '../api/api.service';
+import { ApiService } from '../api.service';
 import { ResultsService } from '../results/results.service';
 
 import { Api_Response } from '../../models/api_response';

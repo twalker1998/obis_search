@@ -3,13 +3,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { Api_Response } from '../../models/api_response';
-import { Acctax } from '../../models/acctax';
-import { Hightax } from '../../models/hightax';
-import { Swap } from '../../models/swap';
-import { FedStatus } from '../../models/fed_status';
-import { StateStatus } from '../../models/st_status';
-import { OccurrenceData } from '../../models/occurrence_data';
+import { Api_Response } from '../models/api_response';
+import { Acctax } from '../models/acctax';
+import { Hightax } from '../models/hightax';
+import { Swap } from '../models/swap';
+import { FedStatus } from '../models/fed_status';
+import { StateStatus } from '../models/st_status';
+import { OccurrenceData } from '../models/occurrence_data';
 
 @Injectable({
   providedIn: 'root'
