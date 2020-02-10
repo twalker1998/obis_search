@@ -12,7 +12,7 @@ import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
 import { Occurrence } from 'src/app/models/occurrence';
-import { OccurrenceData } from 'src/app/models/occurrence_data';
+import { OccurrenceData } from 'src/app/models/occurrence-data';
 import { formatDate } from '@angular/common';
 
 declare const require: any;

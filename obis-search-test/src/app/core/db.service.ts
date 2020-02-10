@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { OccurrenceData } from '../models/occurrence_data';
+import { OccurrenceData } from '../models/occurrence-data';
 
 @Injectable({
   providedIn: 'root'
