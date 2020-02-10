@@ -1,77 +1,75 @@
 <ul class="nav nav-pills mb-3 justify-content-end" id="obis-search-nav" role="tablist">
   <li class="nav-item">
-      <a class="nav-link active" id="nav-search-tab" data-toggle="pill" href="#nav-search" role="tab" aria-controls="nav-search" aria-selected="true">Search</a>
+    <a class="nav-link active" id="nav-search-tab" data-toggle="pill" href="#nav-search" role="tab" aria-controls="nav-search" aria-selected="true">Search</a>
   </li>
   <li class="nav-item">
-      <a class="nav-link" id="nav-about-tab" data-toggle="pill" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a>
+    <a class="nav-link" id="nav-about-tab" data-toggle="pill" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a>
   </li>
   <li class="nav-item">
-      <a class="nav-link" id="nav-map-tab" data-toggle="pill" href="#nav-map" role="tab" aria-controls="nav-map" aria-seleected="false">Map</a>
+    <a class="nav-link" id="nav-map-tab" data-toggle="pill" href="#nav-map" role="tab" aria-controls="nav-map" aria-seleected="false">Map</a>
   </li>
   <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
-      <div class="dropdown-menu dropdown-menu-right">
-          <form class="px-4 py-3">
-              <div class="form-group">
-                  <label for="exampleDropdownFormEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-              </div>
-              <div class="form-group">
-                  <label for="exampleDropdownFormPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-              </div>
-              <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                  <label class="form-check-label" for="dropdownCheck">
-                      Remember me
-                  </label>
-              </div>
-              <button type="submit" class="btn btn-primary">Sign in</button>
-          </form>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">New around here? Sign up</a>
-          <a class="dropdown-item" href="#">Forgot password?</a>
-      </div>
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+    <div class="dropdown-menu dropdown-menu-right">
+      <form class="px-4 py-3">
+        <div class="form-group">
+          <label for="exampleDropdownFormEmail1">Email address</label>
+          <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label for="exampleDropdownFormPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="dropdownCheck">
+          <label class="form-check-label" for="dropdownCheck">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </form>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">New around here? Sign up</a>
+      <a class="dropdown-item" href="#">Forgot password?</a>
+    </div>
   </li>
   <li class="nav-item">
-      <a class="nav-link" id="nav-help-tab" data-toggle="pill" href="#nav-help" role="tab" aria-controls="nav-help" aria-selected="false">Help</a>
+    <a class="nav-link" id="nav-help-tab" data-toggle="pill" href="#nav-help" role="tab" aria-controls="nav-help" aria-selected="false">Help</a>
   </li>
   <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
-      <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#">Edit Data</a>
-          <a class="dropdown-item" href="http://oknaturalheritage.ou.edu/content/info-request/online-request/" target="_blank">Information Request Form</a>
-          <a class="dropdown-item" href="#">Submit an Observation</a>
-          <a class="dropdown-item" href="#">Tracking Lists</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="http://oknaturalheritage.ou.edu/" target="_blank">Oklahoma Natural Heritage Inventory Home</a>
-          <a class="dropdown-item" href="http://biosurvey.ou.edu/" target="_blank">Oklahoma Biological Survey Home</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Contact Us</a>
-      </div>
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Edit Data</a>
+      <a class="dropdown-item" href="http://oknaturalheritage.ou.edu/content/info-request/online-request/" target="_blank">Information Request Form</a>
+      <a class="dropdown-item" href="#">Submit an Observation</a>
+      <a class="dropdown-item" href="#">Tracking Lists</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="http://oknaturalheritage.ou.edu/" target="_blank">Oklahoma Natural Heritage Inventory Home</a>
+      <a class="dropdown-item" href="http://biosurvey.ou.edu/" target="_blank">Oklahoma Biological Survey Home</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Contact Us</a>
+    </div>
   </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="nav-search" role="tabpanel" aria-labelledby="nav-search-tab">
-        <div class="centered">
-            <h3 class="label">oklahoma biodiversity information system</h3>
-            <app-search location="main"></app-search>
-            <router-outlet></router-outlet>
-        </div>
+  <div class="tab-pane fade show active" id="nav-search" role="tabpanel" aria-labelledby="nav-search-tab">
+    <div class="centered">
+      <h3 class="label">oklahoma biodiversity information system</h3>
+      <app-search location="main"></app-search>
+      <router-outlet></router-outlet>
     </div>
-    <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-        <div class="centered">
-            ABOUT COMING SOON
-        </div>
+  </div>
+  <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+    <div class="centered">
+      ABOUT COMING SOON
     </div>
-    <div class="tab-pane fade" id="nav-map" role="tabpanel" aria-labelledby="nav-map-tab">
-        <div class="centered map">
-            <app-map></app-map>
-        </div>
+  </div>
+  <div class="tab-pane fade" id="nav-map" role="tabpanel" aria-labelledby="nav-map-tab">
+    <div class="centered map">
+      <app-map></app-map>
     </div>
-    <div class="tab-pane fade" id="nav-help" role="tabpanel" aria-labelledby="nav-help-tab">
-        <div class="centered">
-            HELP COMING SOON
-        </div>
+  </div>
+  <div class="tab-pane fade" id="nav-help" role="tabpanel" aria-labelledby="nav-help-tab">
+    <div class="centered">
+      HELP COMING SOON
     </div>
+  </div>
 </div>
