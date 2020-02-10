@@ -2,24 +2,14 @@
   <div class="card">
     <div class="card-header" id="overview-header">
       <h5 class="mb-0">
-        <button
-          class="btn btn-link"
-          data-toggle="collapse"
-          data-target="#collapse-overview"
-          aria-expanded="true"
-          aria-controls="collapse-overview"
-        >
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-overview" aria-expanded="true"
+          aria-controls="collapse-overview">
           Overview
         </button>
       </h5>
     </div>
 
-    <div
-      id="collapse-overview"
-      class="collapse show"
-      aria-labelledby="overview-header"
-      data-parent="#accordion"
-    >
+    <div id="collapse-overview" class="collapse show" aria-labelledby="overview-header" data-parent="#accordion">
       <div class="card-body" *ngIf="result">
         <div *ngIf="!result">
           <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
@@ -44,10 +34,7 @@
         </div>
         <div *ngIf="areVNamesLoaded">
           <p>
-            <b>{{ primaryVname }}</b
-            ><span *ngIf="otherVnames.length > 0"
-              >, {{ otherVnames.join(", ") }}</span
-            >
+            <b>{{ primaryVname }}</b><span *ngIf="otherVnames.length > 0">, {{ otherVnames.join(", ") }}</span>
           </p>
         </div>
 
@@ -60,21 +47,13 @@
           </p>
           <p *ngIf="result.s_rank">
             <b>State Rank: </b>
-            <a
-              class="underline"
-              href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/"
-              target="_blank"
-              >{{ result.s_rank }}</a
-            >
+            <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/"
+              target="_blank">{{ result.s_rank }}</a>
           </p>
           <p *ngIf="result.g_rank">
             <b>Global Rank: </b>
-            <a
-              class="underline"
-              href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/"
-              target="_blank"
-              >{{ result.g_rank }}</a
-            >
+            <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/"
+              target="_blank">{{ result.g_rank }}</a>
           </p>
         </div>
 
@@ -131,24 +110,14 @@
   <div class="card">
     <div class="card-header" id="map-header">
       <h5 class="mb-0">
-        <button
-          class="btn btn-link collapsed"
-          data-toggle="collapse"
-          data-target="#collapse-map"
-          aria-expanded="false"
-          aria-controls="collapse-map"
-        >
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-map" aria-expanded="false"
+          aria-controls="collapse-map">
           Distribution Map
         </button>
       </h5>
     </div>
 
-    <div
-      id="collapse-map"
-      class="collapse"
-      aria-labelledby="map-header"
-      data-parent="#accordion"
-    >
+    <div id="collapse-map" class="collapse" aria-labelledby="map-header" data-parent="#accordion">
       <div class="card-body">
         <app-distribution-map [acode]="acode"></app-distribution-map>
       </div>
@@ -158,24 +127,14 @@
   <div class="card">
     <div class="card-header" id="table-header">
       <h5 class="mb-0">
-        <button
-          class="btn btn-link collapsed"
-          data-toggle="collapse"
-          data-target="#collapse-table"
-          aria-expanded="false"
-          aria-controls="collapse-table"
-        >
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-table"
+          aria-expanded="false" aria-controls="collapse-table">
           Occurrence Table
         </button>
       </h5>
     </div>
 
-    <div
-      id="collapse-table"
-      class="collapse"
-      aria-labelledby="table-header"
-      data-parent="#accordion"
-    >
+    <div id="collapse-table" class="collapse" aria-labelledby="table-header" data-parent="#accordion">
       <div class="card-body">
         <div *ngIf="occurrences.length > 0">
           <button (click)="export('csv')" class="btn btn-success btn-export">
