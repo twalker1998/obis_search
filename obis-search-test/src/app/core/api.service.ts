@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { Api_Response } from '../models/api_response';
+import { ApiResponse } from '../models/api-response';
 import { Acctax } from '../models/acctax';
 import { Hightax } from '../models/hightax';
 import { Swap } from '../models/swap';
@@ -20,7 +20,7 @@ export class ApiService {
 
   get_url(url: string, type: string): any {
     if (type === 'api_response') {
-      return this.httpClient.get<Api_Response>(url).pipe(
+      return this.httpClient.get<ApiResponse>(url).pipe(
         retry(1),
         catchError(this.handleError)
       );
@@ -54,7 +54,7 @@ export class ApiService {
 
   get_url_promise(url: string, type: string): any {
     if (type === 'api_response') {
-      return this.httpClient.get<Api_Response>(url).pipe(
+      return this.httpClient.get<ApiResponse>(url).pipe(
         retry(1),
         catchError(this.handleError)
       ).toPromise();
@@ -87,7 +87,7 @@ export class ApiService {
   }
 
   get_query(table: string, field: string, query: string) {
-    return this.httpClient.get<Api_Response>(this.baseUrl + table + '/?' + field + '=' + query + '&format=json').pipe(
+    return this.httpClient.get<ApiResponse>(this.baseUrl + table + '/?' + field + '=' + query + '&format=json').pipe(
       retry(1),
       catchError(this.handleError)
     ).toPromise();

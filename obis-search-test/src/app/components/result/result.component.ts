@@ -7,7 +7,7 @@ import { SearchService } from '../../core/search.service';
 import { ResultsService } from '../../core/results.service';
 import { MapService } from '../../core/map.service';
 
-import { Api_Response } from '../../models/api_response';
+import { ApiResponse } from '../../models/api-response';
 import { Acctax } from 'src/app/models/acctax';
 import { Comtax } from 'src/app/models/comtax';
 import { Syntax } from 'src/app/models/syntax';
@@ -25,7 +25,7 @@ require('jspdf-autotable');
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
-  private response: Api_Response;
+  private response: ApiResponse;
   acode: string;
   listResult: Acctax | Comtax | Syntax;
   result: Acctax;
@@ -143,7 +143,7 @@ export class ResultComponent implements OnInit {
     this.isStStatusLoaded = true;
   }
 
-  async get_vnames(response: Api_Response) {
+  async get_vnames(response: ApiResponse) {
     if (response.results.length > 1) {
       for (let r of response.results) {
         r = (r) as Comtax;
@@ -161,7 +161,7 @@ export class ResultComponent implements OnInit {
     this.areVNamesLoaded = true;
   }
 
-  async get_synonyms(response: Api_Response) {
+  async get_synonyms(response: ApiResponse) {
     for (let r of response.results) {
       r = (r) as Syntax;
 
