@@ -1,49 +1,47 @@
 <div *ngIf="location === 'main'">
-    <input type="text" class="form-control" name="query_main" id="query_main" #query_main required>
-    <button class="btn btn-primary" id="submitSearch_main" (click)="search(query_main.value)">Search</button>
+  <input type="text" class="form-control" name="query_main" id="query_main" #query_main required />
+  <button class="btn btn-primary" id="submitSearch_main" (click)="search(query_main.value)">Search</button>
 </div>
 <div *ngIf="location === 'map'">
-    <input type="text" class="form-control" name="query_map" id="query_map" #query_map required>
-    <button class="btn btn-primary" id="submitSearch_map" (click)="search(query_map.value)">Search</button>
+  <input type="text" class="form-control" name="query_map" id="query_map" #query_map required />
+  <button class="btn btn-primary" id="submitSearch_map" (click)="search(query_map.value)">Search</button>
 </div>
 <div *ngIf="isQueryStarted">
-    <img class="loading" id="loading_gif" src="assets/loading.gif" />
+  <img class="loading" id="loading_gif" src="assets/loading.gif" />
 </div>
 <div *ngIf="isQueryComplete">
-    <div *ngIf="results.length > 0">
-        <div id="pagination">
-            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
-        </div>
-        <div id="results">
-            <div class="card" *ngFor="let result of results | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize">
-                <div class="card-body">
-                    <div class="name">
-                        <a class="card-link" [routerLink]="['/result', result.acode]">{{result.display_name}}</a>
-                        <img *ngIf="result.type === 'acctax' && result.taxa !== 'community'" class="badge" src="assets/accepted.png" />
-                        <img *ngIf="result.type === 'comtax' && result.taxa !== 'community'" class="badge common" src="assets/common.png" />
-                        <img *ngIf="result.type === 'syntax' && result.taxa !== 'community'" class="badge" src="assets/synonym.png" />
-                        <img *ngIf="result.taxa === 'community'" class="badge community" src="assets/community.png" />
-                    </div>
-                    <div *ngIf="!result.taxa">
-                        <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                    </div>
-                    <div *ngIf="result.taxa">
-                        <div *ngIf="result.taxa !== 'community'">
-                            <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
-                        </div>
-                        <div *ngIf="result.taxa === 'community'">
-    
-                        </div>
-                    </div>
-                </div>
+  <div *ngIf="results.length > 0">
+    <div id="pagination">
+      <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+    <div id="results">
+      <div class="card" *ngFor="let result of results | slice: (page - 1) * pageSize:(page - 1) * pageSize + pageSize">
+        <div class="card-body">
+          <div class="name">
+            <a class="card-link" [routerLink]="['/result', result.acode]">{{result.display_name}}</a>
+            <img *ngIf="result.type === 'acctax' && result.taxa !== 'community'" class="badge" src="assets/accepted.png" />
+            <img *ngIf="result.type === 'comtax' && result.taxa !== 'community'" class="badge common" src="assets/common.png" />
+            <img *ngIf="result.type === 'syntax' && result.taxa !== 'community'" class="badge" src="assets/synonym.png" />
+            <img *ngIf="result.taxa === 'community'" class="badge community" src="assets/community.png" />
+          </div>
+          <div *ngIf="!result.taxa">
+            <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+          </div>
+          <div *ngIf="result.taxa">
+            <div *ngIf="result.taxa !== 'community'">
+              <h6 class="card-subtitle mb-2 text-muted">{{result.taxa}}</h6>
             </div>
+            <div *ngIf="result.taxa === 'community'"></div>
+          </div>
         </div>
-        <div id="pagination">
-            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
-        </div>
+      </div>
     </div>
-    <div *ngIf="results.length == 0">
-        <img class="no-results" src="assets/no-results.png" />
-        <h3 style="color: #548235;">Query returned no results.</h3>
+    <div id="pagination">
+      <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="results.length" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
     </div>
+  </div>
+  <div *ngIf="results.length == 0">
+    <img class="no-results" src="assets/no-results.png" />
+    <h3 style="color: #548235;">Query returned no results.</h3>
+  </div>
 </div>

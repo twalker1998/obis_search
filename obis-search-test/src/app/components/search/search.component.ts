@@ -25,63 +25,66 @@ export class SearchComponent implements AfterViewInit {
 
   @HostListener('window:popstate', ['$event'])
   onPopState(event: any) {
-    let results_str = localStorage.getItem("results");
-    this.results = JSON.parse(results_str);
+    const resultsStr = localStorage.getItem('results');
+    this.results = JSON.parse(resultsStr);
     this.resultsService.isQueryStarted.next(false);
     this.resultsService.isQueryComplete.next(true);
-    this.mapService.changeAcode("search");
+    this.mapService.changeAcode('search');
   }
 
-  constructor(private searchService: SearchService, private resultsService: ResultsService, private mapService: MapService, private router: Router) {
-    this.resultsService.isQueryStarted.subscribe(s_value => {
-      this.isQueryStarted = s_value;
+  constructor(private searchService: SearchService, private resultsService: ResultsService,
+              private mapService: MapService, private router: Router) {
+    this.resultsService.isQueryStarted.subscribe(sValue => {
+      this.isQueryStarted = sValue;
     });
 
-    this.resultsService.isQueryComplete.subscribe(c_value => {
-      if(c_value) {
+    this.resultsService.isQueryComplete.subscribe(cValue => {
+      if (cValue) {
         this.isQueryStarted = false;
-        if(this.searchService.get_results().length == 0) {
-          let results_str = localStorage.getItem("results");
+        if (this.searchService.get_results().length === 0) {
+          const resultsStr = localStorage.getItem('results');
 
-          if(!results_str) {
+          if (!resultsStr) {
             this.results = new Array<Acctax | Comtax | Syntax>();
           } else {
-            this.results = JSON.parse(results_str);
+            this.results = JSON.parse(resultsStr);
           }
 
           this.searchService.set_results(this.results);
           this.searchService.get_taxa_strings();
         } else {
           this.results = this.searchService.get_results();
-          let results_str = JSON.stringify(this.results);
-          localStorage.setItem("results", results_str);
+          const resultsStr = JSON.stringify(this.results);
+          localStorage.setItem('results', resultsStr);
         }
       }
 
-      this.isQueryComplete = c_value;
+      this.isQueryComplete = cValue;
     });
   }
 
   ngAfterViewInit() {
-    var searchBar: HTMLElement;
-    var submitSearch: HTMLElement;
+    let searchBar: HTMLElement;
+    let submitSearch: HTMLElement;
 
-    if(this.location === 'main') {
-      searchBar = document.getElementById("query_main");
-      submitSearch = document.getElementById("submitSearch_main");
-    } else if(this.location === 'map') {
-      searchBar = document.getElementById("query_map");
-      submitSearch = document.getElementById("submitSearch_map");
+    if (this.location === 'main') {
+      searchBar = document.getElementById('query_main');
+      submitSearch = document.getElementById('submitSearch_main');
+    } else if (this.location === 'map') {
+      searchBar = document.getElementById('query_map');
+      submitSearch = document.getElementById('submitSearch_map');
     }
 
-    searchBar.addEventListener("keyup", function(event) {
-      if(event.keyCode === 13) {
+    // tslint:disable-next-line: only-arrow-functions
+    searchBar.addEventListener('keyup', function(event) {
+      // tslint:disable-next-line: deprecation
+      if (event.keyCode === 13) {
         event.preventDefault();
 
         submitSearch.click();
       }
     });
-    
+
     this.searchService.query.subscribe(query => {
       this.updateQueryValue(query);
     });
@@ -93,22 +96,22 @@ export class SearchComponent implements AfterViewInit {
     this.searchService.query_api(query);
     this.resultsService.isQueryStarted.next(true);
     this.resultsService.isQueryComplete.next(false);
-    this.mapService.changeAcode("search");
+    this.mapService.changeAcode('search');
     this.searchService.updateQuery(query);
   }
 
   clearResult(): void {
     this.results = new Array<Acctax | Comtax | Syntax>();
-    localStorage.removeItem("results");
-    this.router.navigate(["./"]);
-    this.searchService.updateQuery("");
+    localStorage.removeItem('results');
+    this.router.navigate(['./']);
+    this.searchService.updateQuery('');
   }
 
   updateQueryValue(query: string) {
-    if(this.location === 'main') {
-      (<HTMLInputElement>document.getElementById("query_map")).value = query;
-    } else if(this.location === 'map') {
-      (<HTMLInputElement>document.getElementById("query_main")).value = query;
+    if (this.location === 'main') {
+      (document.getElementById('query_map') as HTMLInputElement).value = query;
+    } else if (this.location === 'map') {
+      (document.getElementById('query_main') as HTMLInputElement).value = query;
     }
   }
 }
