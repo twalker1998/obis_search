@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ApiService } from '../../core/api.service';
-import { SearchService } from '../../core/search/search.service';
+import { SearchService } from '../../core/search.service';
 import { ResultsService } from '../../core/results.service';
 import { MapService } from '../../core/map.service';
 
