@@ -1,144 +1,214 @@
 <div id="accordion">
-    <div class="card">
-        <div class="card-header" id="overview-header">
-            <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-overview" aria-expanded="true" aria-controls="collapse-overview">
-                    Overview
-                </button>
-            </h5>
-        </div>
-
-        <div id="collapse-overview" class="collapse show" aria-labelledby="overview-header" data-parent="#accordion">
-            <div class="card-body" *ngIf="result">
-                <div *ngIf="!result">
-                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                </div>
-                <div *ngIf="result">
-                    <p><i>{{result.sname}}</i> {{result.scientificnameauthorship}}</p>
-                </div>
-
-                <div *ngIf="!areSynsLoaded">
-                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                </div>
-                <div *ngIf="areSynsLoaded">
-                    <p *ngIf="synonyms.length > 0"><b>Synonyms: </b><span>{{synonyms.join(", ")}}</span></p>
-                </div>
-
-                <div *ngIf="!areVNamesLoaded">
-                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                </div>
-                <div *ngIf="areVNamesLoaded">
-                    <p><b>{{primary_vname}}</b><span *ngIf="other_vnames.length > 0">, {{other_vnames.join(", ")}}</span></p>
-                </div>
-
-                <div *ngIf="!result">
-                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                </div>
-                <div *ngIf="result">
-                    <p *ngIf="result.tsn"><b>Taxonomic Serial Number: </b> {{result.tsn}}</p>
-                    <p *ngIf="result.s_rank"><b>State Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.s_rank}}</a></p>
-                    <p *ngIf="result.g_rank"><b>Global Rank: </b> <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{result.g_rank}}</a></p>
-                </div>
-
-                <div *ngIf="!isSwapLoaded">
-                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                </div>
-                <div *ngIf="isSwapLoaded">
-                    <p><b>Species of Greatest Conservation Need Tier: </b> {{swap_status}}</p>
-                </div>
-
-                <div *ngIf="!isFedStatusLoaded">
-                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                </div>
-                <div *ngIf="isFedStatusLoaded">
-                    <p><b>Federal Status: </b> {{fed_status}}</p>
-                </div>
-
-                <div *ngIf="!isStStatusLoaded">
-                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                </div>
-                <div *ngIf="isStStatusLoaded">
-                    <p><b>State Status: </b> {{st_status}}</p>
-                </div>
-
-                <div *ngIf="!isTaxaBuilt">
-                    <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
-                </div>
-                <div *ngIf="isTaxaBuilt">
-                    <table *ngIf="taxa.length > 0">
-                        <tr>
-                            <th>Kingdom</th>
-                            <th>Phylum</th>
-                            <th>Class</th>
-                            <th>Order</th>
-                            <th>Family</th>
-                            <th>Genus</th>
-                        </tr>
-                        <tr>
-                            <td>{{taxa[0]}}</td>
-                            <td>{{taxa[1]}}</td>
-                            <td>{{taxa[2]}}</td>
-                            <td>{{taxa[3]}}</td>
-                            <td>{{taxa[4]}}</td>
-                            <td>{{result.genus}}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
+  <div class="card">
+    <div class="card-header" id="overview-header">
+      <h5 class="mb-0">
+        <button
+          class="btn btn-link"
+          data-toggle="collapse"
+          data-target="#collapse-overview"
+          aria-expanded="true"
+          aria-controls="collapse-overview"
+        >
+          Overview
+        </button>
+      </h5>
     </div>
 
-    <div class="card">
-        <div class="card-header" id="map-header">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-map" aria-expanded="false" aria-controls="collapse-map">
-                    Distribution Map
-                </button>
-            </h5>
+    <div
+      id="collapse-overview"
+      class="collapse show"
+      aria-labelledby="overview-header"
+      data-parent="#accordion"
+    >
+      <div class="card-body" *ngIf="result">
+        <div *ngIf="!result">
+          <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+        </div>
+        <div *ngIf="result">
+          <p>
+            <i>{{ result.sname }}</i> {{ result.scientificnameauthorship }}
+          </p>
         </div>
 
-        <div id="collapse-map" class="collapse" aria-labelledby="map-header" data-parent="#accordion">
-            <div class="card-body">
-                <app-distribution-map [acode]="acode"></app-distribution-map>
-            </div>
+        <div *ngIf="!areSynsLoaded">
+          <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
         </div>
+        <div *ngIf="areSynsLoaded">
+          <p *ngIf="synonyms.length > 0">
+            <b>Synonyms: </b><span>{{ synonyms.join(", ") }}</span>
+          </p>
+        </div>
+
+        <div *ngIf="!areVNamesLoaded">
+          <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+        </div>
+        <div *ngIf="areVNamesLoaded">
+          <p>
+            <b>{{ primaryVname }}</b
+            ><span *ngIf="otherVnames.length > 0"
+              >, {{ otherVnames.join(", ") }}</span
+            >
+          </p>
+        </div>
+
+        <div *ngIf="!result">
+          <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+        </div>
+        <div *ngIf="result">
+          <p *ngIf="result.tsn">
+            <b>Taxonomic Serial Number: </b> {{ result.tsn }}
+          </p>
+          <p *ngIf="result.s_rank">
+            <b>State Rank: </b>
+            <a
+              class="underline"
+              href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/"
+              target="_blank"
+              >{{ result.s_rank }}</a
+            >
+          </p>
+          <p *ngIf="result.g_rank">
+            <b>Global Rank: </b>
+            <a
+              class="underline"
+              href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/"
+              target="_blank"
+              >{{ result.g_rank }}</a
+            >
+          </p>
+        </div>
+
+        <div *ngIf="!isSwapLoaded">
+          <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+        </div>
+        <div *ngIf="isSwapLoaded">
+          <p>
+            <b>Species of Greatest Conservation Need Tier: </b> {{ swapStatus }}
+          </p>
+        </div>
+
+        <div *ngIf="!isFedStatusLoaded">
+          <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+        </div>
+        <div *ngIf="isFedStatusLoaded">
+          <p><b>Federal Status: </b> {{ fedStatus }}</p>
+        </div>
+
+        <div *ngIf="!isStStatusLoaded">
+          <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+        </div>
+        <div *ngIf="isStStatusLoaded">
+          <p><b>State Status: </b> {{ stStatus }}</p>
+        </div>
+
+        <div *ngIf="!isTaxaBuilt">
+          <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
+        </div>
+        <div *ngIf="isTaxaBuilt">
+          <table *ngIf="taxa.length > 0">
+            <tr>
+              <th>Kingdom</th>
+              <th>Phylum</th>
+              <th>Class</th>
+              <th>Order</th>
+              <th>Family</th>
+              <th>Genus</th>
+            </tr>
+            <tr>
+              <td>{{ taxa[0] }}</td>
+              <td>{{ taxa[1] }}</td>
+              <td>{{ taxa[2] }}</td>
+              <td>{{ taxa[3] }}</td>
+              <td>{{ taxa[4] }}</td>
+              <td>{{ result.genus }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="map-header">
+      <h5 class="mb-0">
+        <button
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapse-map"
+          aria-expanded="false"
+          aria-controls="collapse-map"
+        >
+          Distribution Map
+        </button>
+      </h5>
     </div>
 
-    <div class="card">
-        <div class="card-header" id="table-header">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-table" aria-expanded="false" aria-controls="collapse-table">
-                    Occurrence Table
-                </button>
-            </h5>
-        </div>
-
-        <div id="collapse-table" class="collapse" aria-labelledby="table-header" data-parent="#accordion">
-            <div class="card-body">
-                <div *ngIf="occurrences.length > 0">
-                    <button (click)="export('csv')" class="btn btn-success btn-export">Export to CSV</button>
-                    <button (click)="export('pdf')" class="btn btn-success btn-export">Export to PDF</button>
-                    <table id="occ_table">
-                        <tr>
-                            <th>County</th>
-                            <th>Count</th>
-                            <th>Min Event Date</th>
-                            <th>Max Event Date</th>
-                        </tr>
-                        <tr *ngFor="let occurrence of occurrences">
-                            <td>{{occurrence.county}}</td>
-                            <td>{{occurrence.count}}</td>
-                            <td *ngIf="occurrence.is_date">{{occurrence.min_date | date: 'longDate'}}</td>
-                            <td *ngIf="!occurrence.is_date">No Date Listed</td>
-                            <td *ngIf="occurrence.is_date">{{occurrence.max_date | date: 'longDate'}}</td>
-                            <td *ngIf="!occurrence.is_date">No Date Listed</td>
-                        </tr>
-                    </table>
-                </div>
-                <div *ngIf="occurrences.length <= 0">
-                    <p>No occurrences found for this record.</p>
-                </div>
-            </div>
-        </div>
+    <div
+      id="collapse-map"
+      class="collapse"
+      aria-labelledby="map-header"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <app-distribution-map [acode]="acode"></app-distribution-map>
+      </div>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="table-header">
+      <h5 class="mb-0">
+        <button
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapse-table"
+          aria-expanded="false"
+          aria-controls="collapse-table"
+        >
+          Occurrence Table
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapse-table"
+      class="collapse"
+      aria-labelledby="table-header"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <div *ngIf="occurrences.length > 0">
+          <button (click)="export('csv')" class="btn btn-success btn-export">
+            Export to CSV
+          </button>
+          <button (click)="export('pdf')" class="btn btn-success btn-export">
+            Export to PDF
+          </button>
+          <table id="occ_table">
+            <tr>
+              <th>County</th>
+              <th>Count</th>
+              <th>Min Event Date</th>
+              <th>Max Event Date</th>
+            </tr>
+            <tr *ngFor="let occurrence of occurrences">
+              <td>{{ occurrence.county }}</td>
+              <td>{{ occurrence.count }}</td>
+              <td *ngIf="occurrence.is_date">
+                {{ occurrence.min_date | date: "longDate" }}
+              </td>
+              <td *ngIf="!occurrence.is_date">No Date Listed</td>
+              <td *ngIf="occurrence.is_date">
+                {{ occurrence.max_date | date: "longDate" }}
+              </td>
+              <td *ngIf="!occurrence.is_date">No Date Listed</td>
+            </tr>
+          </table>
+        </div>
+        <div *ngIf="occurrences.length <= 0">
+          <p>No occurrences found for this record.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
