@@ -18,7 +18,7 @@
       <div class="card" *ngFor="let result of results | slice: (page - 1) * pageSize:(page - 1) * pageSize + pageSize">
         <div class="card-body">
           <div class="name">
-            <a class="card-link" [routerLink]="['/result', result.acode]">{{result.display_name}}</a>
+            <a class="card-link" [routerLink]="['/result', result.acode]">{{ result.display_name }}</a>
             <img *ngIf="result.type === 'acctax' && result.taxa !== 'community'" class="badge" src="assets/accepted.png" />
             <img *ngIf="result.type === 'comtax' && result.taxa !== 'community'" class="badge common" src="assets/common.png" />
             <img *ngIf="result.type === 'syntax' && result.taxa !== 'community'" class="badge" src="assets/synonym.png" />
