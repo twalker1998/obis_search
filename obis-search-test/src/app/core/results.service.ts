@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Acctax } from '../../models/acctax';
-import { Comtax } from '../../models/comtax';
-import { Syntax } from '../../models/syntax';
+import { Acctax } from '../models/acctax';
+import { Comtax } from '../models/comtax';
+import { Syntax } from '../models/syntax';
 
 @Injectable({
   providedIn: 'root'
@@ -11,33 +11,33 @@ import { Syntax } from '../../models/syntax';
 export class ResultsService {
   public isQueryStarted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public isQueryComplete: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  
+
   constructor() { }
 
   contains(arr: Array<Acctax | Comtax | Syntax>, e: Acctax | Comtax | Syntax): boolean {
-    for(let r of arr) {
-      if(r.type === 'acctax' || r.type === 'syntax') {
-        r = <Acctax | Syntax>(r);
+    for (let r of arr) {
+      if (r.type === 'acctax' || r.type === 'syntax') {
+        r =  (r) as Acctax | Syntax;
 
-        if(e.type === 'comtax') {
+        if (e.type === 'comtax') {
           continue;
         }
 
-        e = <Acctax | Syntax>(e);
+        e =  (e) as Acctax | Syntax;
 
-        if(r.sname === e.sname) {
+        if (r.sname === e.sname) {
           return true;
         }
-      } else if(r.type === 'comtax') {
-        r = <Comtax>(r);
+      } else if (r.type === 'comtax') {
+        r =  (r) as Comtax;
 
-        if(e.type === 'acctax' || e.type === 'syntax') {
+        if (e.type === 'acctax' || e.type === 'syntax') {
           continue;
         }
 
-        e = <Comtax>(e);
+        e =  (e) as Comtax;
 
-        if(r.vname === e.vname) {
+        if (r.vname === e.vname) {
           return true;
         }
       }
