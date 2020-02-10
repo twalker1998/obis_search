@@ -1,4 +1,4 @@
-export interface Api_Response {
+export interface ApiResponse {
     count: number;
     next: string;
     results: Array<any>;

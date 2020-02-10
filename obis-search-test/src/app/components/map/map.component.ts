@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { loadModules } from 'esri-loader';
-import { MapService } from '../../core/map/map.service';
+
+import { MapService } from '../../core/map.service';
 
 @Component({
   selector: 'app-map',
@@ -14,7 +15,7 @@ export class MapComponent {
 
   constructor(private mapService: MapService) {
     this.mapService.acode.subscribe(acode => {
-      if(acode === "search") {
+      if (acode === 'search') {
         this.isResultLoaded = false;
       } else {
         this.isResultLoaded = true;
@@ -25,12 +26,30 @@ export class MapComponent {
 
   public async initializeMap(acode: string) {
     try {
-      const [Map, MapView, GroupLayer, FeatureLayer, MapImageLayer, Home, Search, BasemapGallery, LayerList, Expand, SimpleRenderer, Extent, SpatialReference, Query, QueryTask, Graphic, Fullscreen] = await loadModules([
+      const [
+        Map,
+        MapView,
+        GroupLayer,
+        FeatureLayer,
+        MapImageLayer,
+        Home,
+        Search,
+        BasemapGallery,
+        LayerList,
+        Expand,
+        SimpleRenderer,
+        Extent,
+        SpatialReference,
+        Query,
+        QueryTask,
+        Graphic,
+        Fullscreen
+      ] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
         'esri/layers/GroupLayer',
         'esri/layers/FeatureLayer',
-        'esri/layers/MapImageLayer', 
+        'esri/layers/MapImageLayer',
         'esri/widgets/Home',
         'esri/widgets/Search',
         'esri/widgets/BasemapGallery',
@@ -45,286 +64,293 @@ export class MapComponent {
         'esri/widgets/Fullscreen'
       ]);
 
-      //map extent: Need this since no basemap; otherwise extent is pretty wonky
-      var bounds = new Extent({
-        "xmin":-103.5,
-        "ymin":33.0,
-        "xmax":-93.5,
-        "ymax":37.5,
-        "spatialReference":{"wkid":4326} //this is for the extent only; need to set map spatial reference in view.
+      // map extent: Need this since no basemap; otherwise extent is pretty wonky
+      const bounds = new Extent({
+        xmin: -103.5,
+        ymin: 33.0,
+        xmax: -93.5,
+        ymax: 37.5,
+        spatialReference: {wkid: 4326} // this is for the extent only; need to set map spatial reference in view.
       });
 
-      // var speciesquery = "acode='B-GRAM'"
-      var speciesquery = "acode='" + acode + "'";
-      
+      const speciesquery = 'acode=\'' + acode + '\'';
+
       // Oklahoma Counties Layer
-      var okcounties = new FeatureLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ArcGISServer_Counties/FeatureServer",
-        title: "Oklahoma Counties"
+      const okcounties = new FeatureLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ArcGISServer_Counties/FeatureServer',
+        title: 'Oklahoma Counties',
       });
 
-      var cotemplate = {
+      const cotemplate = {
         // autocasts as new PopupTemplate()
-        title: "<em>{sname}</em> ({vernacularname})",
-        content: "ONHI has {count} occurrence record(s) for <em>{sname}</em> ({vernacularname}) in {county} County"
+        title: '<em>{sname}</em> ({vernacularname})',
+        content: 'ONHI has {count} occurrence record(s) for <em>{sname}</em> ({vernacularname}) in {county} County'
       };
-      
+
       // County Occurrences Layer
-      var coquery = new FeatureLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OBIS_County_Occurrences_Poly/MapServer/0/",
+      const coquery = new FeatureLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OBIS_County_Occurrences_Poly/MapServer/0/',
         definitionExpression: speciesquery,
-        title: "County Occurrences",
-        outFields: ["*"],
+        title: 'County Occurrences',
+        outFields: ['*'],
         popupTemplate: cotemplate
       });
 
       // Ecological Systems
-      var okecos = new MapImageLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/EcologicalSystems/OKECOS/MapServer",
-          title: "Ecological Systems",
-          visible: false            
+      const okecos = new MapImageLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/EcologicalSystems/OKECOS/MapServer',
+        title: 'Ecological Systems',
+        visible: false
       });
 
-      var ecoivtemplate = {
+      const ecoivtemplate = {
         // autocasts as new PopupTemplate()
-        title: "<strong>Level IV Ecoregion</strong>: {us_l4name}",
-        content: "Level III Ecoregion: {us_l3name}<br> Level II Ecoregion: {na_l2name}<br> Level I Ecoregion: {na_l1name}"
+        title: '<strong>Level IV Ecoregion</strong>: {us_l4name}',
+        content: 'Level III Ecoregion: {us_l3name}<br> Level II Ecoregion: {na_l2name}<br> Level I Ecoregion: {na_l1name}'
       };
-      
+
       // Ecoregions
-      var ecoiv = new FeatureLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ok_eco_l4/FeatureServer",
-        title: "Level IV Ecoregions of Oklahoma",
-        popupTemplate: ecoivtemplate, 
-        visible: false            
+      const ecoiv = new FeatureLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ok_eco_l4/FeatureServer',
+        title: 'Level IV Ecoregions of Oklahoma',
+        popupTemplate: ecoivtemplate,
+        visible: false
       });
-      
-      var okpadivtemplate = {
+
+      const okpadivtemplate = {
         // autocasts as new PopupTemplate()
-        title: "<strong>{unit_nm}</strong>",
-        content: "Protected Area Type: {loc_ds}<br> Protected Area Manager: {loc_own}"
+        title: '<strong>{unit_nm}</strong>',
+        content: 'Protected Area Type: {loc_ds}<br> Protected Area Manager: {loc_own}'
       };
-      
+
       // Protected Areas
-      var okpad = new FeatureLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/PAD_OK/FeatureServer",
-        title: "Protected Areas of Oklahoma",
-        popupTemplate: okpadivtemplate, 
-        visible: false            
+      const okpad = new FeatureLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/PAD_OK/FeatureServer',
+        title: 'Protected Areas of Oklahoma',
+        popupTemplate: okpadivtemplate,
+        visible: false
       });
 
-      var dftemplate = {
+      const dftemplate = {
         // autocasts as new PopupTemplate()
-        title: "<strong>Game Types of Oklahoma</strong>",
-        content: "{gametype}"
+        title: '<strong>Game Types of Oklahoma</strong>',
+        content: '{gametype}'
       };
-      
+
       // Duck and Fletcher
-      var df = new FeatureLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/Duck_and_Fletcher/FeatureServer",
-        title: "Duck and Fletcher: Game Types",
-        popupTemplate: dftemplate, 
-        visible: false            
-      });
-      
-      var geotemplate = {
-        // autocasts as new PopupTemplate()
-        title: "<strong>Geomorphic Province</strong>",
-        content: "{province}"
-      };
-      
-      // Geomorphic Provinces
-      var geo = new FeatureLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/geomorphic/FeatureServer",
-        title: "Geomorphic Provinces",
-        popupTemplate: geotemplate, 
-        visible: false            
+      const df = new FeatureLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/Duck_and_Fletcher/FeatureServer',
+        title: 'Duck and Fletcher: Game Types',
+        popupTemplate: dftemplate,
+        visible: false
       });
 
-      var swaptemplate = {
+      const geotemplate = {
         // autocasts as new PopupTemplate()
-        title: "<strong>Comprehensive Wildlife Conservation Strategy Region</strong>",
-        content: "{name}"
+        title: '<strong>Geomorphic Province</strong>',
+        content: '{province}'
       };
-      
-      // Comprehensive Wildlife Conservation Strategy Regions
-      var swap = new FeatureLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OKWCSR/FeatureServer",
-        title: "Comprehensive Wildlife Conservation Strategy Regions",
-        popupTemplate: swaptemplate, 
-        visible: false            
+
+      // Geomorphic Provinces
+      const geo = new FeatureLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/geomorphic/FeatureServer',
+        title: 'Geomorphic Provinces',
+        popupTemplate: geotemplate,
+        visible: false
       });
-      
-      var hextemplate = {
+
+      const swaptemplate = {
         // autocasts as new PopupTemplate()
-        title: "<em>{sname}</em> ({vernacularname})",
-        content: "ONHI has {count} occurrence record(s) for <em>{sname}</em> ({vernacularname}) in this hexagon"
+        title: '<strong>Comprehensive Wildlife Conservation Strategy Region</strong>',
+        content: '{name}'
+      };
+
+      // Comprehensive Wildlife Conservation Strategy Regions
+      const swap = new FeatureLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OKWCSR/FeatureServer',
+        title: 'Comprehensive Wildlife Conservation Strategy Regions',
+        popupTemplate: swaptemplate,
+        visible: false
+      });
+
+      const hextemplate = {
+        // autocasts as new PopupTemplate()
+        title: '<em>{sname}</em> ({vernacularname})',
+        content: 'ONHI has {count} occurrence record(s) for <em>{sname}</em> ({vernacularname}) in this hexagon'
       };
 
       // Hex Occurrences Layer
-      var hexquery = new FeatureLayer({
-        url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OBIS_5km_Occurrences/MapServer/0/",
+      const hexquery = new FeatureLayer({
+        url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/OBIS_5km_Occurrences/MapServer/0/',
         definitionExpression: speciesquery,
-        title: "Georeferenced Occurrences",
-        outFields: ["*"],
+        title: 'Georeferenced Occurrences',
+        outFields: ['*'],
         popupTemplate: hextemplate
       });
-      
+
       // Create GroupLayer for occurrences
-      var occurrencesGroupLayer = new GroupLayer({
-        title: "Occurrences",
+      const occurrencesGroupLayer = new GroupLayer({
+        title: 'Occurrences',
         visible: true,
-        //visibilityMode: "exclusive",
+        // visibilityMode: "exclusive",
         layers: [coquery, hexquery],
         opacity: 0.75
       });
 
       // Township/Range
-      var townships = new FeatureLayer({
-        url: "https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/0",
-        outFields: ["*"],
-        title: "Township/Range"
-        //popupTemplate: template
+      const townships = new FeatureLayer({
+        url: 'https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/0',
+        outFields: ['*'],
+        title: 'Township/Range'
+        // popupTemplate: template
       });
-  
+
       // Sections
-      var sections = new FeatureLayer({
-        url: "https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/1",
-        outFields: ["*"],
-        title: "Section"
-        //popupTemplate: template
+      const sections = new FeatureLayer({
+        url: 'https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/1',
+        outFields: ['*'],
+        title: 'Section'
+        // popupTemplate: template
       });
-        
+
       // Create GroupLayer for PLSS data
-      var PLSS = new GroupLayer({
-        title: "PLSS Data",
+      const PLSS = new GroupLayer({
+        title: 'PLSS Data',
         visible: false,
-        visibilityMode: "independent",
+        visibilityMode: 'independent',
         layers: [townships, sections]
       });
 
-      var map = new Map({
-        //basemap: "satellite",
+      const map = new Map({
+        // basemap: "satellite",
         layers: [PLSS, okecos, geo, swap, ecoiv, df, okpad, okcounties, occurrencesGroupLayer]
       });
 
-      var view = new MapView({
-        container: "viewDiv-map",
-        map: map,
+      const view = new MapView({
+        container: 'viewDiv-map',
+        map,
         extent: bounds,
-        spatialReference: 3857 //spatial reference of map; different from the extent
+        spatialReference: 3857 // spatial reference of map; different from the extent
       });
 
-      //Home button
-      var homeBtn = new Home({
-        view: view
+      // Home button
+      const homeBtn = new Home({
+        view
       });
 
       // Add the home button to the top left corner of the view
-      view.ui.add(homeBtn, "top-left");
+      view.ui.add(homeBtn, 'top-left');
 
       // create a search widget
-      var searchWidget = new Search({
-        view: view,
+      const searchWidget = new Search({
+        view,
         sources: [{
-          layer: new FeatureLayer({ //Notice the property is called layer Not featureLayer new to 4.11
-            url: "https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/0",
+          layer: new FeatureLayer({ // Notice the property is called layer Not featureLayer new to 4.11
+            url: 'https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/0',
             popupTemplate: { // autocasts as new PopupTemplate()
-              title: "{label}",
+              title: '{label}',
               overwriteActions: true
             }
-          }), 	
-  
-          searchFields: ["label"],
-          displayField: "label",
+          }),
+
+          searchFields: ['label'],
+          displayField: 'label',
           exactMatch: false,
-          outFields: ["label"],
-          name: "Township/Range",
-          placeholder: "example: 12N 10W"
-        }, 
-          
-        {
-          layer: new FeatureLayer({ //Notice the property is called layer Not featureLayer new to 4.11
-          url: "https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/1",
-            popupTemplate: { // autocasts as new PopupTemplate()
-              title: "{STR_label}",
-              overwriteActions: true
-            }
-          }), 	
-  
-          searchFields: ["STR_label"],
-          displayField: "STR_label",
-          exactMatch: false,
-          outFields: ["STR_label"],
-          name: "Section Township/Range",
-          placeholder: "example: 15 12N 10W",
+          outFields: ['label'],
+          name: 'Township/Range',
+          placeholder: 'example: 12N 10W',
         },
-        
+
         {
-          layer: new FeatureLayer({ //Notice the property is called layer Not featureLayer new to 4.11
-          url: "https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ArcGISServer_Counties/FeatureServer/0",
-          popupTemplate: { // autocasts as new PopupTemplate()
-            title: "{name} County",
-            overwriteActions: true
-          }
-        }),
-          
-          searchFields: ["name"],
-          displayField: "name",
+          layer: new FeatureLayer({ // Notice the property is called layer Not featureLayer new to 4.11
+            url: 'https://services.arcgis.com/3xOwF6p0r7IHIjfn/arcgis/rest/services/PLSS/FeatureServer/1',
+            popupTemplate: { // autocasts as new PopupTemplate()
+              title: '{STR_label}',
+              overwriteActions: true
+            }
+          }),
+
+          searchFields: ['STR_label'],
+          displayField: 'STR_label',
           exactMatch: false,
-          outFields: ["name"],
-          name: "Counties",
-          placeholder: "example: Adair",
+          outFields: ['STR_label'],
+          name: 'Section Township/Range',
+          placeholder: 'example: 15 12N 10W',
+        },
+
+        {
+          layer: new FeatureLayer({ // Notice the property is called layer Not featureLayer new to 4.11
+            url: 'https://obsgis.csa.ou.edu:6443/arcgis/rest/services/ONHI/ArcGISServer_Counties/FeatureServer/0',
+            popupTemplate: { // autocasts as new PopupTemplate()
+              title: '{name} County',
+              overwriteActions: true
+            }
+          }),
+
+          searchFields: ['name'],
+          displayField: 'name',
+          exactMatch: false,
+          outFields: ['name'],
+          name: 'Counties',
+          placeholder: 'example: Adair',
         }]
       });
 
       // Add the search widget to the top right corner of the view
       view.ui.add(searchWidget, {
-        position: "top-right"
+        position: 'top-right'
       });
 
       // Create a BasemapGallery widget instance and set
       // its container to a div element
-      var basemapGallery = new BasemapGallery({
-        view: view,
-        container: document.createElement("div")
+      const basemapGallery = new BasemapGallery({
+        view,
+        container: document.createElement('div')
       });
-  
+
       // Create an Expand instance for basemap gallery
-      var bgExpand = new Expand({
-        view: view,
-        expandTooltip: "Select basemap",
+      const bgExpand = new Expand({
+        view,
+        expandTooltip: 'Select basemap',
         content: basemapGallery
       });
-  
+
       // Add the expand instance to the ui
-      view.ui.add(bgExpand, "top-left");
+      view.ui.add(bgExpand, 'top-left');
 
       // Add a legend instance to the panel of a
       // ListItem in a LayerList instance
       const layerList = new LayerList({
-        view: view,
-        listItemCreatedFunction: function(event) {
+        view,
+        listItemCreatedFunction(event) {
           const item = event.item;
-          if (item.layer.type != "group") { // don't show legend twice
+          if (item.layer.type !== 'group') { // don't show legend twice
             item.panel = {
-              content: "legend",
+              content: 'legend',
               open: false
             };
           }
         }
       });
 
-      view.ui.add(layerList, "bottom-left");
-          
-      // var fullscreen = new Fullscreen({
-      //   view: view
-      // });
+      // Create an Expand instance for legend gallery
+      const lgExpand = new Expand({
+        view,
+        expandTooltip: 'Expand Layer List',
+        content: layerList
+      });
 
-      // view.ui.add(fullscreen, "top-right");
+      // Add the expand instance to the ui
+      view.ui.add(lgExpand, 'top-left');
+
+      const fullscreen = new Fullscreen({
+        view
+      });
+
+      view.ui.add(fullscreen, 'top-right');
 
       return new MapView(view);
-    } catch(error) {
+    } catch (error) {
       console.log('EsriLoader: ', error);
     }
   }
