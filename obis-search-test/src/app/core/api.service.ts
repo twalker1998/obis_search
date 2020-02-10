@@ -8,7 +8,7 @@ import { Acctax } from '../models/acctax';
 import { Hightax } from '../models/hightax';
 import { Swap } from '../models/swap';
 import { FedStatus } from '../models/fed-status';
-import { StateStatus } from '../models/st_status';
+import { StateStatus } from '../models/st-status';
 
 @Injectable({
   providedIn: 'root'
