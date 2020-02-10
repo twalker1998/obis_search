@@ -7,7 +7,7 @@ import { ApiResponse } from '../models/api-response';
 import { Acctax } from '../models/acctax';
 import { Hightax } from '../models/hightax';
 import { Swap } from '../models/swap';
-import { FedStatus } from '../models/fed_status';
+import { FedStatus } from '../models/fed-status';
 import { StateStatus } from '../models/st_status';
 
 @Injectable({
