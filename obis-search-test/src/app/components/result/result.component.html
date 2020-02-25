@@ -69,23 +69,27 @@
           <img class="spinner" id="spinner_gif" src="assets/spinner.gif" />
         </div>
         <div *ngIf="isTaxaBuilt">
-          <table *ngIf="taxa.length > 0">
-            <tr>
-              <th>Kingdom</th>
-              <th>Phylum</th>
-              <th>Class</th>
-              <th>Order</th>
-              <th>Family</th>
-              <th>Genus</th>
-            </tr>
-            <tr>
-              <td>{{ taxa[0] }}</td>
-              <td>{{ taxa[1] }}</td>
-              <td>{{ taxa[2] }}</td>
-              <td>{{ taxa[3] }}</td>
-              <td>{{ taxa[4] }}</td>
-              <td>{{ result.genus }}</td>
-            </tr>
+          <table *ngIf="taxa.length > 0" role="table" id="taxa_table">
+            <thead role="rowgroup">
+              <tr role="row">
+                <th role="columnheader">Kingdom</th>
+                <th role="columnheader">Phylum</th>
+                <th role="columnheader">Class</th>
+                <th role="columnheader">Order</th>
+                <th role="columnheader">Family</th>
+                <th role="columnheader">Genus</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              <tr role="row">
+                <td role="cell">{{ taxa[0] }}</td>
+                <td role="cell">{{ taxa[1] }}</td>
+                <td role="cell">{{ taxa[2] }}</td>
+                <td role="cell">{{ taxa[3] }}</td>
+                <td role="cell">{{ taxa[4] }}</td>
+                <td role="cell">{{ result.genus }}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -118,21 +122,25 @@
         <div *ngIf="occurrences.length > 0">
           <button (click)="export('csv')" class="btn btn-success btn-export">Export to CSV</button>
           <button (click)="export('pdf')" class="btn btn-success btn-export">Export to PDF</button>
-          <table id="occ_table">
-            <tr>
-              <th>County</th>
-              <th>Count</th>
-              <th>Min Event Date</th>
-              <th>Max Event Date</th>
-            </tr>
-            <tr *ngFor="let occurrence of occurrences">
-              <td>{{ occurrence.county }}</td>
-              <td>{{ occurrence.count }}</td>
-              <td *ngIf="occurrence.is_date">{{ occurrence.min_date | date: "longDate" }}</td>
-              <td *ngIf="!occurrence.is_date">No Date Listed</td>
-              <td *ngIf="occurrence.is_date">{{ occurrence.max_date | date: "longDate" }}</td>
-              <td *ngIf="!occurrence.is_date">No Date Listed</td>
-            </tr>
+          <table role="table" id="occ_table">
+            <thead role="rowgroup">
+              <tr role="row">
+                <th role="columnheader">County</th>
+                <th role="columnheader">Count</th>
+                <th role="columnheader">Min Event Date</th>
+                <th role="columnheader">Max Event Date</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              <tr *ngFor="let occurrence of occurrences" role="row">
+                <td role="cell">{{ occurrence.county }}</td>
+                <td role="cell">{{ occurrence.count }}</td>
+                <td *ngIf="occurrence.is_date" role="cell">{{ occurrence.min_date | date: "longDate" }}</td>
+                <td *ngIf="!occurrence.is_date" role="cell">No Date Listed</td>
+                <td *ngIf="occurrence.is_date" role="cell">{{ occurrence.max_date | date: "longDate" }}</td>
+                <td *ngIf="!occurrence.is_date" role="cell">No Date Listed</td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div *ngIf="occurrences.length <= 0">

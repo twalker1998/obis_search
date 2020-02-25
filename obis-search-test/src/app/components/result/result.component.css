@@ -30,3 +30,61 @@ table, th, td {
 th {
     text-align: center;
 }
+
+@media
+    only screen
+    and (max-width: 760px), (min-device-width: 768px)
+    and (max-device-width: 1024px) {
+        .btn-export {
+            display: none;
+        }
+
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin: 0 0 1 rem 0;
+        }
+
+        #taxa_table td:nth-child(odd) {
+            background: #ccc;
+        }
+
+        #occ_table tr:nth-child(odd) {
+            background: #ccc;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+
+        #taxa_table td:nth-of-type(1):before { content: "Kingdom"; font-weight: bold; }
+        #taxa_table td:nth-of-type(2):before { content: "Phylum"; font-weight: bold; }
+        #taxa_table td:nth-of-type(3):before { content: "Class"; font-weight: bold; }
+        #taxa_table td:nth-of-type(4):before { content: "Order"; font-weight: bold; }
+        #taxa_table td:nth-of-type(5):before { content: "Family"; font-weight: bold; }
+        #taxa_table td:nth-of-type(6):before { content: "Genus"; font-weight: bold; }
+
+        #occ_table td:nth-of-type(1)::before { content: "County"; font-weight: bold; }
+        #occ_table td:nth-of-type(2)::before { content: "Count"; font-weight: bold; }
+        #occ_table td:nth-of-type(3)::before { content: "Min Date"; font-weight: bold; }
+        #occ_table td:nth-of-type(4)::before { content: "Max Date"; font-weight: bold; }
+    }
