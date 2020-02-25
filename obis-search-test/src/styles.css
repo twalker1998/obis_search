@@ -132,8 +132,8 @@ a:hover {
     border-color: #548235;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1150px) {
     .centered {
-        width: 85%;
+        width: 75%;
     }
 }
