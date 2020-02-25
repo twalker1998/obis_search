@@ -14,3 +14,10 @@ html, body, #viewDiv-map {
 .map-search {
     width: 50vw;
 }
+
+@media (max-width: 1150px) {
+    .map-search {
+        width: 95%;
+        padding: 10px 0;
+    }
+}
