@@ -6,8 +6,8 @@ import { catchError, retry } from 'rxjs/operators';
 import { Acctax } from '../models/acctax';
 import { ApiResponse } from '../models/api-response';
 import { FedStatus } from '../models/fed-status';
-import { GRank } from '../models/g-rank';
 import { Hightax } from '../models/hightax';
+import { Rank } from '../models/rank';
 import { StateStatus } from '../models/st-status';
 import { Swap } from '../models/swap';
 
@@ -35,8 +35,8 @@ export class ApiService {
         retry(1),
         catchError(this.handleError)
       );
-    } else if (type === 'g_rank') {
-      return this.httpClient.get<GRank>(url).pipe(
+    } else if (type === 'rank') {
+      return this.httpClient.get<Rank>(url).pipe(
         retry(1),
         catchError(this.handleError)
       );
@@ -74,8 +74,8 @@ export class ApiService {
         retry(1),
         catchError(this.handleError)
       ).toPromise();
-    } else if (type === 'g_rank') {
-      return this.httpClient.get<GRank>(url).pipe(
+    } else if (type === 'rank') {
+      return this.httpClient.get<Rank>(url).pipe(
         retry(1),
         catchError(this.handleError)
       ).toPromise();

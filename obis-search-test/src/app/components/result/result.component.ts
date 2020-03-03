@@ -110,7 +110,7 @@ export class ResultComponent implements OnInit {
     } else {
       const baseUrl = result.g_rank.replace('http', 'https');
 
-      const gRankResponse = await this.apiService.get_url_promise(baseUrl + '?format=json', 'g_rank');
+      const gRankResponse = await this.apiService.get_url_promise(baseUrl + '?format=json', 'rank');
 
       this.gRank = gRankResponse.code;
     }

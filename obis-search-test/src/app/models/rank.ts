@@ -1,4 +1,4 @@
-export interface GRank {
+export interface Rank {
     id: number;
     code: string;
 }
