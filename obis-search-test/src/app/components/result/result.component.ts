@@ -33,6 +33,7 @@ export class ResultComponent implements OnInit {
   primaryVname: string;
   otherVnames: Array<string> = [];
   gRank: string;
+  sRank: string;
   swapStatus: string;
   fedStatus: string;
   stStatus: string;
@@ -42,6 +43,7 @@ export class ResultComponent implements OnInit {
   areSynsLoaded = false;
   areVNamesLoaded = false;
   isGRankLoaded = false;
+  isSRankLoaded = false;
   isSwapLoaded = false;
   isFedStatusLoaded = false;
   isStStatusLoaded = false;
@@ -81,6 +83,7 @@ export class ResultComponent implements OnInit {
     }
 
     await this.get_g_rank(this.result);
+    await this.get_s_rank(this.result);
     await this.get_swap(this.result);
     await this.get_fed_status(this.result);
     await this.get_st_status(this.result);
@@ -116,6 +119,20 @@ export class ResultComponent implements OnInit {
     }
 
     this.isGRankLoaded = true;
+  }
+
+  async get_s_rank(result: Acctax) {
+    if (!result.s_rank) {
+      this.sRank = 'SNR';
+    } else {
+      const baseUrl = result.s_rank.replace('http', 'https');
+
+      const sRankResponse = await this.apiService.get_url_promise(baseUrl + '?format=json', 'rank');
+
+      this.sRank = sRankResponse.code;
+    }
+
+    this.isSRankLoaded = true;
   }
 
   async get_swap(result: Acctax) {
