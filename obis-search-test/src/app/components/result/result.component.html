@@ -34,10 +34,6 @@
         </div>
         <div *ngIf="result">
           <p *ngIf="result.tsn"><b>Taxonomic Serial Number: </b> {{ result.tsn }}</p>
-          <!-- <p *ngIf="result.s_rank">
-            <b>State Rank: </b>
-            <a class="underline" href="http://www.oknaturalheritage.ou.edu/content/biodiversity-info/ranking-guide/" target="_blank">{{ result.s_rank }}</a>
-          </p> -->
         </div>
 
         <div *ngIf="!isSRankLoaded">
