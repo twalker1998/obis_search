@@ -32,6 +32,7 @@ export class ResultComponent implements OnInit {
   synonyms: Array<string> = [];
   primaryVname: string;
   otherVnames: Array<string> = [];
+  gRank: string;
   swapStatus: string;
   fedStatus: string;
   stStatus: string;
@@ -40,6 +41,7 @@ export class ResultComponent implements OnInit {
 
   areSynsLoaded = false;
   areVNamesLoaded = false;
+  isGRankLoaded = false;
   isSwapLoaded = false;
   isFedStatusLoaded = false;
   isStStatusLoaded = false;
@@ -78,6 +80,7 @@ export class ResultComponent implements OnInit {
       this.result = (this.listResult) as Acctax;
     }
 
+    await this.get_g_rank(this.result);
     await this.get_swap(this.result);
     await this.get_fed_status(this.result);
     await this.get_st_status(this.result);
@@ -99,6 +102,20 @@ export class ResultComponent implements OnInit {
     }
 
     await this.get_occurrences();
+  }
+
+  async get_g_rank(result: Acctax) {
+    if (!result.g_rank) {
+      this.gRank = 'GNR';
+    } else {
+      const baseUrl = result.g_rank.replace('http', 'https');
+
+      const gRankResponse = await this.apiService.get_url_promise(baseUrl + '?format=json', 'g_rank');
+
+      this.gRank = gRankResponse.code;
+    }
+
+    this.isGRankLoaded = true;
   }
 
   async get_swap(result: Acctax) {
