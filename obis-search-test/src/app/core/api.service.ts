@@ -7,6 +7,7 @@ import { Acctax } from '../models/acctax';
 import { ApiResponse } from '../models/api-response';
 import { FedStatus } from '../models/fed-status';
 import { Hightax } from '../models/hightax';
+import { Rank } from '../models/rank';
 import { StateStatus } from '../models/st-status';
 import { Swap } from '../models/swap';
 
@@ -31,6 +32,11 @@ export class ApiService {
       );
     } else if (type === 'hightax') {
       return this.httpClient.get<Hightax>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+    } else if (type === 'rank') {
+      return this.httpClient.get<Rank>(url).pipe(
         retry(1),
         catchError(this.handleError)
       );
@@ -65,6 +71,11 @@ export class ApiService {
       ).toPromise();
     } else if (type === 'hightax') {
       return this.httpClient.get<Hightax>(url).pipe(
+        retry(1),
+        catchError(this.handleError)
+      ).toPromise();
+    } else if (type === 'rank') {
+      return this.httpClient.get<Rank>(url).pipe(
         retry(1),
         catchError(this.handleError)
       ).toPromise();
